@@ -8,7 +8,7 @@ module.exports = {
       colors: {
         // 🌑 Main Backgrounds
         bg: "#0B0C1B",        // primary app background
-        card: "#1A1C24",      // cards / sections
+        card: "#8B5CF6",      // cards / sections
         card2: "#222432", 
             // elevated surfaces
 

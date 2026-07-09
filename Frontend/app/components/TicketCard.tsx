@@ -15,7 +15,7 @@ export default function TicketCard({
   return (
     <Pressable onPress={onPress}>
       <View
-        className={`relative mx-2 h-32 w-24 items-center justify-center rounded-[26px] ${
+        className={`relative mr-2  h-32 w-24 items-center justify-center rounded-[20px] ${
           selected ? "bg-[#8B5CF6]" : "bg-[#1B1B31]"
         }`}
       >
@@ -48,7 +48,7 @@ export default function TicketCard({
         <View
           className={`mt-3 h-2 w-2 rounded-full ${
             selected ? "bg-white" : "bg-[#8B5CF6]"
-          }`}
+          }  `}
         />
       </View>
     </Pressable>

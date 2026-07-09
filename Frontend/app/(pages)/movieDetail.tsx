@@ -1,20 +1,96 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import DateCarousel from '../components/DateCarousel'
+import { LinearGradient } from "expo-linear-gradient";
+import MovieHeader from '../components/MovieHeader';
+import Divider from '../components/Divider';
+import { TimeCarousel } from '../components/TimeCarousel';
+import { ScreenCarousel } from '../components/ScreenCarousel';
+import CustomButton from '../components/CustomButton';
+import { Armchair } from 'lucide-react-native';
+import { router } from 'expo-router';
 
 const movieDetail = () => {
   return (
-    <View className='w-[100%] h-[100%] bg-bg'> 
 
-     <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView
+  edges={["bottom"]}
+  className="flex-1 bg-[#0B0C1B]"
+>
+    <View className='w-[100%] relative h-[100%] bg-bg  pt-0 overflow-hidden  '> 
  
-    <DateCarousel/>
- 
+
+        <MovieHeader/>
 
 
-     </SafeAreaView>
+
+        <View className='pt-8'></View>
+
+      <ScrollView
+      showsVerticalScrollIndicator={false}
+        
+      contentContainerStyle={{
+        paddingBottom: 0,
+      }}
+    >
+      <View className=' flex gap-y-2 p-4 pr-0'>
+         
+         <View  className='pl-0'>
+
+             <Text className='text-white font-poppins-bold text-[1.3rem] '>Select Date</Text>
+         </View>
+
+
+         <DateCarousel/>
+
+      </View>
+
+
+
+      <Divider/>
+
+         
+          <View className=' flex gap-y-2 p-4 pt-2 pr-0'>
+         
+         <View  className='pl-0 flex flex-col gap-y-2'>
+
+             <Text className='text-white font-poppins-bold text-[1.3rem] '>Select Time</Text>
+
+               <TimeCarousel/>
+         </View>
+
+
+      </View>
+
+
+      <Divider/>
+
+        <View className=' flex gap-y-2 p-4 pt-2 pr-0'>
+         
+         <View  className='pl-0 flex flex-col gap-y-2'>
+
+             <Text className='text-white font-poppins-bold text-[1.3rem] '>Select Screen</Text>
+
+               <ScreenCarousel/>
+         </View>
+
+
+      </View>
+
+     
+
+       
+      
+    
+     </ScrollView>
+
+        <CustomButton Icon={Armchair} onPress={() => router.push("/(pages)/SeatsBooking")}/>
+    
     </View>
+
+
+    </SafeAreaView>
   )
 }
 

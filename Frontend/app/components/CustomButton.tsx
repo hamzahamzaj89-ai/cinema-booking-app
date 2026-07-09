@@ -1,19 +1,23 @@
 import { View, Text, Pressable, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { LucideIcon, Ticket } from 'lucide-react-native'
+interface Props {
+   Icon: LucideIcon 
+  onPress: () => void;
+}
+function CustomButton ({Icon, onPress}:Props) {
 
-const CustomButton = () => {
+  
   return (
-    <View className='w-[100%] flex justify-center content-center items-center'>
+      <TouchableOpacity onPress={onPress} className="rounded-lg w-[83%] bg-violet-600 px-8 flex justify-center content-center align-middle h-12">
+            <View className="flex-row items-center justify-center">
+              <Icon size={18} color="white" />
 
-         <TouchableOpacity className='w-[92%] p-[12px] flex justify-center items-center rounded-lg bg-primaryDark '>
-
-             <Text className='font-bold text-black text-[15px] '>
-                Filter
-             </Text>
-              
-
-         </TouchableOpacity>
-     </View>
+              <Text className="ml-3 font-poppins-semibold text-lg text-white">
+                Book Tickets
+              </Text>
+            </View>
+          </TouchableOpacity>
   )
 }
 
