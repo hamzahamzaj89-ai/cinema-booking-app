@@ -13,7 +13,7 @@ const Header = () => {
 
 
 
-             <Text  className='font-semibold text-[#969494]'>
+             <Text  className='font-poppins-semibold text-text'>
               
               What movie you are going to see today
 

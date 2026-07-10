@@ -25,7 +25,7 @@ const movieDetail = () => {
 
 
 
-        <View className='pt-8'></View>
+        <View className='pt-0'></View>
 
       <ScrollView
       showsVerticalScrollIndicator={false}
@@ -48,7 +48,7 @@ const movieDetail = () => {
 
 
 
-      <Divider/>
+    
 
          
           <View className=' flex gap-y-2 p-4 pt-2 pr-0'>
@@ -64,7 +64,7 @@ const movieDetail = () => {
       </View>
 
 
-      <Divider/>
+    
 
         <View className=' flex gap-y-2 p-4 pt-2 pr-0'>
          
@@ -85,8 +85,13 @@ const movieDetail = () => {
     
      </ScrollView>
 
-        <CustomButton Icon={Armchair} onPress={() => router.push("/(pages)/SeatsBooking")}/>
-    
+           <View className='flex justify-center content-center mb- w-[100%] items-center mt-4 '>
+
+                    <CustomButton Icon={Armchair} onPress={() => router.push("/(pages)/SeatsBooking")}/>
+
+            
+            
+            </View>    
     </View>
 
 

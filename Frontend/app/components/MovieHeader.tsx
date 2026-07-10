@@ -3,6 +3,7 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import DateCarousel from '../components/DateCarousel'
 import { LinearGradient } from "expo-linear-gradient";
+import { Heart } from 'lucide-react-native';
 
 const MovieHeader = () => {
   return (
@@ -12,13 +13,13 @@ const MovieHeader = () => {
       
 
         
-        <View className='w-[100%] h-[45vh]  rounded-lg overflow-hidden '>
+        <View className='w-[100%] h-[32vh]   rounded-lg overflow-hidden '>
              
               <ImageBackground
           source={{
             uri: "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
           }}
-          className="h-[100%] object-cover rounded-xl "
+          className="h-[100%] w-[100%]  rounded-xl "
           resizeMode="cover"
         >
 
@@ -42,17 +43,32 @@ const MovieHeader = () => {
             />
 
          
-        <View className='flex flex-col text-white font-poppins absolute p-4 top-[75%] gap-y-1 '>
-              <Text className='text-white font-poppins-bold font-bold text-[1.9rem] ' numberOfLines={1} >Deadpool & Wolverine</Text>
+        <View className='flex flex-row w-[100%]  justify-between text-white font-poppins absolute p-4 top-[65%] gap-y-1 '>
+
+              <View className='flex flex-col gap-y-1'>
+              <Text className='text-white  font-poppins-bold font-bold text-[1.9rem] ' numberOfLines={1} >Deadpool & Wolverine</Text>
                
 
 
                <View className='text-white flex flex-row gap-x-3 z-[9999] '>
-                    <Text className='text-white'>• Action,comedy</Text>
-                     <Text className='text-white'>• UA</Text>
-                    <Text className='text-white'>• 2h 7m</Text>
+                    <Text className='text-text font-poppins'>• Action,comedy</Text>
+                     <Text className='text-text font-poppins'>• UA</Text>
+                    <Text className='text-text font-poppins'>• 2h 7m</Text>
                    
                </View>
+             </View>
+
+
+             <View className='mt-5'>
+              < Heart 
+               size={25}
+              color="#8B5CF6"
+              strokeWidth={2.2}
+              />
+             </View>
+
+
+
         </View>
 
 

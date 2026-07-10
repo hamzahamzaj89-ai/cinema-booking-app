@@ -18,7 +18,7 @@ module.exports = {
         primaryDark: "#D89C00",
 
         // ⚪ Text colors
-        text: "#FFFFFF",
+        text: "#9B9BB5",
         textMuted: "#A9A9B2",
         textDim: "#6C6F7A",
 

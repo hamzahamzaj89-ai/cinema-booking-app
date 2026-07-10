@@ -1,5 +1,7 @@
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
+import Toast from "react-native-toast-message";
+
 import {
   Poppins_400Regular,
   Poppins_500Medium,
@@ -21,6 +23,8 @@ export default function RootLayout() {
   return(<>
   
         <Stack screenOptions={{ headerShown: false }} />
+
+        <Toast />
   
   </>) 
 }
