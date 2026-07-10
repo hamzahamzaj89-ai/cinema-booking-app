@@ -7,13 +7,13 @@ const Header = () => {
 
         <View className='text-[8px]  flex flex-column gap-[3px]  '>
 
-           <Text className='font-bold font-poppins-medium text-white  '>
+           <Text className='font-bold font-poppins-medium text-[1.1rem] text-white  '>
                 Welcome hamza 
            </Text>
 
 
 
-             <Text  className='font-poppins-semibold text-text'>
+             <Text  className='font-poppins text-text'>
               
               What movie you are going to see today
 

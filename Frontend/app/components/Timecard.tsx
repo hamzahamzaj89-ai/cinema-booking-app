@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Pressable, Text, View } from "react-native";
+import useBookingStore from "../store/bookingStore";
 
 interface Props {
   item: any;
@@ -14,8 +15,25 @@ export default function TimeCard({
 }: Props) {
 
 
+
+
+  const setTime = useBookingStore((state) => state.setTime)
+
+
+
+
+
+
+  const handleTime = () => {
+
+     setTime(item)
+
+      onPress()
+
+  }
+
   return (
-    <Pressable onPress={onPress}>
+    <Pressable onPress={handleTime}>
 
       <View
         className={`relative mr-2  h-[60px] w-24 items-center justify-center rounded-lg ${

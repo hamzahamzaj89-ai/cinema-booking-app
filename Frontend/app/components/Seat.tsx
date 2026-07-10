@@ -1,10 +1,10 @@
 import { View, Text, Pressable } from "react-native";
-import React from "react";
+import React, { use, useEffect, useState } from "react";
 import useBookingStore from "../store/bookingStore";
 import Toast from "react-native-toast-message";
+import clsx from "clsx";
 
-
-const Seat = ({ item, key }: any) => {
+const Seat = ({ item, key , seats}: any) => {
   if (item == null) {
     return (
       <>
@@ -13,10 +13,7 @@ const Seat = ({ item, key }: any) => {
     );
   }
 
-
-
-
-
+  
 
   const toggleSeat= useBookingStore(
   (state) => 
@@ -61,32 +58,19 @@ const Seat = ({ item, key }: any) => {
     <Pressable
      onPress={handleSeats}
       key={key}
-      className={`
-w-8
-h-8
-rounded-lg
-justify-center
-items-center
-m-[3px]
 
 
+        className ={clsx(
 
-${
-  item.status === "VIP"
-    ? "bg-amber-400"
-    : item.status === "available"
-      ? "bg-slate-600"
-      : "bg-red-500"
-  
-}
+           "w-8 h-8 rounded-lg justify-center items-center m-[3px]",
+            item.status === "VIP" && "bg-amber-400",
+            item.status === "available" && "bg-slate-600",
+            item.status === "booked" && "bg-red-500",
+            seats?.includes(item) && "bg-SelectedCard"
+          
 
+        )}
 
-${
-     checkSeat(item) && "bg-card"
-    
-}
-
-` }
     ></Pressable>
   );
 };

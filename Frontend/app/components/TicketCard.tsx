@@ -1,5 +1,6 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
+import useBookingStore from "../store/bookingStore";
 
 interface Props {
   item: any;
@@ -12,8 +13,28 @@ export default function TicketCard({
   selected,
   onPress,
 }: Props) {
+
+
+
+  const setDate = useBookingStore((state) => state.setDate)
+
+
+
+
+
+
+  const handleDate = () => {
+
+     setDate(item)
+
+      onPress()
+
+  }
+
+
+
   return (
-    <Pressable onPress={onPress}>
+    <Pressable onPress={handleDate}>
       <View
         className={`relative mr-2  h-32 w-24 items-center justify-center rounded-[20px] ${
           selected ? "bg-[#8B5CF6]" : "bg-[#1B1B31]"

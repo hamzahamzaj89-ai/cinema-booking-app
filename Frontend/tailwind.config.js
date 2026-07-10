@@ -8,8 +8,8 @@ module.exports = {
       colors: {
         // 🌑 Main Backgrounds
         bg: "#0B0C1B",        // primary app background
-        card: "#8B5CF6",      // cards / sections
-        card2: "#222432", 
+        SelectedCard: "#8B5CF6",      // cards / sections
+        card: "#1B1B31", 
             // elevated surfaces
 
         buttonbg: "#7137CA",

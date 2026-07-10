@@ -1,8 +1,25 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {seatLayout} from "../data/Seats"
 import Seat from './Seat'
+import useBookingStore from '../store/bookingStore'
 const SeatsGrid = () => {
+
+
+  const seats = useBookingStore((state) => state.seats)
+
+    const [Seats , setSeats] = useState<any>();
+
+
+  useEffect(() => {
+
+      setSeats(seats)
+
+  },[seats])
+
+
+
+
   return (
     <View className='flex flex-col gap-y-[3px] w-[100%] h-auto mt-10 px-1 justify-center items-center '>
        {
@@ -16,7 +33,7 @@ const SeatsGrid = () => {
               
               {item.seats.map((seat , index) => (
 
-                      <Seat key={index} item={seat}/>
+                      <Seat key={index} item={seat} seats={Seats}/>
 
               ))}
               

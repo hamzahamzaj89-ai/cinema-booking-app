@@ -1,6 +1,7 @@
 import { Armchair } from "lucide-react-native";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
+import useBookingStore from "../store/bookingStore";
 
 interface Props {
   item: any;
@@ -15,8 +16,27 @@ export default function ScreenCard({
 }: Props) {
 
 
+  
+   const setScreen = useBookingStore((state) => state.setScreen)
+
+
+
+
+
+
+  const handleScreen = () => {
+
+     setScreen(item)
+
+      onPress()
+
+  }
+
+
+  
+
   return (
-       <Pressable onPress={onPress}>
+       <Pressable onPress={handleScreen}>
       <View
         className={`mr-2 h-38 w-[100px] items-center justify-between rounded-lg border px-0 py-4 ${
           selected
