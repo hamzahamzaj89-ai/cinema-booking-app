@@ -17,7 +17,7 @@ interface BookingStore {
 
   setShowtimeId: (id: string) => void;
   setDate: (date: string) => void;
-  setTime: (time: string) => void;
+  setTime: (time: any) => void;
   setScreen: (screen: string) => void;
 
   getGrandTotal: () => number;

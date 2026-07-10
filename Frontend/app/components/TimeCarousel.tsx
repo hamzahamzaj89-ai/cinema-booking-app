@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FlatList, Text } from "react-native";
 import TimeCard from "./Timecard";
-
-
-
-export  function TimeCarousel() {
-  const [selectedIndex, setSelectedIndex] = useState(2);
+import useBookingStore from "../store/bookingStore";
 
 
   
@@ -57,15 +53,36 @@ export  function TimeCarousel() {
   },
 ];
 
+export  function TimeCarousel() {
+
+
+  const bookingStore = useBookingStore();
+  const setTime = useBookingStore((state) => state.setTime);
+  const [selectedIndex, setSelectedIndex] = useState(0); 
+
+
+  useEffect(() => {
+ 
+
+    if (bookingStore.time == undefined) {
+  
+
+           setTime(showTimes[0])
+
+    }  
+
+        
+  }, [])
+
+
+
+ 
+
+
+
 
 
   return (
-
-
-    
-
-
-
 
     <FlatList
       horizontal

@@ -8,7 +8,7 @@ const SeatsGrid = () => {
 
   const seats = useBookingStore((state) => state.seats)
 
-    const [Seats , setSeats] = useState<any>();
+    const [Seats , setSeats] = useState<any>([]);
 
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const SeatsGrid = () => {
 
   },[seats])
 
-
+ 
 
 
   return (

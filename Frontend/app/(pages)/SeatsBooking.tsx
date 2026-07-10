@@ -33,7 +33,7 @@ const SeatsBooking = () => {
 
           <SeatSummary/>
 
-             <View className='w-[100%] flex justify-center items-center mt-6'>
+             <View className='w-[100%] flex justify-center items-center mt-6 px-4'>
                       <CustomButton Icon={BadgeCheck } onPress={() => router.push("/(pages)/BookingSummary")}/>
 
              </View>

@@ -54,6 +54,7 @@ const Seat = ({ item, key , seats}: any) => {
   }
 
 
+
   return (
     <Pressable
      onPress={handleSeats}
@@ -66,7 +67,7 @@ const Seat = ({ item, key , seats}: any) => {
             item.status === "VIP" && "bg-amber-400",
             item.status === "available" && "bg-slate-600",
             item.status === "booked" && "bg-red-500",
-            seats?.includes(item) && "bg-SelectedCard"
+            seats.includes(item) && "bg-violet-600"
           
 
         )}

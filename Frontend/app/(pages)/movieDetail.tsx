@@ -29,7 +29,8 @@ const movieDetail = () => {
 
       <ScrollView
       showsVerticalScrollIndicator={false}
-        
+      style={{
+      }}
       contentContainerStyle={{
         paddingBottom: 0,
       }}
@@ -85,7 +86,7 @@ const movieDetail = () => {
     
      </ScrollView>
 
-           <View className='flex justify-center content-center mb- w-[100%] items-center mt-4 '>
+           <View className='flex justify-center content-center mb- w-[100%] items-center mt-4 px-4 '>
 
                     <CustomButton Icon={Armchair} onPress={() => router.push("/(pages)/SeatsBooking")}/>
 

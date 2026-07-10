@@ -131,8 +131,10 @@ export default function MovieCard({movie}: {movie:any}) {
 
            <View  className="mt-5 flex flex-row gap-x-2 ">
                 {/* Button */}
-          
-           <CustomButton Icon={Ticket} onPress={() => router.push("/(pages)/movieDetail")}/>
+             <View className="w-[83%] ">
+            <CustomButton Icon={Ticket} onPress={() => router.push("/(pages)/movieDetail")}/>
+
+             </View>
 
 
            <TouchableOpacity
