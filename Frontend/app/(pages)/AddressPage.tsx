@@ -42,7 +42,7 @@ export default function AddressPage() {
          <View className="flex-1 bg-[#0B0B14]">
 
 
-            <SafeAreaView>
+            <SafeAreaView style={{ flex: 1 }}>
 
       <StatusBar
         barStyle="light-content"

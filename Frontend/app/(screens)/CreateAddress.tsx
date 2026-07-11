@@ -53,7 +53,7 @@ export default function CreateAddress({ navigation }: any) {
 
   return (
     <View className="flex-1 bg-bg">
-        <SafeAreaView className="flex-1">
+        <SafeAreaView style={{ flex: 1 }}>
 
       <StatusBar
         barStyle="light-content"
