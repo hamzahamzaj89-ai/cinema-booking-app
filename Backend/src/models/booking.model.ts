@@ -84,7 +84,6 @@ const bookingSchema = new Schema<IBooking>(
             type: Schema.Types.ObjectId,
             ref: "Showtime",
             required: true,
-            index: true
         },
 
         movie: {
