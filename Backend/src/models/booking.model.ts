@@ -41,7 +41,8 @@ export interface IBooking extends Document {
     expiresAt: Date;
 
     bookedAt: Date;
-
+    
+    date: string;
     transactionId?: string;
 
     isActive: boolean;
@@ -158,6 +159,12 @@ const bookingSchema = new Schema<IBooking>(
             default: Date.now
         },
 
+
+        date: {
+            type: String,
+            required: true,
+        },
+
         transactionId: {
             type: String
         },
@@ -187,15 +194,13 @@ bookingSchema.index({
     createdAt: -1
 });
 
-// TTL index - automatically removes expired pending bookings
-bookingSchema.index(
-    {
-        expiresAt: 1
-    },
-    {
-        expireAfterSeconds: 0
-    }
-);
+bookingSchema.index({
+    date: 1,
+    movie: 1,
+    user: 1
+})
+
+
 
 // Helps query seat conflicts
 bookingSchema.index({

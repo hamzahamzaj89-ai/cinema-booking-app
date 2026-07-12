@@ -132,3 +132,7 @@ export const createSeatLayout: Controller = async (req, res, next) => {
         next(error);
     }
 };
+
+
+
+

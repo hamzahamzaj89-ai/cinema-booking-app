@@ -110,6 +110,8 @@ const movieSchema = new Schema<IMovie>(
 
 
 
+
+
 movieSchema.index({
     genres: 1
 });

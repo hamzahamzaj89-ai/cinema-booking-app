@@ -98,10 +98,6 @@ export const createShowTime: Controller = async (req, res, next) => {
 
 
 
-
-
-
-
 export const getShowTimeMovies: Controller = async (
     req,
     res,
@@ -132,10 +128,8 @@ export const getShowTimeMovies: Controller = async (
             // One document per unique movie
             {
                 $group: {
-                    _id: "$movie",
-                    latestShowTime: {
-                        $first: "$startTime"
-                    }
+                    _id: "$movie"
+                   
                 }
             },
 
@@ -306,3 +300,169 @@ export const getShowTimes: Controller = async (
         next(error);
     }
 };
+
+
+
+
+
+export const filterShowTime: Controller = async (
+    req,
+    res,
+    next
+) => {
+    try {
+
+        if (!req.query.branch) {
+            throw new AppError("Branch is required.", 400);
+        }
+
+        if (req.query.period && !req.query.date) {
+            throw new AppError(
+                "Date is required when filtering by period.",
+                400
+            );
+        }
+
+        const match: any = {
+            branch: new mongoose.Types.ObjectId(
+                req.query.branch as string
+            ),
+            isActive: true
+        };
+
+
+
+
+
+        if (req.query.date) {
+            match.date = new Date(req.query.date as string);
+        }
+
+
+
+
+
+
+
+        
+        if (req.query.period) {
+
+            let startHour = 0;
+            let endHour = 23;
+
+            switch (req.query.period) {
+
+                case "morning":
+                    startHour = 6;
+                    endHour = 11;
+                    break;
+
+                case "afternoon":
+                    startHour = 12;
+                    endHour = 16;
+                    break;
+
+                case "evening":
+                    startHour = 17;
+                    endHour = 20;
+                    break;
+
+                case "night":
+                    startHour = 21;
+                    endHour = 23;
+                    break;
+            }
+
+            const startTime = new Date(req.query.date as string);
+            startTime.setUTCHours(startHour, 0, 0, 0);
+
+            const endTime = new Date(req.query.date as string);
+            endTime.setUTCHours(endHour, 59, 59, 999);
+
+            match.startTime = {
+                $gte: startTime,
+                $lte: endTime
+            };
+        }
+
+
+
+
+
+
+
+        const pipeline: any[] = [
+            {
+                $match: match
+            },
+
+            {
+                $group: {
+                    _id: "$movie"
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "movies",
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "movie"
+                }
+            },
+
+            {
+                $unwind: "$movie"
+            }
+        ];
+
+        // Optional Genre
+        if (req.query.genre) {
+              
+            pipeline.push({
+                $match: {
+                         "movie.genre": {
+            $in: ((req.query.genre as string).split(","))
+        }
+                }
+         
+            });
+        }
+
+        pipeline.push(
+            {
+                $replaceRoot: {
+                    newRoot: "$movie"
+                }
+            },
+
+            {
+                $sort: {
+                    createdAt: -1
+                }
+            },
+
+            {
+                $limit: 10
+            }
+        );
+
+        const movies = await showTimeModel.aggregate(pipeline);
+
+        res.status(200).json({
+            success: true,
+            message: "ShowTime fetched successfully.",
+            movies
+        });
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+
+
+
+

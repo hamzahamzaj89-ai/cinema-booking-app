@@ -141,15 +141,20 @@ const showTimeSchema = new Schema<IShowtime>(
 );
 
 
+showTimeSchema.index({
+    startTime: 1
+})
 
 showTimeSchema.index({
-    startTime: 1,
+    movie: 1,
 });
 
 
 showTimeSchema.index({
+    branch: 1,
+    date: 1,
+    startTime: 1,
 
-    date: 1
 
 })
 
