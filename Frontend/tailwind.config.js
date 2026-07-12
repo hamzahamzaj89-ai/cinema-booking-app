@@ -11,7 +11,7 @@ module.exports = {
         SelectedCard: "#8B5CF6",      // cards / sections
         card: "#1B1B31", 
             // elevated surfaces
-
+        field: "#13152b",
         buttonbg: "#7137CA",
         // ✨ Primary Accent (gold theme)
         primary: "#F5B700",   // buttons, active tabs, highlights

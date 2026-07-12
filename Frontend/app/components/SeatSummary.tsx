@@ -34,7 +34,7 @@ setTotalPrice(totalPrice2)
 
 
   return (
-    <View className="mx-5 rounded-xl bg-[#141425]  mt-4  p-5 ">
+    <View className="mx-5 rounded-xl bg-field  mt-4  p-5 ">
 
       {/* Header */}
       <View className="mb-5 flex-row items-center">

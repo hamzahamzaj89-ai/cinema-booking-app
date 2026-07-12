@@ -52,7 +52,7 @@ setTicketPrice(totalPrice2)
 
 
   return (
-    <View className=" mt-5 rounded-xl bg-[#1B1B31] p-5">
+    <View className=" mt-5 rounded-xl bg-field p-5">
 
       {/* Header */}
 

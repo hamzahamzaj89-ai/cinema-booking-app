@@ -1,5 +1,6 @@
 import { View, Text, FlatList, Pressable } from 'react-native'
 import React from 'react'
+import clsx from 'clsx';
 
 const Category = ({selectedCategory, setSelectedCategory}: {selectedCategory:String , setSelectedCategory:any}) => {
 
@@ -39,7 +40,10 @@ const Category = ({selectedCategory, setSelectedCategory}: {selectedCategory:Str
          }}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({ item }) => (
-        <Pressable onPress={() => setSelectedCategory(item)} className={`px-5 h-10 rounded-md items-center justify-center  mr-3 bg-[#1B1B31]  ${(selectedCategory === item) && 'bg-buttonbg'} `}>
+        <Pressable onPress={() => setSelectedCategory(item)} className={clsx("bg-field px-5 h-10 rounded-lg items-center justify-center   mr-3 ",
+            selectedCategory === item &&  'bg-none bg-violet-600',
+
+        )}>
             
             <Text className={`  text-primaryText    ${(selectedCategory === item) && 'text-white'} `}>
                 {item}

@@ -27,7 +27,7 @@ export default function AddressCard({ address, selected, onPress }: Props) {
       className={clsx(
         "mb-4 rounded-xl border p-5 ",
 
-        selected ? "border-[#8B5CF6] bg-card"  : " bg-card",
+        selected ? " bg-field"  : " bg-field",
       )}
     >
       <View className="flex-row justify-between">

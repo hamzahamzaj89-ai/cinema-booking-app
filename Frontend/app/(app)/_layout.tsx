@@ -22,7 +22,7 @@ export default function TabLayout() {
           alignContent: "center",
           alignItems: "center",
           justifyContent: "space-between",
-          paddingTop: 0,
+          paddingTop:7,
           
           
           ...styles.shadow,
@@ -39,7 +39,7 @@ export default function TabLayout() {
            tabBarActiveTintColor: 'green',
           
           tabBarIcon: ({ color, size , focused }) => (
-            <Ionicons name="home" size={28}   color={focused ? "#7137CA": "gray"} />
+            <Ionicons name="home-outline" size={28}   color={focused ? "#7c3aed": "#9B9BB5"} />
           ),
 
           tabBarLabel: ({ focused, color }) => (
@@ -47,7 +47,7 @@ export default function TabLayout() {
         style={{
           fontSize: 12,
           fontWeight: focused ? "700" : "500",
-          color: !focused ? "gray": '#7137CA',
+          color: !focused ? "#9B9BB5": '#7c3aed',
         }}
       >
         Home
@@ -64,7 +64,7 @@ export default function TabLayout() {
         options={{
           title: "Profile",
               tabBarIcon: ({ color, size , focused }) => (
-            <Ionicons name="person-outline" size={28}   color={focused ? "#7137CA": "gray"} />
+            <Ionicons name="person-outline" size={28}   color={focused ? "#7c3aed": "#9B9BB5"} />
           ),
 
           tabBarLabel: ({ focused, color }) => (
@@ -72,8 +72,8 @@ export default function TabLayout() {
         style={{
           fontSize: 12,
           fontWeight: focused ? "700" : "500",
-          color: !focused ? "gray": '#7137CA',
-          marginLeft: 6,
+          color: !focused ? "#9B9BB5": '#7c3aed',
+          marginLeft: 5,
         }}
       >
           profile
@@ -91,7 +91,7 @@ export default function TabLayout() {
         options={{
           title: "Profile",
               tabBarIcon: ({ color, size , focused }) => (
-            <Ionicons name="heart-outline" size={28}   color={focused ? "#7137CA": "gray"} />
+            <Ionicons name="heart-outline" size={28}   color={focused ? "#7c3aed": "#9B9BB5"} />
           ),
 
           tabBarLabel: ({ focused, color }) => (
@@ -99,7 +99,7 @@ export default function TabLayout() {
         style={{
           fontSize: 12,
           fontWeight: focused ? "700" : "500",
-          color: !focused ? "gray": '#7137CA',
+          color: !focused ? "#9B9BB5": '#7c3aed',
         }}
       >
         favourites

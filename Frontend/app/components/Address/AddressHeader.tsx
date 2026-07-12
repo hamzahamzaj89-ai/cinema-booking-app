@@ -10,7 +10,7 @@ interface Props {
 export default function AddressHeader({ onBack, onAddAddress }: Props) {
   return (
     <View className="mb-6 mt-1 flex-row justify-between items-center ">
-      <View className="flex flex-row justify-center items-center ">
+      <View className="flex flex-row justify-center items-center mt-2">
         <TouchableOpacity
           onPress={onBack}
           className="h-12 w-12 items-center justify-center rounded-full "
@@ -24,19 +24,19 @@ export default function AddressHeader({ onBack, onAddAddress }: Props) {
 
           <TouchableOpacity
         onPress={onAddAddress}
-        className="flex-row items-center rounded-md bg-selectedCard  px-4 py-3   bg-violet-600"
+        className="flex-row items-center rounded-md bg-selectedCard  px-3 py-3   bg-violet-600"
       >
         <Plus
           size={18}
           color="white"
           strokeWidth={3}
           style={{
-            marginBottom: 4
+            marginBottom: 2
           }}
           className="mb-2 font-bold"
         />
 
-        <Text className="ml-2 font-poppins-semibold mt-[-2px]   text-white">
+        <Text className="ml-1 font-poppins-semibold mt-[0px]   text-white">
           Add New
         </Text>
       </TouchableOpacity>

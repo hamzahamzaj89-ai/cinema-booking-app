@@ -10,7 +10,7 @@ const SearchBar = () => {
     return (
     <View className="flex-row items-center gap-3 px-2 mt-1">
       {/* Search Bar */}
-      <View className="flex-1 flex-row items-center bg-[#1B1B31] rounded-lg px-4 h-14">
+      <View className="flex-1 flex-row items-center bg-[#13152b] rounded-lg px-4 h-[3.3rem]">
         <Ionicons
           name="search"
           size={22}

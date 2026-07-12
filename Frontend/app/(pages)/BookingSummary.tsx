@@ -44,7 +44,7 @@ const BookingSummary = () => {
 
 
 
-            <View className='flex flex-row mt-5  justify-center items-center'>
+            <View className='flex flex-row mt-6  justify-center items-center'>
 
                <CustomButton
             Icon={CreditCard}

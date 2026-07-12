@@ -34,7 +34,7 @@ export default function BottomCheckout({
 
         {/* Total */}
 
-        <View className="flex flex-col gap-y-0">
+        <View className="flex flex-col gap-y-0 mt-2">
 
           <Text className="font-poppins p-0 m-0 text-[0.9rem]   text-text">
             Grand Total

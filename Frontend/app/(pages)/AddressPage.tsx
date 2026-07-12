@@ -37,17 +37,13 @@ export default function AddressPage() {
 
 
   return (
-      <>
+    
       
-         <View className="flex-1 bg-[#0B0B14]">
+          <View className="flex-1 bg-bg py-10 pb-4">
 
 
-            <SafeAreaView style={{ flex: 1 }}>
 
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="#0B0B14"
-      />
+        
 
       <View className="flex-1 px-3">
 
@@ -99,8 +95,7 @@ export default function AddressPage() {
 
       </View>
 
-    </SafeAreaView>
-         </View>
-      </>
+          </View>
+      
   );
 }

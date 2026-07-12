@@ -23,7 +23,7 @@ export default function MovieInfoCard({
 
 
   return (
-    <View className="mx-1 rounded-xl bg-[#1B1B31] p-3">
+    <View className="mx-1 rounded-xl bg-field p-3">
 
       <View className="flex-row ">
 
@@ -50,7 +50,7 @@ export default function MovieInfoCard({
               {title}
             </Text>
 
-            <Text className="mt-1 text-sm text-text font-poppins-semibold">
+            <Text className="mt-1 text-sm text-text font-poppins">
               {genre}
             </Text>
 
@@ -66,11 +66,11 @@ export default function MovieInfoCard({
               fill="#FBBF24"
             />
 
-            <Text className="ml-[4px] mt-[1px] font-poppins-semibold text-text">
+            <Text className="ml-[4px] mt-[1px] font-poppins text-text">
               {rating}
             </Text>
 
-            <Text className="ml-[6px] mt-[1px] text-text font-poppins-semibold">
+            <Text className="ml-[6px] mt-[1px] text-text font-poppins">
               IMDb
             </Text>
 
@@ -85,7 +85,7 @@ export default function MovieInfoCard({
               color="#8B5CF6"
             />
 
-            <Text className="ml-2 font-poppins-medium text-text mt-[2px]">
+            <Text className="ml-2 font-poppins text-text mt-[2px]">
               {runtime}
             </Text>
 

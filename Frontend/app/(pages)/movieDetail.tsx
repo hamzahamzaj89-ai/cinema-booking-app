@@ -86,7 +86,7 @@ const movieDetail = () => {
     
      </ScrollView>
 
-           <View className='flex justify-center content-center mb- w-[100%] items-center mt-4 px-4 '>
+           <View className='flex justify-center content-center mb-8 w-[100%] items-center mt-0 px-4 '>
 
                     <CustomButton Icon={Armchair} onPress={() => router.push("/(pages)/SeatsBooking")}/>
 

@@ -13,7 +13,7 @@ const MovieHeader = () => {
       
 
         
-        <View className='w-[100%] h-[32vh]   rounded-lg overflow-hidden '>
+        <View className='w-[100%] h-[34vh]   rounded-lg overflow-hidden '>
              
               <ImageBackground
           source={{
