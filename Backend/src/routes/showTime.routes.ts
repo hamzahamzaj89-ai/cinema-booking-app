@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createShowTime, filterShowTime, getShowTimeMovies, getShowTimes } from "../controllers/ShowTime.controller.js";
+import { createShowTime, filterShowTime, getShowTimeMovies, getShowTimes, showTimeSeats } from "../controllers/ShowTime.controller.js";
 
 
 
@@ -11,4 +11,8 @@ router.post("/create" , createShowTime)
 router.get("/get/branch/:branchId" , getShowTimeMovies)
 router.get("/get/:movieid" , getShowTimes)
 router.get("/filter" , filterShowTime)
+router.get("/seats"  , showTimeSeats)
+
+
+
 export default router

@@ -1,13 +1,13 @@
 import { Schema, model, Document, Types } from "mongoose";
 
-export interface IBookedSeat {
+ interface IBookedSeat {
     seatId: string;
     status: "VIP" | "Premium" | "Standard";
     price: number;
 }
 
-export interface IBooking extends Document {
-    user: Types.ObjectId;
+ interface IBooking extends Document {
+    user: string;
 
     showtime: Types.ObjectId;
 
@@ -74,10 +74,9 @@ const bookedSeatSchema = new Schema<IBookedSeat>(
 const bookingSchema = new Schema<IBooking>(
     {
         user: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-            required: true,
-            index: true
+            type: String,
+            required: true
+            
         },
         
 
@@ -201,11 +200,12 @@ bookingSchema.index({
 })
 
 
-
-// Helps query seat conflicts
 bookingSchema.index({
-    showtime: 1,
-    "seats.seatId": 1
+    showTime: 1,
+    status: 1,
+    expiresAt: 1
 });
+
+
 
 export default model<IBooking>("Booking", bookingSchema);

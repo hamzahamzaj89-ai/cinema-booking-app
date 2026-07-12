@@ -5,6 +5,8 @@ import branchModel from "../models/branch.model.js";
 import screenModel from "../models/Screen.model.js";
 import AppError from "../utils/AppError.js";
 import mongoose from "mongoose";
+import bookingModel from "../models/booking.model.js";
+import { IBookedSeat, IRow, ISeat } from "../interfaces/BookingSeat.js";
 
 export const createShowTime: Controller = async (req, res, next) => {
     try {
@@ -466,3 +468,90 @@ export const filterShowTime: Controller = async (
 
 
 
+
+export const showTimeSeats: Controller = async (
+    req,
+    res,
+    next
+) => {
+    try {
+
+        if (!req.params.showTimeId) {
+              throw new AppError("Please provide the show time detail" , 400);
+              return
+        }
+
+        const showTime = await showTimeModel
+            .findById(req.params.showTimeId)
+            .populate({
+                path: "screen",
+                populate: {
+                    path: "seatLayout"
+                }
+            });
+
+        if (!showTime) {
+            throw new AppError("Showtime not found.", 404);
+        }
+
+        const screen: any = showTime.screen;
+
+        if (!screen || !screen.seatLayout) {
+            throw new AppError("Seat layout not found.", 404);
+        }
+
+
+        
+
+        const bookings = await bookingModel.find({
+            showTime: showTime._id,
+            $or: [
+                {
+                    status: "confirmed"
+                },
+                {
+                    status: "pending",
+                    expiresAt: {
+                        $gt: new Date()
+                    }
+                }
+            ]
+        });
+
+        // Hash Set for occupied seats
+        const occupiedSeats = new Set<string>();
+
+        for (const booking of bookings) {
+
+            booking.seats.forEach((seatId: IBookedSeat) => {
+                occupiedSeats.add(seatId.seatId);
+            });
+
+        }
+
+        const seatLayout = {...screen.seatLayout};
+
+        seatLayout.seatLayout.forEach((row: IRow) => {
+             
+            row.seats.forEach((seat: ISeat |null) => {
+
+                if (!seat) return;
+
+                seat.bookingStatus = occupiedSeats.has(seat.seatId)
+                    ? "booked"
+                    : "available";
+
+            });
+
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Seat layout fetched successfully.",
+            seatLayout
+        });
+
+    } catch (error) {
+        next(error);
+    }
+};

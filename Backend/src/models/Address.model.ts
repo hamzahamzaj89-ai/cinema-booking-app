@@ -1,7 +1,7 @@
 import { Schema, model, Document, Types } from "mongoose";
 
 export interface IAddress extends Document {
-    user: Types.ObjectId;
+    user:string;
 
     fullName: string;
 
@@ -24,10 +24,8 @@ export interface IAddress extends Document {
 const addressSchema = new Schema<IAddress>(
     {
         user: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
+            type: String,
             required: true,
-            index: true
         },
 
         fullName: {
