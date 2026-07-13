@@ -8,14 +8,13 @@ import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import Category from '../components/Category';
 import CustomButton from '../components/CustomButton';
-import { movies } from '../data/movieData';
 import MovieCard from '../components/movieCard';
 
 const Home = () => {
 
     const [selectedCategory , setSelectedCategory] = useState<String>("Action");
 
- 
+      
 
   return (
          <View className='flex flex-1  bg-bg' >
@@ -25,7 +24,7 @@ const Home = () => {
 
 
             <FlatList
-    data={movies}
+    data={[...Array(10)]}
     keyExtractor={(item) => item.id.toString()}
     renderItem={({ item }) => <MovieCard movie={item} />}
      numColumns={1}

@@ -132,7 +132,7 @@ export default function MovieCard({movie}: {movie:any}) {
            <View  className="mt-5 flex flex-row gap-x-2 ">
                 {/* Button */}
              <View className="w-[83%] ">
-            <CustomButton Icon={Ticket} onPress={() => router.push("/(pages)/movieDetail")}/>
+            <CustomButton text={"Book Tickets"} Icon={Ticket} onPress={() => router.push("/(pages)/movieDetail")}/>
 
              </View>
 

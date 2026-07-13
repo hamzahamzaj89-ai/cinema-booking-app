@@ -1,10 +1,10 @@
 import "../global.css"
 
 
+
 import {  ActivityIndicator, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Redirect, router } from "expo-router";
-
 const App = () => {
 
   const [loggedIn , setLoggedIn] = useState(false);
@@ -13,13 +13,13 @@ const App = () => {
    useEffect(() => {
     const timer = setTimeout(() => {
        setPending(false)
-     setLoggedIn(true);
+     setLoggedIn(false);
 
         console.log("hello");
 
         
 
-    }, 3000);
+    }, 500);
 
 
 
@@ -32,7 +32,7 @@ const App = () => {
       if (loggedIn) {
         router.replace("/(app)/Home");
       } else {
-        router.replace("/(auth)/SignIn");
+        router.replace("/(auth)/Auth");
       }
     }
   }, [loggedIn, pending]);
