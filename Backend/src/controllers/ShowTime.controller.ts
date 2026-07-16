@@ -202,12 +202,14 @@ export const getShowTimes: Controller = async (
     try {
 
 
-        const movieId: any = req.params.movieid;
+        const movieId: any = req.params.movieId;
+        const branch: any = req.params.branchId;
 
         const showTimes = await showTimeModel.aggregate([
 
             {
                 $match: {
+                    branch: new mongoose.Types.ObjectId(branch),
                     movie: new mongoose.Types.ObjectId(movieId),
                     isActive: true
                 }
@@ -295,7 +297,7 @@ export const getShowTimes: Controller = async (
         res.status(200).json({
             success: true,
             message: "Showtimes fetched successfully.",
-            showTimes
+            data: showTimes
         });
 
     } catch (error) {

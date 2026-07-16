@@ -8,13 +8,22 @@ import cinemaRouter from "./routes/cinema.routes.js";
 import branchRouter from "./routes/branch.routes.js";
 import screenRouter from "./routes/screen.routes.js"
 import showTimeRouter from "./routes/showTime.routes.js"
+import { clerkMiddleware } from "@clerk/express";
 
 const app = express();
+ const clerkAuth = clerkMiddleware();
+
+
+
+
 
 dotenv.config();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+app.use(clerkAuth);
 
 
 connectDB()
@@ -27,6 +36,7 @@ app.use("/api/cinema", cinemaRouter)
 app.use("/api/branch" , branchRouter)
 app.use("/api/showTime" , showTimeRouter)
 app.use("/api/screen" , screenRouter)
+
 
 
 app.use(errorMiddleware);

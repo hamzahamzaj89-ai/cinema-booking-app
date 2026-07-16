@@ -16,13 +16,52 @@ import {
 import { BlurView } from "expo-blur";
 import { router } from "expo-router";
 import CustomButton from "./CustomButton";
+import { IShowTime } from "../interface/IShowTime";
+import useMovieStore from "../store/movieStore";
+import { convertingDate } from "../utils/convertingDate";
+import useBookingStore from "../store/bookingStore";
+import { useIndexStore } from "../store/indexStore";
 
 
 
 
 
 
-export default function MovieCard({movie}: {movie:any}) {
+export default function MovieCard({movie}: {movie:IShowTime}) {
+
+  const setMovieId = useIndexStore((state) => state.setMovieId)
+ const resetBooking = useBookingStore((state) => state.resetBooking)
+  const  setSelectedMovie = useMovieStore((state) => state.setSelectedMovie)
+  let hours:number;
+  let minutes: number
+
+
+
+  function convertMinutes(minutes: number) {
+   hours = Math.floor(minutes / 60);
+   minutes = minutes % 60;
+
+  return `${hours}h ${minutes}m`;
+}
+
+
+  const runtime = convertMinutes(movie.runtime)
+
+
+
+  const handleShowTime = () => {
+      setMovieId(movie._id)
+      resetBooking()
+      setSelectedMovie(movie)
+  
+
+     router.push("/(pages)/movieDetail")
+ 
+
+  }
+
+
+  
   return (
     <View className="w-full flex-col rounded-3xl border border-[#2B2B45] bg-[#141425] p-3">
 
@@ -30,8 +69,10 @@ export default function MovieCard({movie}: {movie:any}) {
       <View className="relative object-cover">
         <Image
           source={{
-            uri: "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
+            uri: `https://image.tmdb.org/t/p/w1280${movie.backdropPath}`
           }}
+
+
           className="h-[16rem] object-cover rounded-2xl"
           resizeMode="cover"
         />
@@ -39,7 +80,7 @@ export default function MovieCard({movie}: {movie:any}) {
         <View className="absolute left-2 top-2 rounded-full bg-[#2A2030]/90 px-3 py-2 flex-row items-center">
           <View className="mr-2 h-2.5 w-2.5 rounded-full bg-red-500" />
           <Text className="font-poppins-medium text-xs text-white">
-            Now Showing
+            {movie.status}
           </Text>
         </View>
 
@@ -48,7 +89,7 @@ export default function MovieCard({movie}: {movie:any}) {
          <View className=" absolute right-2 top-0 flex-row items-center rounded-2xl o px-4 py-2">
             <Star size={18} color="#FACC15" fill="#FACC15" />
             <Text className="ml-1 font-poppins-semibold text-lg text-white">
-              4.8
+              {movie.rating}
             </Text>
           </View>
       </View>
@@ -64,19 +105,25 @@ export default function MovieCard({movie}: {movie:any}) {
         {/* Movie Info */}
         <View className="w-[100%]">
           <Text  numberOfLines={2} className="font-poppins-bold w-[100%] text-ellipsis text-4xl text-white">
-            Oppenheimer
+            {movie.title}
           </Text>
 
-          <Text className="mt-3 font-poppins text-base text-[#9B9BB5]">
-            Biography • Drama • History • 3h 0m
-          </Text>
+          <View className="mt-3 font-poppins   flex flex-row gap-x-2 text-[#9B9BB5]">
+
+            {
+              movie.genres.map((item) => (
+                <>
+                   <Text className="text-[#9B9BB5] font-poppins text-base">• {item}</Text>
+                </>
+              ))
+            }
+          </View>
 
           <Text
             numberOfLines={3}
             className="mt-5 leading-7 font-poppins text-base text-[#8C8CA6]"
           >
-            The story of J. Robert Oppenheimer's role in the
-            development of the atomic bomb during World War II.
+           {movie.overview}
           </Text>
         </View>
 
@@ -94,7 +141,7 @@ export default function MovieCard({movie}: {movie:any}) {
 
             <View className="ml-3">
               <Text className="font-poppins-medium text-white">
-                21 Jul 2023
+                {convertingDate(movie.releaseDate)}
               </Text>
 
               <Text className="font-poppins text-xs text-[#8C8CA6]">
@@ -113,7 +160,7 @@ export default function MovieCard({movie}: {movie:any}) {
 
             <View className="ml-3">
               <Text className="font-poppins-medium text-white">
-                3h 0m
+                {runtime}
               </Text>
 
               <Text className="font-poppins text-xs text-[#8C8CA6]">
@@ -132,7 +179,7 @@ export default function MovieCard({movie}: {movie:any}) {
            <View  className="mt-5 flex flex-row gap-x-2 ">
                 {/* Button */}
              <View className="w-[83%] ">
-            <CustomButton text={"Book Tickets"} Icon={Ticket} onPress={() => router.push("/(pages)/movieDetail")}/>
+            <CustomButton text={"Book Tickets"} Icon={Ticket} onPress={() => {handleShowTime()}}/>
 
              </View>
 

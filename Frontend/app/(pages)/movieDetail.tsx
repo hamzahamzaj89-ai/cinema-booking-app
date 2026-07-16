@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import DateCarousel from '../components/DateCarousel'
 import { LinearGradient } from "expo-linear-gradient";
@@ -10,8 +10,50 @@ import { ScreenCarousel } from '../components/ScreenCarousel';
 import CustomButton from '../components/CustomButton';
 import { Armchair } from 'lucide-react-native';
 import { router } from 'expo-router';
+import { useFetch } from '../hooks/useFetch';
+import { getShowTimes } from '../services/showTime.service';
+import { useBranchStore } from '../store/branchStore';
+import useMovieStore from '../store/movieStore';
+import { IShowTimeByDate } from '../interface/IShowTimeDetail';
+import Loader from '../components/Loader';
+import { useShowtimes } from '../hooks/useShowTimes';
+import useShowTime from '../hooks/useShowTime';
 
 const movieDetail = () => {
+
+
+    const branch = useBranchStore((state) => state.branch )
+    const movie =useMovieStore((state) => state.selectedMovie)
+
+
+    //callbacks
+    const fetchShowTimes = useCallback(() => {
+    return getShowTimes(branch?.id ?? null, movie?._id ?? null);
+}, [branch?.id, movie?._id]);
+
+
+
+
+
+ //hooks
+    const {data:showTimes , loading , error } = useFetch<IShowTimeByDate>({fetchFunction:fetchShowTimes , enabled: (!!branch && !!movie)})
+
+
+
+     console.log(showTimes)
+
+        if (loading) {
+               return <Loader/>
+        } 
+
+     
+
+
+
+
+
+
+
   return (
 
     <SafeAreaView
@@ -21,12 +63,12 @@ const movieDetail = () => {
     <View className='w-[100%] relative h-[100%] bg-bg  pt-0 overflow-hidden  '> 
  
 
-        <MovieHeader/>
+        <MovieHeader movie={movie}/>
 
 
 
         <View className='pt-0'></View>
-
+      {showTimes.length > 0 && (
       <ScrollView
       showsVerticalScrollIndicator={false}
       style={{
@@ -35,7 +77,9 @@ const movieDetail = () => {
         paddingBottom: 0,
       }}
     >
-      <View className=' flex gap-y-2 p-4 pr-0'>
+
+
+        {showTimes.length > 0 && (<View className=' flex gap-y-2 p-4 pr-0'>
          
          <View  className='pl-0'>
 
@@ -43,9 +87,9 @@ const movieDetail = () => {
          </View>
 
 
-         <DateCarousel/>
+         <DateCarousel showTimes={showTimes}/>
 
-      </View>
+      </View>)}
 
 
 
@@ -58,7 +102,7 @@ const movieDetail = () => {
 
              <Text className='text-white font-poppins-bold text-[1.3rem] '>Select Time</Text>
 
-               <TimeCarousel/>
+               <TimeCarousel showTimes={showTimes}/>
          </View>
 
 
@@ -73,7 +117,7 @@ const movieDetail = () => {
 
              <Text className='text-white font-poppins-bold text-[1.3rem] '>Select Screen</Text>
 
-               <ScreenCarousel/>
+               <ScreenCarousel showTimes={showTimes}/>
          </View>
 
 
@@ -84,7 +128,7 @@ const movieDetail = () => {
        
       
     
-     </ScrollView>
+     </ScrollView>)}
 
            <View className='flex justify-center content-center mb-8 w-[100%] items-center mt-0 px-4 '>
 

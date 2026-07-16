@@ -4,20 +4,21 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import DateCarousel from '../components/DateCarousel'
 import { LinearGradient } from "expo-linear-gradient";
 import { Heart } from 'lucide-react-native';
+import { IShowTime } from '../interface/IShowTime';
+import { convertMinutes } from '../utils/convertingDate';
 
-const MovieHeader = () => {
+const MovieHeader = ({movie}:{movie:IShowTime | null}) => {
+
+
+
   return (
     
- 
-
-      
-
         
         <View className='w-[100%] h-[34vh]   rounded-lg overflow-hidden '>
              
               <ImageBackground
           source={{
-            uri: "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
+            uri: `${process.env.EXPO_PUBLIC_TMDB_URL}${movie?.backdropPath}`,
           }}
           className="h-[100%] w-[100%]  rounded-xl "
           resizeMode="cover"
@@ -46,14 +47,22 @@ const MovieHeader = () => {
         <View className='flex flex-row w-[100%]  justify-between text-white font-poppins absolute p-4 top-[65%] gap-y-1 '>
 
               <View className='flex flex-col gap-y-1'>
-              <Text className='text-white  font-poppins-bold font-bold text-[1.9rem] ' numberOfLines={1} >Deadpool & Wolverine</Text>
+              <Text className='text-white  font-poppins-bold font-bold text-[1.9rem] ' numberOfLines={1} >{movie?.title}</Text>
                
 
 
                <View className='text-white flex flex-row gap-x-3 z-[9999] '>
-                    <Text className='text-text font-poppins'>• Action,comedy</Text>
+
+                     <View className='flex flex-row gap-x-[2px]'>
+                      {movie?.genres.map((item) => (
+                        <>
+                      <Text className='text-text font-poppins'>• {item}</Text>
+
+                        </>
+                      ))}
+                     </View>
                      <Text className='text-text font-poppins'>• UA</Text>
-                    <Text className='text-text font-poppins'>• 2h 7m</Text>
+                    <Text className='text-text font-poppins'>• {convertMinutes(movie?.runtime as any)}</Text>
                    
                </View>
              </View>

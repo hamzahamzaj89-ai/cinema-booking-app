@@ -15,7 +15,8 @@
         "backgroundColor": "#E6F4FE"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.Frontend"
     },
     "web": {
       "bundler": "metro"
@@ -33,9 +34,7 @@
           }
         }
       ],
-      "expo-font",
-      "expo-secure-store",
-      "expo-web-browser"
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,

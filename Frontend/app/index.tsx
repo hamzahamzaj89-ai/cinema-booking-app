@@ -12,14 +12,14 @@ const App = () => {
      
    useEffect(() => {
     const timer = setTimeout(() => {
-       setPending(false)
-     setLoggedIn(false);
+       setPending(true)
+     setLoggedIn(false)
 
         console.log("hello");
 
-        
+        router.replace("/(app)/Home");
 
-    }, 500);
+    }, 1000);
 
 
 
@@ -30,9 +30,13 @@ const App = () => {
     useEffect(() => {
     if (!pending) {
       if (loggedIn) {
+
         router.replace("/(app)/Home");
+        
+     
       } else {
-        router.replace("/(auth)/Auth");
+         router.replace("/(app)/Home");
+             
       }
     }
   }, [loggedIn, pending]);

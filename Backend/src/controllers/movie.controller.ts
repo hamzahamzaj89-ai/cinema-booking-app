@@ -2,6 +2,10 @@ import movieModel from "../models/movie.model.js";
 import { Controller } from "../types/controller.js";
 import AppError from "../utils/AppError.js";
 
+import { Request, Response } from "express";
+import FavoriteMovie from "../models/favourites.model.js";
+import { Types } from "mongoose";
+
 interface Props {
   req: any;
   res: any;
@@ -112,3 +116,59 @@ export const searchMovie:Controller = async (req , res , next) => {
 }
 
 
+
+
+export const toggleFavorite = async (
+  req: any,
+  res: Response
+): Promise<void> => {
+  try {
+    const clerkId = req.auth?.userId;
+    const { movieId } = req.body;
+
+    if (!clerkId) {
+       throw new AppError("Unauthorized user" , 401)
+      return;
+    }
+
+    if (!movieId || !Types.ObjectId.isValid(movieId)) {
+      throw new AppError("Invalid movie Id" , 400)
+      return;
+    }
+
+    const favorite = await FavoriteMovie.findOne({
+      clerkId,
+      movieId,
+    });
+
+    if (favorite) {
+      await favorite.deleteOne();
+
+      res.status(200).json({
+        success: true,
+        favorite: false,
+        message: "Movie removed from favorites",
+      });
+
+      return;
+    }
+
+    await FavoriteMovie.create({
+      clerkId,
+      movieId,
+    });
+
+    res.status(201).json({
+      success: true,
+      favorite: true,
+      message: "Movie added to favorites",
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};

@@ -16,9 +16,9 @@ interface BookingStore {
   bookingFee: number;
 
   setShowtimeId: (id: string) => void;
-  setDate: (date: string) => void;
+  setDate: (date: Date) => void;
   setTime: (time: any) => void;
-  setScreen: (screen: string) => void;
+  setScreen: (screen: any) => void;
 
   getGrandTotal: () => number;
   toggleSeat: (seat: Seats) => void;

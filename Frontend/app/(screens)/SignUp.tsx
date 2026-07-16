@@ -6,8 +6,9 @@ import CustomButton from '../components/CustomButton'
 import SocialButton from '../components/Auth/SocialButton'
 import AuthFooter from '../components/Auth/AuthFooter'
 import OTPModal from '../components/OTPModal'
-import { useSignUp } from '@clerk/clerk-expo'
-import { signUpUser } from '../services/SignUpService'
+import Toast from 'react-native-toast-message'
+import { router } from 'expo-router'
+
 
 
 interface Props  {
@@ -18,9 +19,13 @@ interface Props  {
 
 
 const SignUp = ({onPress} : {onPress:() => void}) => {
-  const { signUp, isLoaded } = useSignUp();
 
 
+  
+  const [loading , setLoading] = useState(false)
+
+
+   
 
   
   const [isVisible , setIsVisible ] = useState(false)
@@ -33,28 +38,17 @@ const SignUp = ({onPress} : {onPress:() => void}) => {
 
   const handleSignUp = () => {
 
-
-    const {name , email , password} = formData
-
-      signUpUser(
-           {
-               signUp,
-               isLoaded,
-               name,
-               email,
-               password
-               
-
-
-            
-           }
- )
-
-
- setIsVisible(true)
-
      
   }
+
+
+
+
+   const handleVerification = (code:string) => {
+      
+    }
+
+
 
   return (
     <View className='flex-1'>
@@ -63,21 +57,21 @@ const SignUp = ({onPress} : {onPress:() => void}) => {
                Icon={User}
                label='Username'
                Placeholder='Please enter the username'
-               onValueChange={(text) =>  {}}
+               onValueChange={(text) =>  {setFormData({...formData , name: text})}}
               />
 
           <InputField
                Icon={MailIcon}
                label='Email'
                Placeholder='Please enter the email'
-               onValueChange={(text) =>  {}}
+               onValueChange={(text) =>  {setFormData({...formData , email : text})}}
               />
 
                <InputField
                Icon={Lock}
                label='Password'
                Placeholder='Please enter the password'
-               onValueChange={(text) =>  {}}
+               onValueChange={(text) =>  {setFormData({...formData , password: text})}}
               />
 
 
@@ -88,7 +82,8 @@ const SignUp = ({onPress} : {onPress:() => void}) => {
                   <CustomButton
                   text={"Sign Up"}
                   Icon={null}
-                  onPress={() => {handleSignUp}}
+                  disabled={loading}
+                  onPress={() => {handleSignUp()}}
                   />
                  </View>
 
@@ -125,7 +120,7 @@ const SignUp = ({onPress} : {onPress:() => void}) => {
                 
                    isVisible={isVisible}
                    onClose={() => setIsVisible(false)}
-                   onVerify={(code) =>{} }
+                   onVerify={(code) =>{handleVerification(code)} }
                 />
     </View>
   )

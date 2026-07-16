@@ -57,7 +57,7 @@ export default function OTPModal({
       onBackdropPress={onClose}
       useNativeDriver
     >
-      <View className="rounded-[30px] bg-[#171727] p-6">
+      <View className="rounded-xl  bg-[#171727] p-6">
 
         {/* Header */}
 
@@ -71,7 +71,7 @@ export default function OTPModal({
 
         {/* OTP */}
 
-        <View className="mt-8 flex-row justify-between">
+        <View className="mt-8 flex-row gap-x-1 justify-center">
 
           {otp.map((digit, index) => (
             <TextInput
@@ -83,7 +83,7 @@ export default function OTPModal({
               keyboardType="number-pad"
               maxLength={1}
               textAlign="center"
-              className={`h-16 w-12 rounded-2xl border bg-[#1F2033] text-center text-xl font-poppins-semibold text-white ${
+              className={`h-16 w-[45px] rounded-md border bg-[#1F2033] text-center text-xl font-poppins-semibold text-white ${
                 focused === index
                   ? "border-[#8B5CF6]"
                   : "border-[#30324A]"
@@ -111,7 +111,7 @@ export default function OTPModal({
 
           <TouchableOpacity
             onPress={onClose}
-            className="mr-2 flex-1 items-center justify-center rounded-2xl border border-[#2F3047] py-4"
+            className="mr-2 flex-1 items-center justify-center rounded-lg bg-card py-[12px]"
           >
             <Text className="font-poppins-semibold text-[#9D9DB8]">
               Cancel
@@ -122,7 +122,7 @@ export default function OTPModal({
             onPress={() =>
               onVerify(otp.join(""))
             }
-            className="ml-2 flex-1 items-center justify-center rounded-2xl bg-violet-600 py-4"
+            className="ml-2 flex-1 items-center justify-center rounded-lg bg-violet-600 py-[12px]"
           >
             <Text className="font-poppins-semibold text-white">
               Verify

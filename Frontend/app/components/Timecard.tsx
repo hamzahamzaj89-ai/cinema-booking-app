@@ -1,37 +1,39 @@
 import React, { useEffect } from "react";
 import { Pressable, Text, View } from "react-native";
 import useBookingStore from "../store/bookingStore";
+import { useIndexStore } from "../store/indexStore";
+import { formatTime } from "../utils/convertingDate";
 
 interface Props {
   item: any;
   selected: boolean;
   onPress: () => void;
+  index: number;
 }
 
 export default function TimeCard({
   item,
   selected,
+  index,
   onPress,
 }: Props) {
 
 
 
 
-  const setTime = useBookingStore((state) => state.setTime)
+  const setTimeIndex = useIndexStore((state) => state.setTimeIndex)
+     const handleTime = () => {
 
-
-
-
-
-
-  const handleTime = () => {
-
-     setTime(item)
-
-      onPress()
-
+     setTimeIndex(index)
   }
   
+
+
+
+
+    const time =  formatTime(item?.startTime)
+
+    const [number , status] = time.split(" ")
 
   return (
     <Pressable onPress={handleTime}>
@@ -48,7 +50,7 @@ export default function TimeCard({
             selected ? "text-white" : "text-[#9B9BB5]"
           }`}
         >
-          {item.time}
+          {number}
         </Text>
 
 
@@ -57,7 +59,7 @@ export default function TimeCard({
             selected ? "text-white" : "text-[#B794F4]"
           }`}
         >
-          {item.status}
+          {status}
         </Text>
 
        

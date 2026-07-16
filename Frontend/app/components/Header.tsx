@@ -1,49 +1,46 @@
-import { View, Text, Image } from 'react-native'
-import React from 'react'
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import { Building2, ChevronRight, MapPin } from "lucide-react-native";
 
-const Header = () => {
+export default function Header() {
   return (
-    <View className=' w-[100%] h-[70px] mt-[10px]  flex flex-row  justify-between px-6 pl-8 pt-1'>
+    <View className=" rounded-3xl   p-5 pt-2 mx-3 mr-0 pr-2">
+      {/* Header */}
 
-        <View className='text-[8px]  flex flex-column gap-[3px]  '>
+      <View className="flex-row items-center justify-between">
+        <View className="flex-row items-center">
+          <View className="h-12 w-12 items-center justify-center rounded-lg bg-[#8B5CF6]/15">
+            <Building2 size={24} color="#8B5CF6" strokeWidth={3}/>
+          </View>
 
-           <Text className='font-bold font-poppins-medium text-[1.1rem] text-white  '>
-                Welcome hamza 
-           </Text>
-
-
-
-             <Text  className='font-poppins text-text'>
-              
-              What movie you are going to see today
-
-             </Text>
-
+          <View className="ml-3">
+            <Text className="mt-[-3px] font-poppins-semibold text-lg text-white">
+              Centoras Mall
+            </Text>
+               <View className="flex flex-row gap-x-2">
+            <Text className="mt-[0px] font-poppins text-sm text-text">
+              Blue Area, Islamabad
+            </Text>
+               </View>
+            
+          </View>
         </View>
 
+        <TouchableOpacity
+          activeOpacity={0.85}
+          className="rounded-lg bg-violet px-5 py-2  border-0 border-violet-600 "
+        >
+          <View className="flex-row items-center">
+            <Text className="font-poppins-semibold text-violet-600 ">Change</Text>
 
+            <ChevronRight size={18} color="#7c3aed" style={{ marginLeft: 4 }} />
+          </View>
+        </TouchableOpacity>
+      </View>
 
+      {/* Location */}
 
-       <View>
-
-
-        <View className='w-[40px] h-[40px] rounded-full'>
-          
-          <Image className='w-full h-full object-cover rounded-full' source={{uri:"https://images.unsplash.com/photo-1779896412149-af18f18dbd54?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-}}/>
-                 
-          
-
-        </View>
-
-
-
-
-       </View>
-
-
+      
     </View>
-  )
+  );
 }
-
-export default Header

@@ -2,33 +2,34 @@ import { Armchair } from "lucide-react-native";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import useBookingStore from "../store/bookingStore";
+import { IScreen, IScreenShowTimes } from "../interface/IShowTimeDetail";
+import { useIndexStore } from "../store/indexStore";
 
 interface Props {
-  item: any;
+  item: IScreenShowTimes;
   selected: boolean;
+  index: number;
   onPress: () => void;
 }
 
 export default function ScreenCard({
   item,
   selected,
+  index,
   onPress,
 }: Props) {
 
 
   
-   const setScreen = useBookingStore((state) => state.setScreen)
 
-
+   const setScreenIndex = useIndexStore((state) => state.setScreenIndex)
 
 
 
 
   const handleScreen = () => {
 
-     setScreen(item)
-
-      onPress()
+           setScreenIndex(index)
 
   }
 
@@ -49,8 +50,9 @@ export default function ScreenCard({
           className={`font-poppins-semibold text-sm ${
             selected ? "text-white" : "text-[#D8D8E5]"
           }`}
+          numberOfLines={1}
         >
-          {item.name}
+          {item?.screen?.name}
         </Text>
 
         {/* Seat Layout */}
@@ -77,7 +79,7 @@ export default function ScreenCard({
               selected ? "text-white" : "text-[#ECECF5]"
             }`}
           >
-            {item.seats}
+            120
           </Text>
 
           <Text

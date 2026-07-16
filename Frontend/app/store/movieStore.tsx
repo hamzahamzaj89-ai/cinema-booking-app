@@ -1,19 +1,11 @@
 import { create } from "zustand";
+import { IShowTime } from "../interface/IShowTime";
 
-export interface Movie {
-  id: string;
-  title: string;
-  logo: any;
-  description: string;
-  genres: string[];
-  runtime: string;
-  rating: number;
-}
 
 interface MovieStore {
-  selectedMovie: Movie | null;
+  selectedMovie: IShowTime | null;
 
-  setSelectedMovie: (movie: Movie) => void;
+  setSelectedMovie: (movie: IShowTime) => void;
 
   clearSelectedMovie: () => void;
 }

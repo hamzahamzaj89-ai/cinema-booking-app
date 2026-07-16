@@ -1,20 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import { FlatList, Text } from "react-native";
 import TimeCard from "./Timecard";
 import ScreenCard from "./ScreenCard";
+import { IShowTimeByDate } from "../interface/IShowTimeDetail";
+import useBookingStore from "../store/bookingStore";
+import { useIndexStore } from "../store/indexStore";
 
 
 
-export  function ScreenCarousel() {
-  const [selectedIndex, setSelectedIndex] = useState(2);
+export  function ScreenCarousel({showTimes}: {showTimes:IShowTimeByDate[]|[]}) {
+  const screen = useBookingStore((state) => state.screen)
+
+  const setScreen = useBookingStore((state) => state.setScreen)
+  const screenIndex = useIndexStore((state) => state.screenIndex)
+  const dateIndex = useIndexStore((state) => state.dateIndex)
 
 
-const screens = [
-  { name: "Screen 1", seats: 120 },
-  { name: "Screen 2", seats: 98 },
-  { name: "Screen 3", seats: 75 },
-  { name: "Screen 4", seats: 60 },
-];
+
+  useEffect(() => {
+
+   
+           setScreen(showTimes[dateIndex]?.screens[screenIndex]?.screen)
+
+
+  } ,[screenIndex]) 
+  
+
+
 
 
   return (
@@ -27,7 +39,7 @@ const screens = [
 
     <FlatList
       horizontal
-      data={screens}
+      data={showTimes[dateIndex]?.screens}
       keyExtractor={(_, index) => index.toString()}
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{
@@ -36,8 +48,9 @@ const screens = [
       renderItem={({ item, index }) => (
         <ScreenCard
           item={item}
-          selected={selectedIndex === index}
-          onPress={() => setSelectedIndex(index)}
+          index = {index}
+          selected={screenIndex == index}
+          onPress={() => {}}
         />
       )}
     />

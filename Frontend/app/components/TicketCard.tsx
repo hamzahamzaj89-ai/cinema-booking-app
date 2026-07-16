@@ -1,23 +1,29 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import useBookingStore from "../store/bookingStore";
+import { formattingDate } from "../utils/convertingDate";
+import { useIndexStore } from "../store/indexStore";
 
 interface Props {
   item: any;
   selected: boolean;
   onPress: () => void;
+  index:number
 }
 
 export default function TicketCard({
   item,
   selected,
-  onPress,
+  index ,
+  onPress
 }: Props) {
 
 
 
   const setDate = useBookingStore((state) => state.setDate)
 
+  const setDateIndex = useIndexStore((state) => state.setDateIndex)
+    
 
 
 
@@ -25,12 +31,15 @@ export default function TicketCard({
 
   const handleDate = () => {
 
-     setDate(item)
+      setDateIndex(index)
+    
 
-      onPress()
 
   }
 
+
+
+    const {weekday , day , month} = formattingDate(item?.date)
 
 
   return (
@@ -51,11 +60,11 @@ export default function TicketCard({
             selected ? "text-white/80" : "text-[#8E8EA4]"
           }`}
         >
-          {item.day}
+          {weekday}
         </Text>
 
         <Text className="mt-1 text-4xl font-poppins-bold text-white">
-          {item.date}
+          {day}
         </Text>
 
         <Text
@@ -63,7 +72,7 @@ export default function TicketCard({
             selected ? "text-white" : "text-[#B794F4]"
           }`}
         >
-          {item.month}
+          {month}
         </Text>
 
         <View

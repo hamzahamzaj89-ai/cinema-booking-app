@@ -9,12 +9,29 @@ import SearchBar from '../components/SearchBar';
 import Category from '../components/Category';
 import CustomButton from '../components/CustomButton';
 import MovieCard from '../components/movieCard';
+import { useShowtimes } from '../hooks/useShowTimes';
+import Loader from '../components/Loader';
+import { useInitializeBranch } from '../hooks/useInitializeBranch';
 
 const Home = () => {
 
-    const [selectedCategory , setSelectedCategory] = useState<String>("Action");
+    useInitializeBranch()
 
+    const [selectedCategory , setSelectedCategory] = useState<String>("Action");
+    
+   
+
+    const {loading , error , showTimesMovies } = useShowtimes();
+    
       
+
+    if (loading) {
+         
+      <Loader/>
+
+        return 
+    }
+
 
   return (
          <View className='flex flex-1  bg-bg' >
@@ -24,8 +41,8 @@ const Home = () => {
 
 
             <FlatList
-    data={[...Array(10)]}
-    keyExtractor={(item) => item.id.toString()}
+    data={showTimesMovies}
+    keyExtractor={(item) => item._id.toString()}
     renderItem={({ item }) => <MovieCard movie={item} />}
      numColumns={1}
     ListHeaderComponent={

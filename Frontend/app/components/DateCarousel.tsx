@@ -1,20 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Text } from "react-native";
 import TicketCard from "./TicketCard";
 import { View } from "lucide-react-native";
+import useBookingStore from "../store/bookingStore";
+import { IShowTimeByDate } from "../interface/IShowTimeDetail";
+import { useIndexStore } from "../store/indexStore";
 
-const DATA = [
-  { day: "MON", date: "15", month: "JUL" },
-  { day: "TUE", date: "16", month: "JUL" },
-  { day: "WED", date: "17", month: "JUL" },
-  { day: "THU", date: "18", month: "JUL" },
-  { day: "FRI", date: "19", month: "JUL" },
-  { day: "SAT", date: "20", month: "JUL" },
-  { day: "SUN", date: "21", month: "JUL" },
-];
 
-export default function DateCarousel() {
-  const [selectedIndex, setSelectedIndex] = useState(2);
+export default function DateCarousel({showTimes}:{showTimes:IShowTimeByDate[] | []} ) {
+
+  
+  const date = useBookingStore((state) => state.date)
+   const setDate = useBookingStore((state) => state.setDate)
+
+   const dateIndex = useIndexStore((state) => state.dateIndex)
+
+
+      useEffect(() => {
+
+
+
+           setDate(showTimes[dateIndex]?.date)
+           
+
+      } , [dateIndex])
+
+
 
   return (
 
@@ -26,7 +37,7 @@ export default function DateCarousel() {
 
     <FlatList
       horizontal
-      data={DATA}
+      data={showTimes}
       keyExtractor={(_, index) => index.toString()}
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{
@@ -35,8 +46,9 @@ export default function DateCarousel() {
       renderItem={({ item, index }) => (
         <TicketCard
           item={item}
-          selected={selectedIndex === index}
-          onPress={() => setSelectedIndex(index)}
+          index ={index}
+          selected={dateIndex === index}
+          onPress={() => {}}
         />
       )}
     />
