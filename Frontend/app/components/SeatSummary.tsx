@@ -58,11 +58,11 @@ setTotalPrice(totalPrice2)
       <View className="mb-2 flex-row flex-wrap">
         {seats.length > 0 && seats.map((seat:any) => (
           <View
-            key={seat.id}
+            key={seat.seatId}
             className="mr-2 mb-2 rounded-lg bg-[#8B5CF6]/15 px-4 py-2"
           >
             <Text className="font-poppins-semibold text-[#8B5CF6]">
-              {seat.id}
+              {seat.seatId}
             </Text>
           </View>
         ))}

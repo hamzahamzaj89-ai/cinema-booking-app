@@ -19,10 +19,14 @@ export default function TimeCard({
 }: Props) {
 
 
+    const setTimeIndex = useIndexStore((state) => state.setTimeIndex)
 
-
-  const setTimeIndex = useIndexStore((state) => state.setTimeIndex)
      const handleTime = () => {
+
+       if (selected ){
+        return
+       }
+
 
      setTimeIndex(index)
   }

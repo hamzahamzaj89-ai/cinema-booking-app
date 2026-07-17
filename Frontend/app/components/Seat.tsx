@@ -3,8 +3,25 @@ import React, { use, useEffect, useState } from "react";
 import useBookingStore from "../store/bookingStore";
 import Toast from "react-native-toast-message";
 import clsx from "clsx";
+import { IPrice, ISeat, ISeatByPrice } from "../interface/ISeatLayout";
+import { SeatType } from "../store/priceStore";
 
-const Seat = ({ item, key , seats}: any) => {
+
+
+interface Props {
+  item : ISeat | null;
+  key:number ;
+  seats: ISeatByPrice[];
+  prices: Record<SeatType , number>
+
+}
+
+const Seat = ({ item, key , seats , prices}: Props) => {
+
+
+
+
+
   if (item == null) {
     return (
       <>
@@ -36,7 +53,7 @@ const Seat = ({ item, key , seats}: any) => {
   const handleSeats = () => {
 
 
-    if (item.status == "booked") {
+    if (item.bookingStatus == "booked") {
         
         Toast.show({
   type: "error",
@@ -47,8 +64,13 @@ const Seat = ({ item, key , seats}: any) => {
        return;
     }
 
+    console.log(prices[item.status])
 
-   toggleSeat(item)
+       
+    console.log(item)
+
+
+   toggleSeat({...item , price:prices[item.status]})
      
 
   }
@@ -64,10 +86,9 @@ const Seat = ({ item, key , seats}: any) => {
         className ={clsx(
 
            "w-8 h-8 rounded-lg justify-center items-center m-[3px]",
-            item.status === "VIP" && "bg-amber-400",
-            item.status === "available" && "bg-slate-600",
-            item.status === "booked" && "bg-red-500",
-            seats.includes(item) && "bg-violet-600"
+            item.bookingStatus === "booked" && "bg-red-500",
+            item.bookingStatus === "available" && ( (item.status === "VIP"  &&   "bg-amber-400")  || (item.status === "Premium" || item.status === "Standard") && "bg-slate-600" )    ,
+            seats.find((seat) => seat.seatId === item.seatId) &&  "bg-violet-600"
           
 
         )}

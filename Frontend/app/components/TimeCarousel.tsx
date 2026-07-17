@@ -15,7 +15,7 @@ export  function TimeCarousel( {showTimes}: {showTimes:IShowTimeByDate[]| []}) {
    const time = useBookingStore((state) => state.time)
    const dateIndex = useIndexStore((state) => state.dateIndex)
      const screenIndex = useIndexStore((state) => state.screenIndex)
-
+  
   const timeIndex = useIndexStore((state) => state.timeIndex)
 
   useEffect(() => {

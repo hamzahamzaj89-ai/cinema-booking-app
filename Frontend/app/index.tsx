@@ -1,58 +1,26 @@
-import "../global.css"
+import { Redirect } from "expo-router";
+import useAuthStore from "@/app/store/authStore";
+import { ActivityIndicator, View } from "react-native";
 
+export default function Index() {
+    const session = useAuthStore((state) => state.session);
+    const loading = useAuthStore((state) => state.loading);
 
-
-import {  ActivityIndicator, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { Redirect, router } from "expo-router";
-const App = () => {
-
-  const [loggedIn , setLoggedIn] = useState(false);
-  const [pending , setPending] = useState(true)
-     
-   useEffect(() => {
-    const timer = setTimeout(() => {
-       setPending(true)
-     setLoggedIn(false)
-
-        console.log("hello");
-
-        router.replace("/(app)/Home");
-
-    }, 1000);
-
-
-
-  }, []);
-
-
-
-    useEffect(() => {
-    if (!pending) {
-      if (loggedIn) {
-
-        router.replace("/(app)/Home");
-        
-     
-      } else {
-         router.replace("/(app)/Home");
-             
-      }
+    if (loading) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <ActivityIndicator />
+            </View>
+        );
     }
-  }, [loggedIn, pending]);
 
-     
-
-
-
-
-  return (
-    <View>
-
-        {pending && <ActivityIndicator/>}
-    </View>
-  )
+    return !session
+        ? <Redirect href="/(app)/Home" />
+        : <Redirect href="/(auth)/Auth" />;
 }
-
-export default App
-

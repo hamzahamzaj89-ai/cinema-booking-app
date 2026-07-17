@@ -18,13 +18,15 @@ import { IShowTimeByDate } from '../interface/IShowTimeDetail';
 import Loader from '../components/Loader';
 import { useShowtimes } from '../hooks/useShowTimes';
 import useShowTime from '../hooks/useShowTime';
+import { usePriceStore } from '../store/priceStore';
+import useBookingStore from '../store/bookingStore';
 
 const movieDetail = () => {
 
 
     const branch = useBranchStore((state) => state.branch )
     const movie =useMovieStore((state) => state.selectedMovie)
-
+    const time = useBookingStore((state) => state.time)
 
     //callbacks
     const fetchShowTimes = useCallback(() => {
@@ -39,8 +41,7 @@ const movieDetail = () => {
     const {data:showTimes , loading , error } = useFetch<IShowTimeByDate>({fetchFunction:fetchShowTimes , enabled: (!!branch && !!movie)})
 
 
-
-     console.log(showTimes)
+          
 
         if (loading) {
                return <Loader/>
@@ -50,6 +51,16 @@ const movieDetail = () => {
 
 
 
+
+
+
+        const handleSeatBoking = () => {
+
+
+
+           router.push("/(pages)/SeatsBooking")
+
+        }
 
 
 
@@ -132,7 +143,7 @@ const movieDetail = () => {
 
            <View className='flex justify-center content-center mb-8 w-[100%] items-center mt-0 px-4 '>
 
-                    <CustomButton Icon={Armchair} onPress={() => router.push("/(pages)/SeatsBooking")}/>
+                    <CustomButton Icon={Armchair} onPress={() => handleSeatBoking()}/>
 
             
             

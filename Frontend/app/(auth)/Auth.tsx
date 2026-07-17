@@ -19,7 +19,7 @@ const Auth = () => {
 
 
   return (
-    <View className='flex-1 bg-bg'>
+    <View className='flex-1 bg-bg '>
           <AuthHero
           backgroundImage={"https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200&q=80"}
           title={"CineVerse"}

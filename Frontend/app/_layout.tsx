@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import Toast from "react-native-toast-message";
 import * as NavigationBar from "expo-navigation-bar";
+import "../global.css";
 import {
   Poppins_400Regular,
   Poppins_500Medium,
@@ -9,7 +10,11 @@ import {
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+
 import { useEffect } from "react";
+import AuthProvider from "./Providers/authPovider";
+import ProtectedRoutes from "./Providers/ProtectedRoutes";
+import useAuthStore from "./store/authStore";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -19,7 +24,7 @@ export default function RootLayout() {
     Poppins_700Bold,
   });
 
-
+  const session = useAuthStore((state) => state.session)
 
     useEffect(() => {
     async function hideNavigationBar() {
@@ -35,19 +40,39 @@ export default function RootLayout() {
 
 
 
-
+    console.log(!!session)
 
 
   return(<>
 
 
 
+       <AuthProvider>
+
+                        <ProtectedRoutes>
+
+                          <Stack screenOptions={{headerShown: false}}/>
+                 
+                        </ProtectedRoutes>
+
+              
+
+    
+
+    
+
+
+            <Toast />
+
+       </AuthProvider>
+
+
+
+
 
 
         
-        <Stack screenOptions={{ headerShown: false }} />
-
-        <Toast />
+       
 
 
 

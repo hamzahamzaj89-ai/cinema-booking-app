@@ -1,12 +1,15 @@
 import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import {seatLayout} from "../data/Seats"
 import Seat from './Seat'
 import useBookingStore from '../store/bookingStore'
-const SeatsGrid = () => {
+import { ISeatRow } from '../interface/ISeatLayout'
+import { usePriceStore } from '../store/priceStore'
+const SeatsGrid = ({seatLayout}: {seatLayout: ISeatRow[]}) => {
 
 
   const seats = useBookingStore((state) => state.seats)
+  const prices = usePriceStore((state) => state.prices)
+
 
     const [Seats , setSeats] = useState<any>([]);
 
@@ -16,6 +19,7 @@ const SeatsGrid = () => {
       setSeats(seats)
 
   },[seats])
+
 
  
 
@@ -33,7 +37,7 @@ const SeatsGrid = () => {
               
               {item.seats.map((seat , index) => (
 
-                      <Seat key={index} item={seat} seats={Seats}/>
+                      <Seat key={index} item={seat} seats={Seats} prices={prices}/>
 
               ))}
               

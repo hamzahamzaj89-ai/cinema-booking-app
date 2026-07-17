@@ -21,6 +21,7 @@ import useMovieStore from "../store/movieStore";
 import { convertingDate } from "../utils/convertingDate";
 import useBookingStore from "../store/bookingStore";
 import { useIndexStore } from "../store/indexStore";
+import { usePriceStore } from "../store/priceStore";
 
 
 
@@ -32,6 +33,8 @@ export default function MovieCard({movie}: {movie:IShowTime}) {
   const setMovieId = useIndexStore((state) => state.setMovieId)
  const resetBooking = useBookingStore((state) => state.resetBooking)
   const  setSelectedMovie = useMovieStore((state) => state.setSelectedMovie)
+      const clearPrices = usePriceStore((state) => state.clearPrices)
+
   let hours:number;
   let minutes: number
 
@@ -52,6 +55,7 @@ export default function MovieCard({movie}: {movie:IShowTime}) {
   const handleShowTime = () => {
       setMovieId(movie._id)
       resetBooking()
+      clearPrices()
       setSelectedMovie(movie)
   
 

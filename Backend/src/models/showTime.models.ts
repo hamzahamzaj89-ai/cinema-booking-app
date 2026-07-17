@@ -2,14 +2,14 @@ import mongoose, { Schema, Document, Types } from "mongoose";
 
 
 
-interface price {
+ interface price {
     seatType: "VIP" | "Premium" | "Standard";
     price: number
 }
 
 
 
-const priceSchema = new Schema({
+const priceSchema = new Schema<price>({
     seatType: {
         type: String,
         enum: ["VIP" , "Premium" , "Standard"]
@@ -41,7 +41,7 @@ export interface IShowtime extends Document {
 
     endTime: Date;
 
-    price: number;
+    price: price[];
 
     language: string;
 

@@ -1,10 +1,16 @@
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, Text } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { green } from "react-native-reanimated/lib/typescript/Colors";
 import { SafeAreaView } from "react-native-safe-area-context";
+import useAuthStore from "../store/authStore";
 
 export default function TabLayout() {
+
+
+
+
+
   return (
 
     <Tabs

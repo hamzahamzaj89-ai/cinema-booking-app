@@ -30,6 +30,8 @@ export default function TicketCard({
 
 
   const handleDate = () => {
+    if (selected)
+      return
 
       setDateIndex(index)
     

@@ -29,6 +29,10 @@ export default function ScreenCard({
 
   const handleScreen = () => {
 
+    if (selected) {
+      return
+    }
+
            setScreenIndex(index)
 
   }

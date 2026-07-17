@@ -9,7 +9,7 @@ import { convertMinutes } from '../utils/convertingDate';
 
 const MovieHeader = ({movie}:{movie:IShowTime | null}) => {
 
-
+  
 
   return (
     

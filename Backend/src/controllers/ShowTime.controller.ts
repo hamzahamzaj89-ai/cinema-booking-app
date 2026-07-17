@@ -117,7 +117,8 @@ export const getShowTimeMovies: Controller = async (
 
             {
                 $match: {
-                    branch: new mongoose.Types.ObjectId((branchId))
+                    branch: new mongoose.Types.ObjectId((branchId)),
+             
                 }
             },
 
@@ -478,10 +479,16 @@ export const showTimeSeats: Controller = async (
 ) => {
     try {
 
+      
+
         if (!req.params.showTimeId) {
               throw new AppError("Please provide the show time detail" , 400);
               return
         }
+
+         
+
+
 
         const showTime = await showTimeModel
             .findById(req.params.showTimeId)
@@ -495,6 +502,10 @@ export const showTimeSeats: Controller = async (
         if (!showTime) {
             throw new AppError("Showtime not found.", 404);
         }
+
+
+        
+       
 
         const screen: any = showTime.screen;
 
@@ -518,14 +529,14 @@ export const showTimeSeats: Controller = async (
                     }
                 }
             ]
-        });
+        }).select("seats bookingStatus");
 
         // Hash Set for occupied seats
         const occupiedSeats = new Set<string>();
 
         for (const booking of bookings) {
 
-            booking.seats.forEach((seatId: IBookedSeat) => {
+            booking?.seats?.forEach((seatId: IBookedSeat) => {
                 occupiedSeats.add(seatId.seatId);
             });
 
@@ -533,27 +544,72 @@ export const showTimeSeats: Controller = async (
 
         const seatLayout = {...screen.seatLayout};
 
-        seatLayout.seatLayout.forEach((row: IRow) => {
+
+        console.log(screen)
+
+
+        seatLayout?.seatLayout?.forEach((row: IRow) => {
              
             row.seats.forEach((seat: ISeat |null) => {
 
                 if (!seat) return;
+                
 
                 seat.bookingStatus = occupiedSeats.has(seat.seatId)
                     ? "booked"
                     : "available";
+                    
+
 
             });
+
+              
+
 
         });
 
         res.status(200).json({
             success: true,
             message: "Seat layout fetched successfully.",
-            seatLayout
+            data: seatLayout.$__.parent.seatLayout.seatLayout,
+            
         });
 
     } catch (error) {
         next(error);
+    }
+};
+
+
+
+
+
+export const getShowtimePrices:Controller = async (req: any, res: any) => {
+    try {
+        const { showTime } = req.params;
+
+        const prices = await showTimeModel
+            .findById(showTime)
+            .select("price -_id");
+
+        if (!prices) {
+             throw new AppError("Prices does not exit" , 404)
+             return
+        }
+
+        return res.status(200).json({
+            messages: "prices fetched successfully",
+
+            success: true,
+            data: prices.price,
+        });
+
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch prices",
+            error,
+        });
     }
 };

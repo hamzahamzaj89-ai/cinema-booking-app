@@ -1,16 +1,15 @@
 import { create } from "zustand";
+import { ISeat, ISeatByPrice } from "../interface/ISeatLayout";
 
-interface Seats {
-  id: String;
-  status: String;
-  price: number;
-}
+  
+
+
 interface BookingStore {
   showtimeId: string | null;
   date: any | null;
   time: any | null;
   screen: any | null;
-  seats: Seats[];
+  seats: ISeatByPrice[];
   discount: number;
   tax: number;
   bookingFee: number;
@@ -21,8 +20,10 @@ interface BookingStore {
   setScreen: (screen: any) => void;
 
   getGrandTotal: () => number;
-  toggleSeat: (seat: Seats) => void;
-  checkSeat: (seat: Seats) => boolean;
+  toggleSeat: (seat: ISeatByPrice) => void;
+  checkSeat: (seat: ISeatByPrice) => boolean;
+  clearSeats: () => void;
+
   resetBooking: () => void;
 }
 
@@ -37,9 +38,18 @@ const useBookingStore = create<BookingStore>((set, get) => ({
   bookingFee: 2,
 
   setShowtimeId: (id) => set({ showtimeId: id }),
-  setDate: (date) => set({ date }),
-  setTime: (time) => set({ time }),
-  setScreen: (screen) => set({ screen }),
+  setDate: (date) => {
+    get().clearSeats()
+        set({ date })
+  },
+  setTime: (time) => {
+    get().clearSeats()
+      set({ time })
+  },
+  setScreen:  (screen) => {
+    get().clearSeats()
+     set({ screen })
+  } ,
 
   getGrandTotal: () => {
     const totalPrice = get().seats.reduce(
@@ -59,10 +69,15 @@ const useBookingStore = create<BookingStore>((set, get) => ({
 
       return {
         seats: isSelected
-          ? state.seats.filter((s) => s.id !== seat.id)
+          ? state.seats.filter((s) => s.seatId !== seat.seatId)
           : [...state.seats, seat],
       };
     }),
+
+
+
+
+
 
   checkSeat: (seat) => {
     const seats = get().seats;
@@ -73,6 +88,16 @@ const useBookingStore = create<BookingStore>((set, get) => ({
       return false;
     }
   },
+
+
+  clearSeats: () => {
+
+        set({
+          seats: []
+        })
+
+  },
+
 
   resetBooking: () =>
     set({
