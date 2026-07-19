@@ -1,5 +1,5 @@
-import { View, Text, Image, Dimensions, FlatList } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, Image, Dimensions, FlatList, ScrollView } from 'react-native'
+import React, { useCallback, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Carousel from "react-native-reanimated-carousel";
 import Animated, { interpolate, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
@@ -12,18 +12,36 @@ import MovieCard from '../components/movieCard';
 import { useShowtimes } from '../hooks/useShowTimes';
 import Loader from '../components/Loader';
 import { useInitializeBranch } from '../hooks/useInitializeBranch';
+import BranchSelectionModal from '../components/BranchSelectionModal/BranchSelectionModal';
+import { useBranchStore } from '../store/branchStore';
+import { getShowTimesMovies } from '../services/showTimes.services';
+import { useFetch } from '../hooks/useFetch';
+import { IShowTime } from '../interface/IShowTime';
+import MovieCardSkeleton from '../components/Skeletons/MovieCardSkeleton';
+import ShowTimeFilterModal from '../components/Filter/ShowTimeFilterModal';
 
 const Home = () => {
 
     useInitializeBranch()
-
+    const [filterVisible , setFilterVisible] = useState(false)
     const [selectedCategory , setSelectedCategory] = useState<String>("Action");
-    
-   
+     const branch = useBranchStore((state) => state.branch)
+     const [visible , setVisible] = useState(false)
 
-    const {loading , error , showTimesMovies } = useShowtimes();
+
+     //callbacks
+
+     const fetchShowTimesMovies = useCallback(() => {
+                return getShowTimesMovies(branch?._id)
+     } , [branch])
+
+
+     const {loading , error , data:showTimesMovies} = useFetch<IShowTime>({fetchFunction : fetchShowTimesMovies , enabled: !!branch})
+
+
+
+
     
-      
 
     if (loading) {
          
@@ -33,13 +51,32 @@ const Home = () => {
     }
 
 
-  return (
+  return ( <>
+  
+  
+
          <View className='flex flex-1  bg-bg' >
       <SafeAreaView style={{ flex: 1 }}>
          <View className='w-full' style={{ flex: 1,  }}>
-            <Header/>
+            <Header onPress={() => setVisible(true)}/>
 
 
+              {loading && (<>
+
+                     <ScrollView className='p-5 mb-10' style={{paddingBottom: 220 , flex: 1}}>
+                             <SearchBar  onPress={() => setFilterVisible(true)}/>
+          <Category selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
+
+          <View className='mt-4'></View>
+          <MovieCardSkeleton/>
+            <View className='mb-24'></View>
+                     </ScrollView>
+              
+              </>)}
+
+              {!loading && (<>
+
+              
             <FlatList
     data={showTimesMovies}
     keyExtractor={(item) => item._id.toString()}
@@ -49,7 +86,7 @@ const Home = () => {
       <>
 
        
-        <SearchBar />
+        <SearchBar  onPress={() => setFilterVisible(true)}/>
           <Category selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
 
 
@@ -64,13 +101,47 @@ const Home = () => {
       gap: 16,
     }}
   />
+              
+              
+              </>)}
+
+
+
+
 
 
 
 
          </View>
+
+
+
+
+
+
+
+
+
+      
       </SafeAreaView>
+
+      
+  
     </View>
+
+    
+ <BranchSelectionModal
+    visible={visible}
+    onClose={() => {setVisible(false)}}
+/>
+
+
+
+
+<ShowTimeFilterModal  visible={filterVisible} onClose={() => { setFilterVisible(false)}}/>
+
+  </>
+
   )
 }
 

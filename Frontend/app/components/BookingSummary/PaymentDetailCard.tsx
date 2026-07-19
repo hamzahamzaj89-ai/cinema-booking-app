@@ -5,46 +5,38 @@ import { ReceiptText } from "lucide-react-native";
 import PriceRow from "./PriceRow";
 import useBookingStore from "@/app/store/bookingStore";
 
-interface Props {
-  ticketPrice: number;
-  bookingFee: number;
-  serviceFee: number;
-  tax: number;
-  discount?: number;
-}
 
 export default function PaymentDetailCard() {
 
 
-  const [ticketPrice , setTicketPrice] = useState(0)
 
 
-    const seats = useBookingStore((state)=> 
-         state.seats
-    )
-
-    const bookingFee  = useBookingStore((state) => state.bookingFee)
-      const tax  = useBookingStore((state) => state.tax)
-      const discount  = useBookingStore((state) => state.discount)
+  const bookingStore = useBookingStore();
 
 
-     const getGrandTotal  = useBookingStore((state) => state.getGrandTotal)
+
+     
+    
+     
+
+      
   
-     const grandTotal = getGrandTotal();
+      if (!bookingStore) {
+           
+           return (
+            <>
+  
+            <View className="mt-5 rounded-xl bg-field p-10 flex justify-start items-center">
+                    <Text className="font-poppins-bold">No information about the Booking</Text>
+            </View>
+            
+            
+            </>
+           )
+      }
+  
 
-     
-    useEffect(() => {
 
-     
-const totalPrice2 = seats.reduce(
-  (total, seat) => total + seat.price,
-  0
-);
-
-
-setTicketPrice(totalPrice2)
-
-    }, [seats])
 
 
 
@@ -75,13 +67,13 @@ setTicketPrice(totalPrice2)
 
       <PriceRow
         title="Ticket Price"
-        value={`$${ticketPrice.toFixed(2)}`}
+        value={`$${bookingStore.seats.reduce( (total, seat) => total + seat.price, 0).toFixed(2)}`}
       />
 
 
       <PriceRow
         title="Booking Fee"
-        value={`$${bookingFee.toFixed(2)}`}
+        value={`$${bookingStore.bookingFee.toFixed(2)}`}
       />
 
 
@@ -89,16 +81,16 @@ setTicketPrice(totalPrice2)
 
       <PriceRow
         title="Tax"
-        value={`$${tax.toFixed(2)}`}
+        value={`$${bookingStore.tax.toFixed(2)}`}
       />
 
-      {discount > 0 && (
+      {bookingStore.discount > 0 && (
         <>
           <View className="h-[1px] bg-[#2B2B42]" />
 
           <PriceRow
             title="Discount"
-            value={`-$${discount.toFixed(2)}`}
+            value={`-$${bookingStore.discount.toFixed(2)}`}
             discount
           />
         </>
@@ -107,7 +99,7 @@ setTicketPrice(totalPrice2)
 
       <PriceRow
         title="Grand Total"
-        value={`$${grandTotal.toFixed(2)}`}
+        value={`$${bookingStore.getGrandTotal().toFixed(2)}`}
         grandTotal
       />
 

@@ -181,7 +181,7 @@ export const getShowTimeMovies: Controller = async (
         res.status(200).json({
             success: true,
             message: "Movies fetched successfully.",
-            movies
+            data: movies
         });
 
     } catch (error) {

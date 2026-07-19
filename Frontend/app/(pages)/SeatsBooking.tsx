@@ -19,14 +19,21 @@ const SeatsBooking = () => {
   
   const time = useBookingStore((state) => state.time);
   const setPrices = usePriceStore((state) => state.setPrices)
+
+
+
+
   //callbacks
   const fetchSeatLayout = useCallback(() => {
-    return SeatLayout(time?._id);
+    return SeatLayout(time?._id as string);
   }, [time]);
 
   const fetchPrices = useCallback(() => {
-    return SeatPrices(time?._id);
+    return SeatPrices(time?._id as string);
   }, [time]);
+
+
+  
 
   //hooks
   const {

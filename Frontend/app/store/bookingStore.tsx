@@ -1,14 +1,15 @@
 import { create } from "zustand";
 import { ISeat, ISeatByPrice } from "../interface/ISeatLayout";
+import { IScreen, IScreenShowTime } from "../interface/IShowTimeDetail";
 
   
 
 
 interface BookingStore {
   showtimeId: string | null;
-  date: any | null;
-  time: any | null;
-  screen: any | null;
+  date: Date | null;
+  time: IScreenShowTime | null;
+  screen: IScreen | null;
   seats: ISeatByPrice[];
   discount: number;
   tax: number;
@@ -65,8 +66,10 @@ const useBookingStore = create<BookingStore>((set, get) => ({
 
   toggleSeat: (seat) =>
     set((state) => {
-      const isSelected = state.seats.includes(seat);
-
+      const isSelected = state.seats.find(
+    s => s.seatId === seat.seatId
+);
+        console.log(seat)
       return {
         seats: isSelected
           ? state.seats.filter((s) => s.seatId !== seat.seatId)

@@ -5,11 +5,14 @@ import { IShowTimeByDate } from "../interface/IShowTimeDetail";
 interface UseFetchOptions<T> {
     fetchFunction: () => Promise<any>;
     enabled?: boolean;
+    append?: boolean
 }
 
 export function useFetch<T>({
     fetchFunction,
     enabled = true,
+    append = false
+    
 }: UseFetchOptions<T>) {
 
     const [data, setData] = useState<T[] | []>([]);
@@ -26,11 +29,25 @@ export function useFetch<T>({
 
             setError(null);
             const response:any =  await fetchFunction();
-                  
 
 
 
-            if (!response.success) {
+            if (append) {
+
+               if (!response.hasMore) {
+
+                       errorMessage("No More Movies found")
+                       setLoading(false)
+                       return
+               }  
+
+
+               setData([...data , response.data])
+
+            }  else {
+
+
+                 if (!response.success) {
                    errorMessage(response.message)
                    setLoading(false)
                    return
@@ -39,9 +56,19 @@ export function useFetch<T>({
            successMessage(response.message)
             setData(response.data);
 
-        } catch (err: any) {
 
+
+            }
+                  
+
+
+
+           
+
+        } catch (err: any) {
+            errorMessage(err?.message)
             setError(err?.message || "Something went wrong");
+            setData([])
 
         } finally {
 

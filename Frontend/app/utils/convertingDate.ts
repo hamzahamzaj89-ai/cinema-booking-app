@@ -30,7 +30,7 @@ export const formattingDate = (date: Date) => {
   const year = formattedDate?.getFullYear();
 
    return {
-    day , month , weekday
+    day , month , weekday, 
    }
 };
 

@@ -3,7 +3,7 @@ import React from 'react'
 import { LucideIcon, Ticket } from 'lucide-react-native'
 import clsx from 'clsx';
 interface Props {
-   Icon: LucideIcon | null;
+   Icon?: LucideIcon | null;
    text?: string | null;
    disabled?: boolean | null;
   onPress: () => void;

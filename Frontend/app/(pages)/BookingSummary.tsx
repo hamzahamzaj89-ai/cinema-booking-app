@@ -7,14 +7,40 @@ import PaymentDetailCard from '../components/BookingSummary/PaymentDetailCard'
 import CustomButton from '../components/CustomButton'
 import { CreditCard } from 'lucide-react-native'
 import { router } from 'expo-router'
+import useMovieStore from '../store/movieStore'
 
 const BookingSummary = () => {
+
+  const selectedMovie = useMovieStore((state) => state.selectedMovie)
+
+  
+
+
+
+
+  const handleAddressPage = () => {
+
+     
+         
+
+
+    router.push("/(pages)/AddressPage")
+
+
+  }
+
+
+
+  
   return (
     <View className='flex-1 bg-bg p-4'>
    
 
    <ScrollView 
       showsVerticalScrollIndicator={false}
+      style={{
+        marginBottom: 40
+      }}
    >
 
 
@@ -23,14 +49,11 @@ const BookingSummary = () => {
 
 
         <MovieInfoCard
-          title='Deadpool & Wolverine'
-          poster="https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg"
-          genre="• Action • comedy"
-          rating= {4}
-          runtime='2h 35min'
-
-
-        
+          title= {`${selectedMovie?.title}`}
+          poster={`${process.env.EXPO_PUBLIC_TMDB_URL}${selectedMovie?.backdropPath}`}
+          genre={selectedMovie?.genres as string[]}
+          rating= {selectedMovie?.rating as number}
+          runtime={selectedMovie?.runtime as number}
         />
 
 
@@ -48,7 +71,7 @@ const BookingSummary = () => {
 
                <CustomButton
             Icon={CreditCard}
-            onPress={() => router.push("/(pages)/AddressPage")}
+            onPress={() => handleAddressPage()}
           />
             </View>
       </SafeAreaView>

@@ -1,7 +1,7 @@
 export interface IScreenShowTime {
   _id: string;
-  startTime: string;
-  endTime: string;
+  startTime: Date;
+  endTime: Date;
   format: string;
   language: string;
 }

@@ -2,6 +2,8 @@ import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import Toast from "react-native-toast-message";
 import * as NavigationBar from "expo-navigation-bar";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 import "../global.css";
 import {
   Poppins_400Regular,
@@ -51,7 +53,12 @@ export default function RootLayout() {
 
                         <ProtectedRoutes>
 
+                          <GestureHandlerRootView style={{ flex: 1 }}>
+
                           <Stack screenOptions={{headerShown: false}}/>
+
+
+                          </GestureHandlerRootView>
                  
                         </ProtectedRoutes>
 

@@ -3,9 +3,10 @@ import { Pressable, Text, View } from "react-native";
 import useBookingStore from "../store/bookingStore";
 import { useIndexStore } from "../store/indexStore";
 import { formatTime } from "../utils/convertingDate";
+import { IScreenShowTime } from "../interface/IShowTimeDetail";
 
 interface Props {
-  item: any;
+  item: IScreenShowTime;
   selected: boolean;
   onPress: () => void;
   index: number;
@@ -35,7 +36,7 @@ export default function TimeCard({
 
 
 
-    const time =  formatTime(item?.startTime)
+    const time =  formatTime(item.startTime)
 
     const [number , status] = time.split(" ")
 

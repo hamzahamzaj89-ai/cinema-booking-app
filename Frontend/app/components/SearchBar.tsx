@@ -2,9 +2,21 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import React from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Ionicons } from '@expo/vector-icons';
+import { GestureResponderEvent } from 'react-native-modal';
+
+interface Props {
+  onPress: () => void
+}
 
 
-const SearchBar = () => {
+const SearchBar = ({onPress}: Props) => {
+
+
+  const handlePress = () => {
+
+
+       onPress()
+  }
 
 
     return (
@@ -25,7 +37,7 @@ const SearchBar = () => {
       </View>
 
       {/* Filter Button */}
-      <TouchableOpacity className="w-14 h-[3.1rem] rounded-md bg-buttonbg items-center justify-center shadow-lg">
+      <TouchableOpacity onPress={() => handlePress()} className="w-14 h-[3.1rem] rounded-md bg-buttonbg items-center justify-center shadow-lg">
         <Ionicons
           name="options-outline"
           size={24}

@@ -1,3 +1,4 @@
+import api from "../apis/axios";
 import { errorMessage } from "../utils/ToastMessages";
 
 export const SeatLayout = async (showTimeId:string) => {
@@ -9,20 +10,18 @@ export const SeatLayout = async (showTimeId:string) => {
       return   errorMessage("Please enter the branchId or movieId")
                
         }
+
+        const response = await api.get(`/showTime/seats/showTime/${showTimeId}`)
        
 
-      const seatLayout = await fetch(`http://192.168.100.20:5000/api/showTime/seats/showTime/6a5658bf444044742ea4d305`)
-          console.log(seatLayout)
-      const res = await seatLayout.json();
 
 
-      return res
+      return response.data
 
 
         
     } catch (error: any) {
-        console.log(error)
-         throw new Error(error)
+         throw new Error(error?.response?.data?.message)
     }
 
 

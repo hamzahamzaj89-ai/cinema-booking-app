@@ -23,7 +23,7 @@ export const useShowtimes = () => {
 
          console.log(branch)
 
-      const res:any = await fetch(`${process.env.EXPO_PUBLIC_BASE_URL}/showTime/get/branch/${branch.id}?page=0`);
+      const res:any = await fetch(`${process.env.EXPO_PUBLIC_BASE_URL}/showTime/get/branch/${branch._id}?page=0`);
 
           
         const response = await res.json();

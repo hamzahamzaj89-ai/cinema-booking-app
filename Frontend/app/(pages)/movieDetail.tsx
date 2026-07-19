@@ -30,8 +30,8 @@ const movieDetail = () => {
 
     //callbacks
     const fetchShowTimes = useCallback(() => {
-    return getShowTimes(branch?.id ?? null, movie?._id ?? null);
-}, [branch?.id, movie?._id]);
+    return getShowTimes(branch?._id , movie?._id );
+}, [branch?._id, movie?._id]);
 
 
 
@@ -42,6 +42,8 @@ const movieDetail = () => {
 
 
           
+
+
 
         if (loading) {
                return <Loader/>

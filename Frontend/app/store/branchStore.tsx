@@ -1,24 +1,18 @@
 import { create } from "zustand";
+import { IBranch } from "../interface/IBranch";
 
-interface Branch {
-
-    id: string;
-
-    name: string;
-    location: string
-}
 
 interface BranchStore {
 
-    branch: Branch | null;
+    branch: IBranch | null;
 
-    setBranch: (branch: Branch) => void;
+    setBranch: (branch: IBranch) => void;
 
 }
 
 export const useBranchStore = create<BranchStore>((set) => ({
 
-    branch: null,
+    branch:null,
 
     setBranch: (branch) =>
         set({

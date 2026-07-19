@@ -11,15 +11,37 @@ import {
 
 import SummaryRow from "./SummaryRow";
 import useBookingStore from "@/app/store/bookingStore";
+import { formatTime, formattingDate } from "@/app/utils/convertingDate";
+import { useBranchStore } from "@/app/store/branchStore";
 
 export default function BookingDetailCard({}) {
          
 
     const bookingStore = useBookingStore();
+    const branch = useBranchStore((state) => state.branch)
+    
+
+    if (!bookingStore) {
+         
+         return (
+          <>
+
+          <View className="mt-5 rounded-xl bg-field p-10 flex justify-start items-center">
+                  <Text className="font-poppins-bold">No information about the Booking</Text>
+          </View>
+          
+          
+          </>
+         )
+    }
 
 
-  const  date = bookingStore.date.date + " "+ bookingStore.date.month
-  const time = bookingStore?.time.time + " " +  bookingStore.time.status;
+    const {month , day} = formattingDate(bookingStore.date as Date)
+    const formattedTime = formatTime(bookingStore.time?.startTime as Date)
+    const timeArray = formattedTime.split(" ")
+
+  const  date = day + " " + month
+  const time = timeArray[0] + " " +  timeArray[1];
 
 
   return (
@@ -62,7 +84,7 @@ export default function BookingDetailCard({}) {
       <SummaryRow
         icon={<Building2 size={20} color="#8B5CF6" />}
         title="Branch"
-        value={"Islamabad Branch"}
+        value={branch?.name}
       />
 
 
@@ -76,7 +98,7 @@ export default function BookingDetailCard({}) {
       <SummaryRow
         icon={<Monitor size={20} color="#8B5CF6" />}
         title="Screen Room"
-        value={"Screen 4"}
+        value={bookingStore.screen?.name}
       />
 
     </View>

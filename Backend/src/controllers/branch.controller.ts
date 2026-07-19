@@ -66,3 +66,39 @@ export const createBranch: Controller = async (req, res, next) => {
 
 
 
+
+
+export const getAllBranches = async (
+  req: any,
+  res: any
+): Promise<void> => {
+  try {
+    const branches = await branchModel.find({
+      isActive: true,
+    })
+      .select(
+        "_id cinema name location city address"
+      )
+      .sort({ city: 1, name: 1 });
+
+
+    res.status(200).json({
+      success: true,
+      message:  "branches fetch successfullly",
+      
+      count: branches.length,
+      data: branches,
+    });
+
+     
+
+
+  } catch (error) {
+    console.error("Get Branches Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch branches.",
+    });
+  }
+};

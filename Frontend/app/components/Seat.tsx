@@ -64,11 +64,6 @@ const Seat = ({ item, key , seats , prices}: Props) => {
        return;
     }
 
-    console.log(prices[item.status])
-
-       
-    console.log(item)
-
 
    toggleSeat({...item , price:prices[item.status]})
      

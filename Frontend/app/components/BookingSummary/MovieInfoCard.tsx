@@ -4,13 +4,14 @@ import {
   Clock3,
   Star,
 } from "lucide-react-native";
+import { convertMinutes } from "@/app/utils/convertingDate";
 
 interface Props {
   poster: string;
   title: string;
-  genre: string;
+  genre: String[];
   rating: number;
-  runtime: string;
+  runtime: number;
 }
 
 export default function MovieInfoCard({
@@ -22,8 +23,10 @@ export default function MovieInfoCard({
 }: Props) {
 
 
+    
+
   return (
-    <View className="mx-1 rounded-xl bg-field p-3">
+    <View className="mx-1 rounded-xl rounded-tr-none bg-field ">
 
       <View className="flex-row ">
 
@@ -33,13 +36,13 @@ export default function MovieInfoCard({
           source={{
             uri: poster,
           }}
-          className="h-36 w-28 rounded-lg"
+          className="h-36 w-28 rounded-tl-xl  rounded-bl-"
           resizeMode="cover"
         />
 
         {/* Details */}
 
-        <View className="ml-3 flex-1 justify-between">
+        <View className="ml-3 flex-1 justify-between p-3 pl-1">
 
           <View>
 
@@ -50,9 +53,21 @@ export default function MovieInfoCard({
               {title}
             </Text>
 
-            <Text className="mt-1 text-sm text-text font-poppins">
-              {genre}
-            </Text>
+               <View  className="flex flex-row flex-wrap gap-2 pr-3">
+                
+            {
+              genre.map((text) => (
+                  <>
+                    <Text className="mt-0 text-sm text-text font-poppins">
+             • {text}
+            </Text>  
+                  
+                  </>
+              ))
+            }
+               </View>
+
+            
 
           </View>
 
@@ -83,10 +98,13 @@ export default function MovieInfoCard({
             <Clock3
               size={17}
               color="#8B5CF6"
+              style={{
+                marginBottom: 2
+              }}
             />
 
             <Text className="ml-2 font-poppins text-text mt-[2px]">
-              {runtime}
+              {convertMinutes(runtime)}
             </Text>
 
           </View>

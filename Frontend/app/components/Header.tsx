@@ -1,8 +1,9 @@
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { Building2, ChevronRight, MapPin } from "lucide-react-native";
+import { GestureResponderEvent } from "react-native-modal";
 
-export default function Header() {
+export default function Header({onPress} : {onPress: () => void}) {
   return (
     <View className=" rounded-3xl   p-5 pt-2 mx-3 mr-0 pr-2">
       {/* Header */}
@@ -27,6 +28,7 @@ export default function Header() {
         </View>
 
         <TouchableOpacity
+          onPress={(event:GestureResponderEvent ) => onPress()}
           activeOpacity={0.85}
           className="rounded-lg bg-violet px-5 py-2  border-0 border-violet-600 "
         >

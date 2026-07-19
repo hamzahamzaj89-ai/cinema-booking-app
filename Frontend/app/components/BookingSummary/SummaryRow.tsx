@@ -1,14 +1,10 @@
 import React from "react";
 import { Text, View } from "react-native";
 import SelectedSeats from "./SelectedSeats";
+import { ISeatByPrice } from "@/app/interface/ISeatLayout";
 
 
-interface Seats {
-    id:String;
-    status: String;
-    price: number;
 
-}
 interface Props {
   icon: React.ReactNode;
   title: string;
@@ -46,13 +42,13 @@ export default function SummaryRow({
 
 
         {title == "Seats" ?  ( <View className="mb-0 mt-1 flex-row flex-wrap">
-                {value.length > 0 && value?.map((seat:any) => (
+                {value.length > 0 && value?.map((seat:ISeatByPrice) => (
                   <View
-                    key={seat.id}
+                    key={seat.seatId}
                     className="mr-2 mb-2 rounded-lg bg-[#8B5CF6]/15 px-4 py-2"
                   >
                     <Text className="font-poppins-semibold text-[#8B5CF6]">
-                      {seat.id}
+                      {seat.seatId}
                     </Text>
                   </View>
                 ))}

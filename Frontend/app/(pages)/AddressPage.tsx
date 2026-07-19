@@ -15,8 +15,13 @@ import EmptyAddress from "../components/Address/EmptyAddress";
 import useBookingStore from "../store/bookingStore";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import useAuthStore from "../store/authStore";
+import InfoPage from "../components/InfoPage";
 
 export default function AddressPage() {
+
+
+    const session = useAuthStore((state) => state.session)
 
   const getGrandTotal = useBookingStore((state) => state.getGrandTotal)
 
@@ -31,6 +36,18 @@ export default function AddressPage() {
 
 
   const grandTotal = getGrandTotal();
+
+
+
+
+  if (session) {
+
+        <InfoPage text={""} link={""}/>
+
+  }
+
+
+
  
 
 
