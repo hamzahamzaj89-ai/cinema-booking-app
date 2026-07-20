@@ -1,6 +1,10 @@
 import api from "../apis/axios";
+import { InfiniteResponse } from "../interface/InfiniteResponse";
+import { IShowTime } from "../interface/IShowTime";
 
- export const getShowTimesMovies = async (branchId:string | undefined) => {
+ export const getShowTimesMovies = async (branchId:string | undefined , page :number)  => {
+
+
 
            if (!branchId) {
                   return
@@ -9,8 +13,8 @@ import api from "../apis/axios";
        try {
 
 
-         const response = await api.get(`/showTime/get/branch/${branchId}?page=0`);
-         return response.data;
+         const response = await api.get(`/showTime/get/branch/${branchId}?page=${page}`);
+         return response.data as Promise<any>;
 
 
 

@@ -11,7 +11,6 @@ interface UseFetchOptions<T> {
 export function useFetch<T>({
     fetchFunction,
     enabled = true,
-    append = false
     
 }: UseFetchOptions<T>) {
 
@@ -32,19 +31,10 @@ export function useFetch<T>({
 
 
 
-            if (append) {
 
-               if (!response.hasMore) {
+             
 
-                       errorMessage("No More Movies found")
-                       setLoading(false)
-                       return
-               }  
-
-
-               setData([...data , response.data])
-
-            }  else {
+         
 
 
                  if (!response.success) {
@@ -58,7 +48,7 @@ export function useFetch<T>({
 
 
 
-            }
+            
                   
 
 

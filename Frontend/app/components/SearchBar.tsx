@@ -5,11 +5,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { GestureResponderEvent } from 'react-native-modal';
 
 interface Props {
-  onPress: () => void
+  onPress: () => void;
+  onChangeText: (text:string) => void
 }
 
 
-const SearchBar = ({onPress}: Props) => {
+const SearchBar = ({onPress , onChangeText}: Props ) => {
 
 
   const handlePress = () => {
@@ -33,6 +34,7 @@ const SearchBar = ({onPress}: Props) => {
           placeholder="Search movies..."
           placeholderTextColor="#8B90A5"
           className="flex-1 ml-3 text-white text-base"
+          onChangeText={(text) => onChangeText(text)}
         />
       </View>
 

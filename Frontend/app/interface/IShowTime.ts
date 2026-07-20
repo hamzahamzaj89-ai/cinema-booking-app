@@ -14,8 +14,10 @@ export interface IShowTime {
   trailerKey: string;
   cast: string[];
   director: string;
-  status: "now_showing"| "coming_soon";
+  status?: "now_showing"| "coming_soon";
   isActive: boolean;
+  lastShowTimeStart: Date;
+  firstShowTimeStart: Date;
   createdAt: Date;
   updatedAt: Date;
 }

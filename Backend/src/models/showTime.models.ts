@@ -51,7 +51,6 @@ export interface IShowtime extends Document {
 
     bookedSeats: number;
 
-    status: "scheduled" | "running" | "completed" | "cancelled";
 
     isActive: boolean;
 }
@@ -120,16 +119,7 @@ const showTimeSchema = new Schema<IShowtime>(
             default: 0,
         },
 
-        status: {
-            type: String,
-            enum: [
-                "coming Soon",
-                "running",
-                "completed",
-            ],
-            default: "scheduled",
-        },
-
+      
         isActive: {
             type: Boolean,
             default: true,

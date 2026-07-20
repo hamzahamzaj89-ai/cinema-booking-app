@@ -22,13 +22,14 @@ import { convertingDate } from "../utils/convertingDate";
 import useBookingStore from "../store/bookingStore";
 import { useIndexStore } from "../store/indexStore";
 import { usePriceStore } from "../store/priceStore";
+import React from "react";
 
 
 
 
 
 
-export default function MovieCard({movie}: {movie:IShowTime}) {
+ function  MovieCard ({movie}: {movie:IShowTime})  {
 
   const setMovieId = useIndexStore((state) => state.setMovieId)
  const resetBooking = useBookingStore((state) => state.resetBooking)
@@ -37,6 +38,11 @@ export default function MovieCard({movie}: {movie:IShowTime}) {
 
   let hours:number;
   let minutes: number
+
+  const now = new Date()
+  const  firstShowTime = new Date(movie.firstShowTimeStart)
+
+  
 
 
 
@@ -65,9 +71,13 @@ export default function MovieCard({movie}: {movie:IShowTime}) {
   }
 
 
+
+  console.log( firstShowTime,  now)
+
+
   
   return (
-    <View className="w-full flex-col rounded-3xl border border-[#2B2B45] bg-[#141425] p-3">
+    <View className="w-full flex-col  rounded-3xl border border-[#2B2B45] bg-[#141425] p-3">
 
       {/* Poster */}
       <View className="relative object-cover">
@@ -81,10 +91,10 @@ export default function MovieCard({movie}: {movie:IShowTime}) {
           resizeMode="cover"
         />
 
-        <View className="absolute left-2 top-2 rounded-full bg-[#2A2030]/90 px-3 py-2 flex-row items-center">
-          <View className="mr-2 h-2.5 w-2.5 rounded-full bg-red-500" />
-          <Text className="font-poppins-medium text-xs text-white">
-            {movie.status}
+        <View className="absolute left-2 top-2 rounded-full bg-[#2A2030]/70 px-3 py-2 flex-row items-center">
+          <View className="mr-2 h-2.5 w-2.5 rounded-full mt-[1px] bg-red-500" />
+          <Text className="font-poppins-medium text-xs text-white pb-[1px]">
+            { firstShowTime >  now ? "coming_soon" : "now_showing"}
           </Text>
         </View>
 
@@ -99,7 +109,7 @@ export default function MovieCard({movie}: {movie:IShowTime}) {
       </View>
 
       {/* Right Side */}
-      <View className="ml-1 mt-3 flex-1 justify-between">
+      <View className="ml-1 mt-3  flex-1 justify-between">
 
         {/* Rating */}
         <View className="flex-row justify-end">
@@ -205,3 +215,7 @@ export default function MovieCard({movie}: {movie:IShowTime}) {
     </View>
   );
 }
+
+
+
+export default MovieCard;
