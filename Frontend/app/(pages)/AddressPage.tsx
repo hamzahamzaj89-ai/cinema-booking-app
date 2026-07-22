@@ -22,6 +22,8 @@ import { useFetch } from "../hooks/useFetch";
 import { getUserAddresses } from "../services/address.services";
 import { IAddress } from "../interface/IAddress";
 import useAddressStore from "../store/addressStore";
+import { Session } from "@supabase/supabase-js";
+import AddressCardLoader from "../components/Skeletons/AddressCardLoader";
 
 export default function AddressPage() {
 
@@ -41,10 +43,10 @@ export default function AddressPage() {
   const fetchUserAdresses = useCallback( 
     () => {
              
-       return getUserAddresses()
+       return getUserAddresses(session as Session)
        
  
-    } , []
+    } , [session]
 
   )
 
@@ -55,6 +57,7 @@ export default function AddressPage() {
 
 
 
+  //useEffect
 
    useEffect(() => {
 
@@ -70,19 +73,42 @@ export default function AddressPage() {
 
   if (!session) {
 
-    return   <InfoScreen text="To continue Booking Please Sign In"  buttonText="SignIn"/>
+    return   <InfoScreen text="To continue Booking Please Sign In"  buttonText="SignIn" onPress={() => {router.replace("/(auth)/Auth")}}/>
 
   }
 
+
+    
+  if (loading) {
+    return (
+      <>
+         <View className="flex-1 bg-bg p-4 py-10 ">
+
+
+            <AddressHeader
+          onBack={() => router.back()}
+          onAddAddress={() =>
+            router.push("/(pages)/CreateAddress")
+          }
+        />
+          <AddressCardLoader/>
+      <AddressCardLoader/>
+      <AddressCardLoader/>
+         </View>
+      
+      </>
+    )
+  }
 
 
  
 
   if (addresses.length === 0) {
 
-         return   <InfoScreen text="Please Create A Address to Continue With Booking"  buttonText="Create Address"/>
+         return   <InfoScreen text="Please Create A Address to Continue With Booking"  buttonText="Create Address" onPress={() => {router.push("/(pages)/CreateAddress")}}/>
 
   }
+
 
 
 
@@ -103,19 +129,12 @@ export default function AddressPage() {
         <AddressHeader
           onBack={() => router.back()}
           onAddAddress={() =>
-            router.push("/screens/CreateAddress")
+            router.push("/(pages)/CreateAddress")
           }
         />
 
-        {/* Empty State */}
 
-        {addresses.length === 0 ? (
-          <EmptyAddress
-            onAddAddress={() =>
-              router.push("/screens/CreateAddress")
-            }
-          />
-        ) : (
+       
           <>
             <FlatList
               data={addresses}
@@ -142,7 +161,6 @@ export default function AddressPage() {
               onProceed={() =>  {}}
             />
           </>
-        )}
 
       </View>
 

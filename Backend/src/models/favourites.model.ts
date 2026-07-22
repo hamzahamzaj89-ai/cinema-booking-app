@@ -1,7 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 
 export interface IFavoriteMovie extends Document {
-  clerkId: string;
+  userId: string;
   movieId: Schema.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
@@ -9,7 +9,7 @@ export interface IFavoriteMovie extends Document {
 
 const favoriteMovieSchema = new Schema<IFavoriteMovie>(
   {
-    clerkId: {
+    userId: {
       type: String,
       required: true,
       index: true,
@@ -34,7 +34,7 @@ const favoriteMovieSchema = new Schema<IFavoriteMovie>(
 
 // Prevent duplicate favorites
 favoriteMovieSchema.index(
-  { clerkId: 1, movieId: 1 },
+  { userId: 1, movieId: 1 },
   { unique: true }
 );
 

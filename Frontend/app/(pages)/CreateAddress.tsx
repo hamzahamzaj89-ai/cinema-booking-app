@@ -4,6 +4,8 @@ import {
   ScrollView,
   StatusBar,
   Switch,
+  Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -30,6 +32,11 @@ import { IAddress, IAddressFormData } from "../interface/IAddress";
 import { createUserAddress } from "../services/create.address.service";
 import { useFetch } from "../hooks/useFetch";
 import useAddressStore from "../store/addressStore";
+import useAuthStore from "../store/authStore";
+import { Session } from "@supabase/supabase-js";
+import { usePost } from "../hooks/usePost";
+import clsx from "clsx";
+import DefaultSelector from "../components/Address/DefaultSelector";
 
 export default function CreateAddress({ navigation }: any) {
 
@@ -37,7 +44,7 @@ export default function CreateAddress({ navigation }: any) {
   const [isDefault, setIsDefault] = useState(true);
 
   const addAddress = useAddressStore((state) => state.addAddress)
-
+  const session = useAuthStore((state) => state.session)
 
   const [form, setForm] = useState<IAddressFormData>({
     fullName: "",
@@ -54,9 +61,9 @@ export default function CreateAddress({ navigation }: any) {
 
    //callBack
 
-   const useCreateUserAddress = useCallback(() => {
+   const useCreateUserAddress = useCallback((data: IAddressFormData) => {
       
-            return createUserAddress(form)
+            return createUserAddress(data , session as Session)
 
    } ,[])
 
@@ -65,19 +72,24 @@ export default function CreateAddress({ navigation }: any) {
 
    //hook
 
-   const {loading , error , refetch , data:address } = useFetch<IAddress>({fetchFunction: useCreateUserAddress})
+   const {loading , error , postData , data:address } = usePost<IAddress , IAddressFormData>({fetchFunction: useCreateUserAddress })
 
+
+   
 
 
    useEffect(() => {
 
-    addAddress(address[0])
+   address  && addAddress(address)
 
    } , [address])
 
+
+
+
   
   return (
-    <View className="flex-1 bg-bg">
+    <View className="flex-1 bg-bg ">
         <SafeAreaView style={{ flex: 1 }}>
 
       <StatusBar
@@ -105,14 +117,14 @@ export default function CreateAddress({ navigation }: any) {
         <SectionTitle title="Personal Information" />
 
         <AddressInput
-          icon={<UserRound color="#8B5CF6" />}
+          icon={<UserRound color="#3b82f6" />}
           placeholder="Full Name"
           value={form.fullName}
           onChangeText={(v) => setForm({...form , fullName: v})}
         />
 
         <AddressInput
-          icon={<Phone color="#8B5CF6" />}
+          icon={<Phone color="#3b82f6" />}
           placeholder="Phone Number"
           value={form.phone}
           onChangeText={(v) => setForm({...form , phone: v})}
@@ -122,21 +134,21 @@ export default function CreateAddress({ navigation }: any) {
 
        
         <AddressInput
-          icon={<Building2 color="#8B5CF6" />}
+          icon={<Building2 color="#3b82f6" />}
           placeholder="City"
           value={form.city}
           onChangeText={(v) => setForm({...form , city: v})}
         />
 
         <AddressInput
-          icon={<MapPinned color="#8B5CF6" />}
+          icon={<MapPinned color="#3b82f6" />}
           placeholder="Area / Society"
           value={form.area}
           onChangeText={(v) => setForm({...form, area: v})}
         />
 
         <AddressInput
-          icon={<House color="#8B5CF6" />}
+          icon={<House color="#3b82f6" />}
           placeholder=" Address"
           value={form.address}
           onChangeText={(v) => setForm({...form , address: v})}
@@ -169,6 +181,13 @@ export default function CreateAddress({ navigation }: any) {
 
         </View>
 
+
+           <DefaultSelector 
+           
+           value={form.isDefault}
+           onChange={(value) => setForm({...form , isDefault: value} )}
+           />
+
         
 
      
@@ -179,7 +198,8 @@ export default function CreateAddress({ navigation }: any) {
             <View className="px-4 ">
                   <CustomButton 
                   Icon={Save}
-                  onPress={() => {refetch}}
+                  disabled={loading}
+                  onPress={() => {postData(form)}}
                   
                   />
             </View>

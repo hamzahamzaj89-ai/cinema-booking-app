@@ -22,53 +22,6 @@ import { IShowTime } from "@/app/interface/IShowTime";
 import Loader from "../Loader";
 import { useDebounce } from "@/app/hooks/useDebounce";
 
-const movies = [
-  {
-    id: "1",
-    title: "Dune: Part Two",
-    poster:
-      "https://image.tmdb.org/t/p/w500/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg",
-    genres: ["Sci-Fi", "Adventure"],
-    rating: 8.6,
-    status: "now_showing",
-  },
-  {
-    id: "2",
-    title: "Deadpool & Wolverine",
-    poster:
-      "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
-    genres: ["Action", "Comedy"],
-    rating: 8.2,
-    status: "coming_soon",
-  },
-  {
-    id: "3",
-    title: "Mission Impossible",
-    poster:
-      "https://image.tmdb.org/t/p/w500/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
-    genres: ["Action", "Thriller"],
-    rating: 8.1,
-    status: "now_showing",
-  },
-  {
-    id: "4",
-    title: "Kung Fu Panda 4",
-    poster:
-      "https://image.tmdb.org/t/p/w500/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg",
-    genres: ["Animation", "Comedy"],
-    rating: 7.9,
-    status: "now_showing",
-  },
-  {
-    id: "5",
-    title: "Mufasa",
-    poster:
-      "https://image.tmdb.org/t/p/w500/lurEK87kukWNaHd0zYnsi3yzJrs.jpg",
-    genres: ["Adventure", "Drama"],
-    rating: 7.8,
-    status: "coming_soon",
-  },
-];
 
 export default function SearchResult({search}: {search:string}) {
 
@@ -98,7 +51,7 @@ export default function SearchResult({search}: {search:string}) {
     loadMore,
 } = useInfiniteSearch<IShowTime>({
     fetchFunction: fetchSearchShowTimesMovies,
-    enabled: !!branch
+    enabled: !!branch && debounceSearch !== ""
 });
 
 

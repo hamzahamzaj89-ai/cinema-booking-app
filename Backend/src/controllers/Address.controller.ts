@@ -15,6 +15,13 @@ export const createAddress: Controller = async (req: any, res, next) => {
     });
 
 
+
+    if (addressCount > 5) {
+       
+      throw  new AppError("Only 4 Address allowed" , 409)
+      return
+
+    }
     
 
     const  isDefault= addressCount === 0 ? true : req.body.isDefault;
@@ -33,8 +40,10 @@ export const createAddress: Controller = async (req: any, res, next) => {
       );
     }
 
+    console.log(req.body)
+
     const address = await addressModel.create({
-      user: req.auth.userId,
+      user: req.user.id,
       fullName: req.body.fullName,
       phone: req.body.phone,
       city: req.body.city,
@@ -48,8 +57,12 @@ export const createAddress: Controller = async (req: any, res, next) => {
     res.status(201).json({
       success: true,
       message: "Address created successfully.",
-      address,
+      data: address
     });
+
+
+
+
   } catch (error) {
     next(error);
   }

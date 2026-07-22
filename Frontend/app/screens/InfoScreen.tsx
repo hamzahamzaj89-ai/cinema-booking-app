@@ -5,9 +5,10 @@ import CustomButton from "../components/CustomButton";
 
 interface Props {
     text : string;
-    buttonText: string
+    buttonText: string;
+    onPress: () => void
 }
-export default function InfoScreen({text , buttonText} : Props) {
+export default function InfoScreen({text , buttonText , onPress} : Props) {
   return (
     <SafeAreaView className="flex-1 bg-bg px-6 justify-center">
 
@@ -37,7 +38,7 @@ export default function InfoScreen({text , buttonText} : Props) {
       <View className="mt-5">
           <CustomButton
       text ={buttonText}
-      onPress = {() => {}}
+      onPress = {onPress}
       Icon = {ArrowRight}/>
       </View>
     </SafeAreaView>

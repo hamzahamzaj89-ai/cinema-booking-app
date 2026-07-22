@@ -25,7 +25,7 @@ export default function AddressHeader({ onBack, onAddAddress }: Props) {
             <CustomButton
             text = {"Add Address"}
              Icon={PlusCircle}
-             onPress={() => {}}
+             onPress={() => {onAddAddress()}}
             />
         </View>
     </View>

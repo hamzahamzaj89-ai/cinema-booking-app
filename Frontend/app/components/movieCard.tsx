@@ -1,9 +1,4 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import {
   Star,
   Calendar,
@@ -22,70 +17,110 @@ import { convertingDate } from "../utils/convertingDate";
 import useBookingStore from "../store/bookingStore";
 import { useIndexStore } from "../store/indexStore";
 import { usePriceStore } from "../store/priceStore";
-import React from "react";
+import React, { use, useCallback, useEffect } from "react";
+import { AddUserfavourites } from "../services/addFavourites.service";
+import useAuthStore from "../store/authStore";
+import { Session } from "@supabase/supabase-js";
+import { usePost } from "../hooks/usePost";
+import { useFetch } from "../hooks/useFetch";
+import useFavoriteStore from "../store/FavouriteStore";
+
+function MovieCard({ movie }: { movie: IShowTime }) {
 
 
 
 
 
 
- function  MovieCard ({movie}: {movie:IShowTime})  {
+  const setMovieId = useIndexStore((state) => state.setMovieId);
+  const resetBooking = useBookingStore((state) => state.resetBooking);
+  const setSelectedMovie = useMovieStore((state) => state.setSelectedMovie);
+  const clearPrices = usePriceStore((state) => state.clearPrices);
+  const session = useAuthStore((state) => state.session)
+  const addFavorite = useFavoriteStore((state) => state.addFavorite)
+  const favorites = useFavoriteStore((state) => state.favorites) 
+  const removeFavorite = useFavoriteStore((state) => state.removeFavorite)
 
-  const setMovieId = useIndexStore((state) => state.setMovieId)
- const resetBooking = useBookingStore((state) => state.resetBooking)
-  const  setSelectedMovie = useMovieStore((state) => state.setSelectedMovie)
-      const clearPrices = usePriceStore((state) => state.clearPrices)
-
-  let hours:number;
-  let minutes: number
-
-  const now = new Date()
-  const  firstShowTime = new Date(movie.firstShowTimeStart)
-
-  
-
-
-
-  function convertMinutes(minutes: number) {
-   hours = Math.floor(minutes / 60);
-   minutes = minutes % 60;
-
-  return `${hours}h ${minutes}m`;
-}
-
-
-  const runtime = convertMinutes(movie.runtime)
+    //callback
+  const postUserfavourite = useCallback((data:string) => {
+        return AddUserfavourites(session as Session , data)
+  } , [session])
 
 
 
-  const handleShowTime = () => {
-      setMovieId(movie._id)
-      resetBooking()
-      clearPrices()
-      setSelectedMovie(movie)
-  
+   //postHook
 
-     router.push("/(pages)/movieDetail")
+   const {loading , error , postData} = usePost<string , string>({fetchFunction: postUserfavourite});
+
+
+
+
+  const handleFavourite = () => {
+
  
+ 
+    if (favorites.has(movie._id)) {
+          removeFavorite(movie._id.toString())
+    } else {
+      addFavorite(movie._id.toString())
+
+    }
+
+       postData(movie._id)
+
+     
+   
+
+    
+
 
   }
 
 
 
-  console.log( firstShowTime,  now)
 
 
-  
+
+
+
+
+
+
+
+  let hours: number;
+  let minutes: number;
+
+  const now = new Date();
+  const firstShowTime = new Date(movie.firstShowTimeStart);
+
+  function convertMinutes(minutes: number) {
+    hours = Math.floor(minutes / 60);
+    minutes = minutes % 60;
+
+    return `${hours}h ${minutes}m`;
+  }
+
+  const runtime = convertMinutes(movie.runtime);
+
+  const handleShowTime = () => {
+    setMovieId(movie._id);
+    resetBooking();
+    clearPrices();
+    setSelectedMovie(movie);
+
+    router.push("/(pages)/movieDetail");
+  };
+
+  console.log(firstShowTime, now);
+
   return (
     <View className="w-full flex-col  rounded-3xl bg-[#141425] p-3">
-
       {/* Poster */}
       <View className="relative object-cover">
         <Image
           source={{
-            uri: `https://image.tmdb.org/t/p/w1280${movie.backdropPath}`
+            uri: `https://image.tmdb.org/t/p/w1280${movie.backdropPath}`,
           }}
-
 
           className="h-[16rem] object-cover rounded-2xl"
           resizeMode="cover"
@@ -94,50 +129,47 @@ import React from "react";
         <View className="absolute left-2 top-2 rounded-full bg-[#2A2030]/70 px-3 py-2 flex-row items-center">
           <View className="mr-2 h-2.5 w-2.5 rounded-full mt-[1px] bg-red-500" />
           <Text className="font-poppins-medium text-xs text-white pb-[1px]">
-            { firstShowTime >  now ? "coming_soon" : "now_showing"}
+            {firstShowTime > now ? "coming_soon" : "now_showing"}
           </Text>
         </View>
 
-
-    
-         <View className=" absolute right-2 top-0 flex-row items-center rounded-2xl o px-4 py-2">
-            <Star size={18} color="#FACC15" fill="#FACC15" />
-            <Text className="ml-1 font-poppins-semibold text-lg text-white">
-              {movie.rating}
-            </Text>
-          </View>
+        <View className=" absolute right-2 top-0 flex-row items-center rounded-2xl o px-4 py-2">
+          <Star size={18} color="#FACC15" fill="#FACC15" />
+          <Text className="ml-1 font-poppins-semibold text-lg text-white">
+            {movie.rating}
+          </Text>
+        </View>
       </View>
 
       {/* Right Side */}
       <View className="ml-1 mt-3  flex-1 justify-between">
-
         {/* Rating */}
-        <View className="flex-row justify-end">
-         
-        </View>
+        <View className="flex-row justify-end"></View>
 
         {/* Movie Info */}
         <View className="w-[100%]">
-          <Text  numberOfLines={2} className="font-poppins-bold w-[100%] text-ellipsis text-4xl text-white">
+          <Text
+            numberOfLines={2}
+            className="font-poppins-bold w-[100%] text-ellipsis text-4xl text-white"
+          >
             {movie.title}
           </Text>
 
           <View className="mt-3 font-poppins   flex flex-row gap-x-2 text-[#9B9BB5]">
-
-            {
-              movie.genres.map((item) => (
-                <>
-                   <Text className="text-[#9B9BB5] font-poppins text-base">• {item}</Text>
-                </>
-              ))
-            }
+            {movie.genres.map((item) => (
+              <>
+                <Text className="text-[#9B9BB5] font-poppins text-base">
+                  • {item}
+                </Text>
+              </>
+            ))}
           </View>
 
           <Text
             numberOfLines={3}
             className="mt-5 leading-7 font-poppins text-base text-[#8C8CA6]"
           >
-           {movie.overview}
+            {movie.overview}
           </Text>
         </View>
 
@@ -146,7 +178,6 @@ import React from "react";
 
         {/* Bottom */}
         <View className="flex-row px-2 justify-between items-center ">
-
           {/* Release */}
           <View className="flex-row  items-center">
             <View className="rounded-2xl pl-2">
@@ -164,8 +195,6 @@ import React from "react";
             </View>
           </View>
 
-         
-
           {/* Duration */}
           <View className="flex-row items-center">
             <View className="rounded-full border border-blue-500 p-2">
@@ -173,49 +202,40 @@ import React from "react";
             </View>
 
             <View className="ml-3">
-              <Text className="font-poppins-medium text-white">
-                {runtime}
-              </Text>
+              <Text className="font-poppins-medium text-white">{runtime}</Text>
 
               <Text className="font-poppins text-xs text-[#8C8CA6]">
                 Duration
               </Text>
             </View>
           </View>
-
-
-       
-      
-
         </View>
 
-
-           <View  className="mt-5 flex flex-row gap-x-2 ">
-                {/* Button */}
-             <View className="w-[83%] ">
-            <CustomButton text={"Book Tickets"} Icon={Ticket} onPress={() => {handleShowTime()}}/>
-
-             </View>
-
-
-           <TouchableOpacity
-              activeOpacity={0.8}
-              className="py-3 px-3 mt-[2px] items-center justify-center rounded-lg mb-2  border-[#8B5CF6] bg-[#1B1B31]"
-         >
-             <Heart
-              size={22}
-              color="#3b82f6"
-              strokeWidth={2.2}
+        <View className="mt-5 flex flex-row gap-x-2 ">
+          {/* Button */}
+          <View className="w-[83%] ">
+            <CustomButton
+              text={"Book Tickets"}
+              Icon={Ticket}
+              onPress={() => {
+                handleShowTime();
+              }}
             />
-
-           </TouchableOpacity>
           </View>
 
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {handleFavourite()}}
+            className="py-3 px-3 mt-[2px] items-center justify-center rounded-lg mb-2  border-[#8B5CF6] bg-[#1B1B31]"
+          >
+              {favorites.has(movie._id.toString()) ? (<>
+                 <Heart fill="#3b82f6" size={22} color="#3b82f6"/>
+              </>) : (<Heart size={22} color="#3b82f6" strokeWidth={2.2} />) }
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 }
-
-
 
 export default MovieCard;

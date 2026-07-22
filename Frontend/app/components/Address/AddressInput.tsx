@@ -18,7 +18,7 @@ export default function AddressInput({
   onChangeText,
 }: Props) {
   return (
-    <View className="mb-4 flex-row items-center rounded-lg border  bg-[#1B1B31] px-5">
+    <View className="mb-4 flex-row items-center rounded-lg    bg-field px-5">
 
        <View className="mb-[1px]">
         {icon}
@@ -27,10 +27,16 @@ export default function AddressInput({
       <TextInput
         value={value}
         placeholder={placeholder}
-        placeholderTextColor="#8C8CA5"
+        placeholderTextColor="#9B9BB5"
         onChangeText={onChangeText}
         
         className="ml-4 flex-1 py-5 pt-6 pb-4  h-[100%]  font-poppins text-base  text-white"
+
+              style={{
+    height: 56,
+    textAlignVertical: "center",
+  }}
+         
       />
 
     </View>

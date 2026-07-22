@@ -85,32 +85,8 @@ export const createShowTime: Controller = async (req, res, next) => {
       isActive,
     });
 
-    // ===========================
-    // Update Movie Showtimes
-    // ===========================
+  
 
-    // Set firstShowTime only once
-    if (!existingMovie.firstShowTimeStart) {
-      existingMovie.firstShowTimeStart = new Date(startTime);
-    }
-
-    // Update firstShowTime if an earlier showtime is added
-    if (
-      existingMovie.firstShowTimeStart &&
-      new Date(startTime) < existingMovie.firstShowTimeStart
-    ) {
-      existingMovie.firstShowTimeStart = new Date(startTime);
-    }
-
-    // Always keep the latest lastShowTime
-    if (
-      !existingMovie.lastShowTimeStart ||
-      new Date(startTime) > existingMovie.lastShowTimeStart
-    ) {
-      existingMovie.lastShowTimeStart = new Date(startTime);
-    }
-
-    await existingMovie.save();
 
     res.status(201).json({
       success: true,

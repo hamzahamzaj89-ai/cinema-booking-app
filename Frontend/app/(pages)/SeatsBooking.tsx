@@ -14,12 +14,14 @@ import { useFetch } from "../hooks/useFetch";
 import { IPrice, ISeatRow } from "../interface/ISeatLayout";
 import { SeatPrices } from "../services/SeatPrices.services";
 import { SeatType, usePriceStore } from "../store/priceStore";
+import useAuthStore from "../store/authStore";
+import { errorMessage } from "../utils/ToastMessages";
 
 const SeatsBooking = () => {
   
   const time = useBookingStore((state) => state.time);
   const setPrices = usePriceStore((state) => state.setPrices)
-
+  const seats =  useBookingStore((state) => state.seats)
 
 
 
@@ -69,6 +71,21 @@ const SeatsBooking = () => {
 
 
 
+  //functions
+
+  const handlePage = () => {
+
+    if (seats.length === 0){
+      return  errorMessage("Please Select seats to proceed")
+    }
+
+
+    
+   router.push("/(pages)/BookingSummary") 
+  }
+
+
+
 
   return (
     <View className="bg-bg flex-1 relative pt-5">
@@ -91,7 +108,7 @@ const SeatsBooking = () => {
           <View className="w-[100%] flex justify-center items-center mt-6 px-4">
             <CustomButton
               Icon={BadgeCheck}
-              onPress={() => router.push("/(pages)/BookingSummary")}
+              onPress={() => handlePage()}
             />
           </View>
         </SafeAreaView>

@@ -21,7 +21,7 @@ export default function LabelChip({
       onPress={onPress}
       className={`mr-3 rounded-lg  px-6 py-3 ${
         selected
-          ? "border-[#8B5CF6] bg-[#8B5CF6]"
+          ? "border-[#8B5CF6] bg-[#3b82f6]"
           : "border-[#2B2B42] bg-[#1B1B31]"
       }`}
     >

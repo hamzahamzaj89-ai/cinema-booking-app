@@ -1,15 +1,15 @@
+import { Session } from "@supabase/supabase-js";
 import api from "../apis/axios";
 import { InfiniteResponse } from "../interface/InfiniteResponse";
 import { IShowTime } from "../interface/IShowTime";
 import useAuthStore from "../store/authStore";
 import { errorMessage } from "../utils/ToastMessages";
 
- export const getUserAddresses = async ()  => {
+ export const getUserAddresses = async (session:Session)  => {
 
+      console.log("hello")
 
-    const session = useAuthStore((state)  => state.session)
-
-    if (session ) {
+    if (!session) {
         errorMessage("Cannot proceed with session")
     }
 
@@ -24,7 +24,6 @@ import { errorMessage } from "../utils/ToastMessages";
                  headers: {Authorization: `Bearer ${session?.access_token}` },
         
          });
-
 
 
          return response.data;

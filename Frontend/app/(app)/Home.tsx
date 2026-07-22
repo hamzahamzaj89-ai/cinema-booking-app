@@ -35,6 +35,12 @@ import LoadMoreLoader from "../components/LoadMoreLoader";
 import SearchResult from "../components/SearchResultCard/SearchCard";
 import { searchShowTimeMovies } from "../services/searchShowTimesMovies.services";
 import useAuthStore from "../store/authStore";
+import { getUserFavorites } from "../services/getFavourites.service";
+import { Session } from "@supabase/supabase-js";
+import useFavoriteStore from "../store/FavouriteStore";
+
+
+
 
 const Home = () => {
   useInitializeBranch();
@@ -44,6 +50,7 @@ const Home = () => {
   const [visible, setVisible] = useState(false);
   const [searchInput , setSearchInput] = useState<string>("")
   const session = useAuthStore((state) => state.session)
+  const setFavorites = useFavoriteStore((state) => state.setFavorites)
   //calBacks
 
   const fetchShowTimeMovies = useCallback(
@@ -53,11 +60,18 @@ const Home = () => {
     [branch?._id],
   );
 
+  const fetchUserFavourites = useCallback(
+    () => {
+      return getUserFavorites(session as Session);
+    },
+    [session],
+  );
 
 
-  useEffect(() => {
-    console.log(session?.access_token)
-  } , [session])
+
+
+
+
 
 
 
@@ -84,10 +98,23 @@ const Home = () => {
 
 
 
+  const {
+    data:favourites
+  } = useFetch<any>({fetchFunction: fetchUserFavourites , enabled: !!session})
 
 
 
 
+
+
+   useEffect(() => {
+    console.log(favourites)
+  if (favourites.length < 0) return;
+
+  setFavorites(
+    favourites.map((favorite) => favorite.movieId)
+  );
+}, [favourites]);
 
 
 

@@ -15,8 +15,7 @@ export interface IMovie extends Document {
   trailerKey?: string;
   cast: string[];
   director?: string;
-  lastShowTimeStart: Date;
-  firstShowTimeStart: Date;
+
 
 
   isActive: boolean;
@@ -95,15 +94,7 @@ const movieSchema = new Schema<IMovie>(
     },
 
 
-    firstShowTimeStart: {
-        type : Date,
-        defaul: null,
-    },
-   
-    lastShowTimeStart: {
-         type : Date,
-         default : null
-    },
+
 
 
 

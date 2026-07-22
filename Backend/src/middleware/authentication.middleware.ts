@@ -4,8 +4,8 @@ export const protectAddress = async (req:any, res:any, next:any) => {
 
     const supabase: any = configSupabase()
   try {
+   
     const token = req.headers.authorization?.replace("Bearer ", "");
-
     if (!token) {
       return res.status(401).json({
         success: false,
