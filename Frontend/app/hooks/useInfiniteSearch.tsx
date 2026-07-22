@@ -5,18 +5,20 @@ import { errorMessage } from "../utils/ToastMessages";
 
 interface Props<T> {
     fetchFunction: (
-        page: number
+        page: number,
+
     ) => Promise<any>;
 
     enabled?: boolean;
 }
 
-export function useInfiniteFetch<T>({
+export function useInfiniteSearch<T>({
     fetchFunction,
     enabled = true,
 }: Props<T>) {
 
     const [data, setData] = useState<T[]>([]);
+
 
     const [page, setPage] = useState(0);
 
@@ -32,7 +34,8 @@ export function useInfiniteFetch<T>({
 
     const fetchPage = useCallback(
         async (
-            pageNumber: number,
+              pageNumber: number,
+          
             append = false
         ) => {
 
@@ -45,15 +48,17 @@ export function useInfiniteFetch<T>({
                 const response =
                     await fetchFunction(pageNumber);
 
-                if (!response.success) {
 
-                    setError(response.message ?? "Failed");
+
+                if (!response?.success) {
+
+                    setError(response?.message ?? "Failed");
 
                     return;
                 }
 
                 setHasNextPage(
-                    response.hasNextPage
+                    response?.hasNextPage
                 );
 
                 setPage(pageNumber);
@@ -66,7 +71,7 @@ export function useInfiniteFetch<T>({
                     ]);
 
                 } else {
-
+                  
                     setData(response?.data);
 
                 }
@@ -107,7 +112,6 @@ export function useInfiniteFetch<T>({
         )
             return;
 
-            console.log("hello")
 
         fetchPage(page + 1, true);
 
@@ -117,11 +121,12 @@ export function useInfiniteFetch<T>({
 
         setRefreshing(true);
 
-        fetchPage(0);
+        fetchPage(0 );
 
     };
 
     return {
+    
 
         data,
 

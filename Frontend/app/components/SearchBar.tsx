@@ -39,7 +39,7 @@ const SearchBar = ({onPress , onChangeText}: Props ) => {
       </View>
 
       {/* Filter Button */}
-      <TouchableOpacity onPress={() => handlePress()} className="w-14 h-[3.1rem] rounded-md bg-buttonbg items-center justify-center shadow-lg">
+      <TouchableOpacity onPress={() => handlePress()} className="w-14 h-[3.1rem] rounded-md bg-blue-500 items-center justify-center shadow-lg">
         <Ionicons
           name="options-outline"
           size={24}

@@ -83,7 +83,7 @@ const Seat = ({ item, key , seats , prices}: Props) => {
            "w-8 h-8 rounded-lg justify-center items-center m-[3px]",
             item.bookingStatus === "booked" && "bg-red-500",
             item.bookingStatus === "available" && ( (item.status === "VIP"  &&   "bg-amber-400")  || (item.status === "Premium" || item.status === "Standard") && "bg-slate-600" )    ,
-            seats.find((seat) => seat.seatId === item.seatId) &&  "bg-violet-600"
+            seats.find((seat) => seat.seatId === item.seatId) &&  "bg-blue-500"
           
 
         )}

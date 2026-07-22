@@ -1,6 +1,8 @@
 import {
   BriefcaseBusiness,
   CheckCircle2,
+  Circle,
+  CircleCheck,
   House,
   MapPinned,
 } from "lucide-react-native";
@@ -10,33 +12,35 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 import { Address } from "../../types/address";
 import clsx from "clsx";
+import { IAddress } from "@/app/interface/IAddress";
 
 interface Props {
-  address: Address;
+  address: IAddress;
   selected: boolean;
   onPress: () => void;
 }
 
 export default function AddressCard({ address, selected, onPress }: Props) {
-  const fullAddress = `${address.street}, ${address.area}, ${address.city}, ${address.country}`;
+  const fullAddress = `${address.address}, ${address.city}, Pakistan`;
 
   return (
     <TouchableOpacity
       activeOpacity={0.9}
       onPress={onPress}
       className={clsx(
-        "mb-4 rounded-xl border p-5 ",
+        "mb-4 rounded-xl  p-5 ",
 
         selected ? " bg-field"  : " bg-field",
+        selected ? " border-[3px] border-blue-500": ""
       )}
     >
       <View className="flex-row justify-between">
         <View className="flex-row items-center">
-          <View className="h-12 w-12 items-center justify-center rounded-2xl bg-[#2A2A40]">
+          <View className=" items-center justify-center rounded-2xl bg-">
             {address.label === "Home" ? (
-              <House color="#8B5CF6" size={22} />
+              <House color="#3b82f6" size={32} />
             ) : (
-              <BriefcaseBusiness color="#8B5CF6" size={22} />
+              <BriefcaseBusiness color="#3b82f6" size={32} />
             )}
           </View>
 
@@ -49,7 +53,15 @@ export default function AddressCard({ address, selected, onPress }: Props) {
           </View>
         </View>
 
-        {selected && <CheckCircle2 color="#8B5CF6" fill="#8B5CF6" />}
+        {selected ?
+<CircleCheck
+  size={28}
+  color="#3b82f6"
+  strokeWidth={2.5}
+/>  : <Circle
+  size={28}
+  color="#3b82f6"
+/>}
       </View>
 
       <View className="mt-5 flex-row">

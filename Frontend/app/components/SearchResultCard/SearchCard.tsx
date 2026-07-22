@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   FlatList,
   Image,
@@ -14,6 +14,13 @@ import Animated, {
   FadeInDown,
   FadeOutUp,
 } from "react-native-reanimated";
+import { searchShowTimeMovies } from "@/app/services/searchShowTimesMovies.services";
+import { useBranchStore } from "@/app/store/branchStore";
+import { useInfiniteSearch } from "@/app/hooks/useInfiniteSearch";
+import LoadMoreLoader from "../LoadMoreLoader";
+import { IShowTime } from "@/app/interface/IShowTime";
+import Loader from "../Loader";
+import { useDebounce } from "@/app/hooks/useDebounce";
 
 const movies = [
   {
@@ -63,7 +70,39 @@ const movies = [
   },
 ];
 
-export default function SearchResult() {
+export default function SearchResult({search}: {search:string}) {
+
+  const branch = useBranchStore((state) => state.branch)
+
+
+  const debounceSearch = useDebounce(search , 2000)
+
+   //useCallbacks 
+
+   const fetchSearchShowTimesMovies = useCallback( (page:number) => {
+
+          return  searchShowTimeMovies(branch?._id , page , debounceSearch)
+
+
+   } , [branch , debounceSearch])
+
+
+   //hooks
+    
+   const {
+    data,
+    loading,
+    loadingMore,
+    refresh,
+    refreshing,
+    loadMore,
+} = useInfiniteSearch<IShowTime>({
+    fetchFunction: fetchSearchShowTimesMovies,
+    enabled: !!branch
+});
+
+
+
   return (
 <Animated.View
     entering={FadeIn.duration(180)}
@@ -99,13 +138,20 @@ export default function SearchResult() {
         </View>
 
         <Text className="font-poppins mt-1 text-[#8D8DA5]">
-          {movies.length} Results
+          {data.length} Results
         </Text>
       </View>
 
+
+      {loading && <Loader/>}
+
      <FlatList
-    data={movies}
-    keyExtractor={(item) => item.id}
+    data={data}
+    keyExtractor={(item) => item?._id}
+    onEndReached={loadMore}
+    onRefresh={refresh}
+    refreshing={refreshing}
+    ListFooterComponent={loadingMore ? <LoadMoreLoader /> : null}
     showsVerticalScrollIndicator={false}
     contentContainerStyle={{
         paddingHorizontal: 16,
@@ -128,7 +174,7 @@ export default function SearchResult() {
 
                     <Image
                         source={{
-                            uri: item.poster,
+                            uri: `${process.env.EXPO_PUBLIC_TMDB_URL}${item.backdropPath}`,
                         }}
                         className="h-28 w-20 rounded-lg"
                     />
@@ -184,9 +230,9 @@ export default function SearchResult() {
                                             : "text-[#D49DFF]"
                                     }`}
                                 >
-                                    {item.status === "now_showing"
-                                        ? "NOW SHOWING"
-                                        : "COMING SOON"}
+                                    {new Date(item.firstShowTimeStart) > new Date()
+                                        ? "coming_soon"
+                                        : new Date(item.lastShowTimeStart) > new Date() ? "now_showing" : "no_show"}
                                 </Text>
 
                             </View>
@@ -202,23 +248,7 @@ export default function SearchResult() {
         </Animated.View>
 
     )}
-    ListFooterComponent={
-
-        <Animated.View
-            entering={FadeIn.delay(300)}
-        >
-
-            <Pressable
-                className="mt-2 items-center rounded-2xl bg-card py-4"
-            >
-                <Text className="font-poppins-semibold text-base text-[#A970FF]">
-                    View All Results
-                </Text>
-            </Pressable>
-
-        </Animated.View>
-
-    }
+ 
 />
       </Animated.View>
 

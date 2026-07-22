@@ -8,22 +8,23 @@ import CustomButton from '../components/CustomButton'
 import { CreditCard } from 'lucide-react-native'
 import { router } from 'expo-router'
 import useMovieStore from '../store/movieStore'
+import useAuthStore from '../store/authStore'
 
 const BookingSummary = () => {
 
   const selectedMovie = useMovieStore((state) => state.selectedMovie)
 
-  
+   const session = useAuthStore((state) => state.session)
 
 
 
 
   const handleAddressPage = () => {
+    
 
+    
+      
      
-         
-
-
     router.push("/(pages)/AddressPage")
 
 
@@ -33,10 +34,10 @@ const BookingSummary = () => {
 
   
   return (
-    <View className='flex-1 bg-bg p-4'>
+    <View className='flex-1 bg-bg p-4 pb-0'>
    
 
-   <ScrollView 
+    <ScrollView 
       showsVerticalScrollIndicator={false}
       style={{
         marginBottom: 40
@@ -46,6 +47,8 @@ const BookingSummary = () => {
 
       <SafeAreaView>
 
+
+  
 
 
         <MovieInfoCard
@@ -66,17 +69,23 @@ const BookingSummary = () => {
         
 
 
+       
 
-            <View className='flex flex-row mt-6  justify-center items-center'>
+
+           
+      </SafeAreaView>
+
+          </ScrollView>
+
+
+
+ <View className='flex flex-row mt-0 relative bottom-10  justify-center items-center'>
 
                <CustomButton
             Icon={CreditCard}
             onPress={() => handleAddressPage()}
           />
             </View>
-      </SafeAreaView>
-
-   </ScrollView>
 
 
     </View>

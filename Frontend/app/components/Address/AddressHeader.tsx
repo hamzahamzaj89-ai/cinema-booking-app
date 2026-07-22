@@ -1,6 +1,7 @@
-import { ChevronLeft, Plus } from "lucide-react-native";
+import { AdIcon, ChevronLeft, createLucideIcon, Plus, PlusCircle } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import CustomButton from "../CustomButton";
 
 interface Props {
   onBack: () => void;
@@ -13,7 +14,7 @@ export default function AddressHeader({ onBack, onAddAddress }: Props) {
       <View className="flex flex-row justify-center items-center mt-2">
         <TouchableOpacity
           onPress={onBack}
-          className="h-12 w-12 items-center justify-center rounded-full "
+          className="h-12 w-12 items-center justify-center rounded-full  mb-1"
         >
           <ChevronLeft size={29} color="white" />
         </TouchableOpacity>
@@ -21,25 +22,11 @@ export default function AddressHeader({ onBack, onAddAddress }: Props) {
       </View>
 
         <View className="mt-2">
-
-          <TouchableOpacity
-        onPress={onAddAddress}
-        className="flex-row items-center rounded-md bg-selectedCard  px-3 py-3   bg-violet-600"
-      >
-        <Plus
-          size={18}
-          color="white"
-          strokeWidth={3}
-          style={{
-            marginBottom: 2
-          }}
-          className="mb-2 font-bold"
-        />
-
-        <Text className="ml-1 font-poppins-semibold mt-[0px]   text-white">
-          Add New
-        </Text>
-      </TouchableOpacity>
+            <CustomButton
+            text = {"Add Address"}
+             Icon={PlusCircle}
+             onPress={() => {}}
+            />
         </View>
     </View>
   );

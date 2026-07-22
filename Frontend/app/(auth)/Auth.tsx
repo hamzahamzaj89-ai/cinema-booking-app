@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import React, { useState } from 'react'
 import AuthHero from '../components/Auth/AuthHeader'
 import AuthCard from '../components/Auth/AuthCard'
@@ -7,8 +7,8 @@ import { Key, Lock, Mail, MailIcon, RectangleGogglesIcon } from 'lucide-react-na
 import CustomButton from '../components/CustomButton'
 import SocialButton from '../components/Auth/SocialButton'
 import ToggleButton from '../components/Auth/ToggleButon'
-import SignIn from '../(screens)/SignIn'
-import SignUp from '../(screens)/SignUp'
+import SignIn from '../screens/SignIn'
+import SignUp from '../screens/SignUp'
 
 const Auth = () => {
 
@@ -19,7 +19,18 @@ const Auth = () => {
 
 
   return (
+
+
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
     <View className='flex-1 bg-bg '>
+
+
+      
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+>
           <AuthHero
           backgroundImage={"https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200&q=80"}
           title={"CineVerse"}
@@ -31,7 +42,7 @@ const Auth = () => {
 
 
             <View
-                 className="flex-1 mt-[-45px] bg-bg rounded-t-[35px] px-7 pt-8 "
+                 className="flex-1 mt-[-50px] bg-bg rounded-t-[35px] px-7 pt-6"
                  
                >
 
@@ -49,8 +60,21 @@ const Auth = () => {
                 
 
           </View>
+
+
+          </KeyboardAvoidingView>
     </View>
+
+
+  
+
+
+
+    </TouchableWithoutFeedback>
   )
+
+
+  
 }
 
 export default Auth

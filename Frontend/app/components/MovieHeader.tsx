@@ -68,10 +68,10 @@ const MovieHeader = ({movie}:{movie:IShowTime | null}) => {
              </View>
 
 
-             <View className='mt-5'>
+             <View className='mt-5 mr-1'>
               < Heart 
                size={25}
-              color="#8B5CF6"
+              color="#3b82f6"
               strokeWidth={2.2}
               />
              </View>

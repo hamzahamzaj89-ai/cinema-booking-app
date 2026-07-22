@@ -42,12 +42,12 @@ export default function ProtectedRoutes({
 
 
     // User is not authenticated but is trying to access the app
-    if (session && currentGroup === "(app)") {
+    if (!session && currentGroup === "(app)") {
         return <Redirect href="/(auth)/Auth" />;
     }
 
     // User is authenticated but is trying to access auth screens
-    if (!session && currentGroup === "(auth)") {
+    if (session && currentGroup === "(auth)") {
         return <Redirect href="/(app)/Home" />;
     }
 

@@ -6,7 +6,7 @@ import {
   FlatList,
   ScrollView,
 } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Carousel from "react-native-reanimated-carousel";
 import Animated, {
@@ -33,6 +33,8 @@ import ShowTimeFilterModal from "../components/Filter/ShowTimeFilterModal";
 import { useInfiniteFetch } from "../hooks/useinfiniteFetch";
 import LoadMoreLoader from "../components/LoadMoreLoader";
 import SearchResult from "../components/SearchResultCard/SearchCard";
+import { searchShowTimeMovies } from "../services/searchShowTimesMovies.services";
+import useAuthStore from "../store/authStore";
 
 const Home = () => {
   useInitializeBranch();
@@ -41,7 +43,7 @@ const Home = () => {
   const branch = useBranchStore((state) => state.branch);
   const [visible, setVisible] = useState(false);
   const [searchInput , setSearchInput] = useState<string>("")
-
+  const session = useAuthStore((state) => state.session)
   //calBacks
 
   const fetchShowTimeMovies = useCallback(
@@ -50,6 +52,19 @@ const Home = () => {
     },
     [branch?._id],
   );
+
+
+
+  useEffect(() => {
+    console.log(session?.access_token)
+  } , [session])
+
+
+
+ 
+
+
+
 
   const {
     data: showTimesMovies,
@@ -67,6 +82,16 @@ const Home = () => {
     fetchFunction: fetchShowTimeMovies,
   });
 
+
+
+
+
+
+
+
+
+
+
   if (loading) {
     <Loader />;
 
@@ -81,7 +106,8 @@ const Home = () => {
         <SafeAreaView style={{ flex: 1 }}>
           <View className="w-full" style={{ flex: 1 }}>
             <Header onPress={() => setVisible(true)} />
-                    {searchInput.trim() !== "" && <SearchResult/>}
+                    {searchInput.trim() !== "" && <SearchResult search={searchInput}
+                    />}
 
 
             {loading && (

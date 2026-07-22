@@ -19,7 +19,7 @@ export default function BranchHeader({
 
           <Building2
             size={28}
-            color="#8B5CF6"
+            color="#3b82f6"
           />
 
         </View>

@@ -54,7 +54,7 @@ export default function BookingDetailCard({}) {
       </Text>
 
       <SummaryRow
-        icon={<Armchair size={20} color="#8B5CF6" />}
+        icon={<Armchair size={20} color="#3b82f6" />}
         title="Seats"
         value={bookingStore.seats}
       />
@@ -63,14 +63,14 @@ export default function BookingDetailCard({}) {
 
       <View className="flex w-[100%]   gap-x-5 flex-col">
           <SummaryRow
-        icon={<CalendarDays size={20} color="#8B5CF6" />}
+        icon={<CalendarDays size={20} color="#3b82f6" />}
         title="Date"
         value={date}
       />
 
 
       <SummaryRow
-        icon={<Clock3 size={20} color="#8B5CF6" />}
+        icon={<Clock3 size={20} color="#3b82f6" />}
         title="Showtime"
         value={time}
       />
@@ -82,21 +82,21 @@ export default function BookingDetailCard({}) {
       
 
       <SummaryRow
-        icon={<Building2 size={20} color="#8B5CF6" />}
+        icon={<Building2 size={20} color="#3b82f6" />}
         title="Branch"
         value={branch?.name}
       />
 
 
       <SummaryRow
-        icon={<Clapperboard size={20} color="#8B5CF6" />}
+        icon={<Clapperboard size={20} color="#3b82f6" />}
         title="Cinema"
         value={"Nuplex Cinema"}
       />
 
 
       <SummaryRow
-        icon={<Monitor size={20} color="#8B5CF6" />}
+        icon={<Monitor size={20} color="#3b82f6" />}
         title="Screen Room"
         value={bookingStore.screen?.name}
       />

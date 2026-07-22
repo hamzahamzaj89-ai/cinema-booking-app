@@ -28,7 +28,7 @@ export default function MovieInfoCard({
   return (
     <View className="mx-1 rounded-xl rounded-tr-none bg-field ">
 
-      <View className="flex-row ">
+      <View className="flex-row  ">
 
         {/* Poster */}
 
@@ -36,29 +36,30 @@ export default function MovieInfoCard({
           source={{
             uri: poster,
           }}
-          className="h-36 w-28 rounded-tl-xl  rounded-bl-"
+          className=" h-36 rounded-tl-xl  rounded-bl-"
+           style={{ aspectRatio: 2.3 / 3 }}
           resizeMode="cover"
         />
 
         {/* Details */}
 
-        <View className="ml-3 flex-1 justify-between p-3 pl-1">
+        <View className="ml-2 flex-1 justify-between p-3 pl-1">
 
           <View>
 
             <Text
-              numberOfLines={2}
+              numberOfLines={1}
               className="font-poppins-bold text-2xl text-white"
             >
               {title}
             </Text>
 
-               <View  className="flex flex-row flex-wrap gap-2 pr-3">
+               <View  className="flex flex-row  flex-nowrap gap-2 pr-3">
                 
             {
-              genre.map((text) => (
+              genre.slice(0, 3).map((text) => (
                   <>
-                    <Text className="mt-0 text-sm text-text font-poppins">
+                    <Text className="mt-0  text-sm text-text font-poppins">
              • {text}
             </Text>  
                   
@@ -97,7 +98,7 @@ export default function MovieInfoCard({
 
             <Clock3
               size={17}
-              color="#8B5CF6"
+              color="#3b82f6"
               style={{
                 marginBottom: 2
               }}

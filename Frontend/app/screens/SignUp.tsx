@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import InputField from '../components/InputField'
 import { Lock, MailIcon, PersonStandingIcon, RectangleGogglesIcon, User } from 'lucide-react-native'
@@ -8,6 +8,9 @@ import AuthFooter from '../components/Auth/AuthFooter'
 import OTPModal from '../components/OTPModal'
 import Toast from 'react-native-toast-message'
 import { router } from 'expo-router'
+import { signUp } from '../supabase/SignUp'
+import { SupabaseError } from '../utils/supabaseErrorMessages'
+import { errorMessage, successMessage } from '../utils/ToastMessages'
 
 
 
@@ -36,23 +39,52 @@ const SignUp = ({onPress} : {onPress:() => void}) => {
   });
 
 
-  const handleSignUp = () => {
+  const handleSignUp = async() => {
+  try {
 
+
+  
+     const {email , password , name} = formData
+
+
+     if (!email || !password || !name) {
+             return errorMessage("plaese provides alll the fields ")
+     }
+
+       setLoading(true)
+
+   const {user} = await signUp(formData)
+
+       console.log(user)
+
+
+
+  } catch (error: any) {
+       SupabaseError(error)
+
+  } finally{
+    setLoading(false)
+  }
+    
      
   }
 
 
 
 
-   const handleVerification = (code:string) => {
-      
-    }
+   
 
 
 
   return (
+
+       <ScrollView
+               keyboardShouldPersistTaps="handled"
+               showsVerticalScrollIndicator={false}
+           >
     <View className='flex-1'>
 
+        
          <InputField
                Icon={User}
                label='Username'
@@ -76,7 +108,7 @@ const SignUp = ({onPress} : {onPress:() => void}) => {
 
 
 
-
+      
 
                  <View className='w-[100%] px-1'>
                   <CustomButton
@@ -116,13 +148,9 @@ const SignUp = ({onPress} : {onPress:() => void}) => {
 
 
 
-                <OTPModal
-                
-                   isVisible={isVisible}
-                   onClose={() => setIsVisible(false)}
-                   onVerify={(code) =>{handleVerification(code)} }
-                />
     </View>
+
+         </ScrollView>
   )
 }
 

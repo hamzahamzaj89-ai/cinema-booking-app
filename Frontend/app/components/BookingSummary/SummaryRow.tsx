@@ -27,17 +27,19 @@ export default function SummaryRow({
 
 
   return (
-    <View className="flex-row   items-center py-2">
+    <View className="flex-row   items-center py-3">
 
       <View className="h-11 w-11 items-center justify-center rounded-2xl bg-[#25253A]">
         {icon}
       </View>
 
-      <View className="ml-4 flex-1">
+      <View className="ml-4 flex-1 ">
 
-        <Text className="font-poppins text-xs tracking-[1px] text-[#8C8CA5]">
+         { title === "Seats" ? ( <Text className="font-poppins text-xs tracking-[1px]  mt-4 text-[#8C8CA5]">
           {title}
-        </Text>
+        </Text>) : ( <Text className="font-poppins text-xs tracking-[1px] text-[#8C8CA5]">
+          {title}
+        </Text>)}
 
 
 
@@ -47,7 +49,7 @@ export default function SummaryRow({
                     key={seat.seatId}
                     className="mr-2 mb-2 rounded-lg bg-[#8B5CF6]/15 px-4 py-2"
                   >
-                    <Text className="font-poppins-semibold text-[#8B5CF6]">
+                    <Text className="font-poppins-semibold text-[#3b82f6]">
                       {seat.seatId}
                     </Text>
                   </View>

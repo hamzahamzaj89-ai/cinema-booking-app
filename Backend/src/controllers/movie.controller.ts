@@ -71,50 +71,6 @@ export const getMovies: Controller = async (req, res, next) => {
 
 
 
-export const searchMovie:Controller = async (req , res , next) => {
-
-
-
-   try {
-
-    const { query } = req.query;
-     const limit = 8;
-
-    if (!query || typeof query !== "string") {
-         throw new AppError("Please enter the search query " , 400)
-      return;
-    }
-
-    const movies = await movieModel.find({
-      title: {
-        $regex: query,
-        $options: "i",
-      },
-          status: {
-        $in: ["now_showing", "coming_soon"]
-    }
-
-    
-    }).limit(limit)
-      
-      .sort({ title: 1 });
-    
-
-    res.status(200).json({
-      success: true,
-      results: movies,
-    });
-    
-   } catch (error) {
-      next(error)
-   }
-
-
-
-
-
-}
-
 
 
 

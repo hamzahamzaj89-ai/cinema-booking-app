@@ -77,7 +77,7 @@ import React from "react";
 
   
   return (
-    <View className="w-full flex-col  rounded-3xl border border-[#2B2B45] bg-[#141425] p-3">
+    <View className="w-full flex-col  rounded-3xl bg-[#141425] p-3">
 
       {/* Poster */}
       <View className="relative object-cover">
@@ -149,8 +149,8 @@ import React from "react";
 
           {/* Release */}
           <View className="flex-row  items-center">
-            <View className="rounded-2xl bg-[#232338] p-3">
-              <Calendar size={20} color="#8B5CF6" />
+            <View className="rounded-2xl pl-2">
+              <Calendar size={28} color="#3b82f6" />
             </View>
 
             <View className="ml-3">
@@ -168,8 +168,8 @@ import React from "react";
 
           {/* Duration */}
           <View className="flex-row items-center">
-            <View className="rounded-full border border-violet-500 p-2">
-              <Clock3 size={18} color="#8B5CF6" />
+            <View className="rounded-full border border-blue-500 p-2">
+              <Clock3 size={18} color="#3b82f6" />
             </View>
 
             <View className="ml-3">
@@ -200,11 +200,11 @@ import React from "react";
 
            <TouchableOpacity
               activeOpacity={0.8}
-              className="h-12 w-12 items-center justify-center rounded-lg mb-2  border-[#8B5CF6] bg-[#1B1B31]"
+              className="py-3 px-3 mt-[2px] items-center justify-center rounded-lg mb-2  border-[#8B5CF6] bg-[#1B1B31]"
          >
              <Heart
               size={22}
-              color="#8B5CF6"
+              color="#3b82f6"
               strokeWidth={2.2}
             />
 

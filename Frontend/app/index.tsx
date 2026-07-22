@@ -20,7 +20,7 @@ export default function Index() {
         );
     }
 
-    return !session
+    return session
         ? <Redirect href="/(app)/Home" />
         : <Redirect href="/(auth)/Auth" />;
 }

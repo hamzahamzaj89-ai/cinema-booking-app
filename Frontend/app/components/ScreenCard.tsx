@@ -43,9 +43,9 @@ export default function ScreenCard({
   return (
        <Pressable onPress={handleScreen}>
       <View
-        className={`mr-2 h-38 w-[100px] items-center justify-between rounded-lg border px-0 py-4 ${
+        className={`mr-2 h-38 w-[100px] items-center justify-between rounded-lg border-[2px] px-0 py-4 ${
           selected
-            ? "border-[#8B5CF6] bg-[#1B1B31]"
+            ? "border-[#3b82f6] bg-[#1B1B31]"
             : " bg-[#1B1B31]"
         }`}
       >
@@ -60,7 +60,7 @@ export default function ScreenCard({
         </Text>
 
         {/* Seat Layout */}
-        <View className="items-center">
+        <View className="items-center mt-1">
           {[0, 1, 2].map((row) => (
             <View key={row} className="mb-1 flex-row">
               {[0, 1, 2, 3].map((seat) => (
@@ -68,7 +68,7 @@ export default function ScreenCard({
                   key={seat}
                   size={13}
                   strokeWidth={2}
-                  color={selected ? "#A855F7" : "#646483"}
+                  color={selected ? "#3b82f6" : "#646483"}
                   style={{ marginHorizontal: 2 }}
                 />
               ))}

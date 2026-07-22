@@ -41,7 +41,7 @@ const Category = ({selectedCategory, setSelectedCategory}: {selectedCategory:Str
       keyExtractor={(item, index) => index.toString()}
       renderItem={({ item }) => (
         <Pressable onPress={() => setSelectedCategory(item)} className={clsx("bg-field px-5 h-10 rounded-lg items-center justify-center   mr-3 ",
-            selectedCategory === item &&  'bg-none bg-violet-600',
+            selectedCategory === item &&  'bg-none bg-blue-500',
 
         )}>
             

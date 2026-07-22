@@ -15,14 +15,17 @@ export default function Loader() {
     
   return (
       <>
+       <View
+             className="flex-1 bg-bg justify-center content-center items-center p-5"
+        >
 
-      <View className="bg-bg w-[100%] h-[100%] flex justify-center items-center">
+            <ActivityIndicator
+                size="large"
+                color="#8B5CF6"
+            />
 
+        </View>
 
-             <ActivityIndicator   size={"large"}  color={"white"}/>
-
-
-      </View>
       
       
       

@@ -16,15 +16,20 @@ export default function Callback() {
 
       const url = await Linking.getInitialURL();
 
+
       if (!url) return;
 
       const { queryParams } = Linking.parse(url);
+
+      console.log(queryParams)
 
       const code = queryParams?.code as string;
 
       if (code) {
         await supabase.auth.exchangeCodeForSession(code);
       }
+
+
     }
 
 

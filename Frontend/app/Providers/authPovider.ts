@@ -17,6 +17,7 @@ export default function AuthProvider({ children }: {children: any}) {
       console.log("Auth Event:", event);
 
       if (session) {
+        console.log(session)
         setSession(session);
       } else {
         clearSession();

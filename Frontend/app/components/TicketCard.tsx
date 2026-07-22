@@ -48,7 +48,7 @@ export default function TicketCard({
     <Pressable onPress={handleDate}>
       <View
         className={`relative mr-2  h-32 w-24 items-center justify-center rounded-[20px] ${
-          selected ? "bg-[#8B5CF6]" : "bg-[#1B1B31]"
+          selected ? "bg-[#3b82f6]" : "bg-[#1B1B31]"
         }`}
       >
         {/* Left Cut */}
@@ -71,7 +71,7 @@ export default function TicketCard({
 
         <Text
           className={`mt-1 text-xs tracking-[2px] font-poppins ${
-            selected ? "text-white" : "text-[#B794F4]"
+            selected ? "text-white" : "text-[#3b82f6]"
           }`}
         >
           {month}
@@ -79,7 +79,7 @@ export default function TicketCard({
 
         <View
           className={`mt-3 h-2 w-2 rounded-full ${
-            selected ? "bg-white" : "bg-[#8B5CF6]"
+            selected ? "bg-white" : "bg-[#3b82f6]"
           }  `}
         />
       </View>

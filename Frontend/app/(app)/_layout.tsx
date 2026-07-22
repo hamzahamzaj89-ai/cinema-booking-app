@@ -45,7 +45,7 @@ export default function TabLayout() {
            tabBarActiveTintColor: 'green',
           
           tabBarIcon: ({ color, size , focused }) => (
-            <Ionicons name="home-outline" size={28}   color={focused ? "#7c3aed": "#9B9BB5"} />
+            <Ionicons name="home-outline" size={28}   color={focused ? "#3b82f6": "#9B9BB5"} />
           ),
 
           tabBarLabel: ({ focused, color }) => (
@@ -53,7 +53,7 @@ export default function TabLayout() {
         style={{
           fontSize: 12,
           fontWeight: focused ? "700" : "500",
-          color: !focused ? "#9B9BB5": '#7c3aed',
+          color: !focused ? "#9B9BB5": '#3b82f6',
         }}
       >
         Home
@@ -70,7 +70,7 @@ export default function TabLayout() {
         options={{
           title: "Profile",
               tabBarIcon: ({ color, size , focused }) => (
-            <Ionicons name="person-outline" size={28}   color={focused ? "#7c3aed": "#9B9BB5"} />
+            <Ionicons name="person-outline" size={28}   color={focused ? "#3b82f6": "#9B9BB5"} />
           ),
 
           tabBarLabel: ({ focused, color }) => (
@@ -78,7 +78,7 @@ export default function TabLayout() {
         style={{
           fontSize: 12,
           fontWeight: focused ? "700" : "500",
-          color: !focused ? "#9B9BB5": '#7c3aed',
+          color: !focused ? "#9B9BB5": '#3b82f6',
           marginLeft: 5,
         }}
       >
@@ -97,7 +97,7 @@ export default function TabLayout() {
         options={{
           title: "Profile",
               tabBarIcon: ({ color, size , focused }) => (
-            <Ionicons name="heart-outline" size={28}   color={focused ? "#7c3aed": "#9B9BB5"} />
+            <Ionicons name="heart-outline" size={28}   color={focused ? "#3b82f6": "#9B9BB5"} />
           ),
 
           tabBarLabel: ({ focused, color }) => (
@@ -105,7 +105,7 @@ export default function TabLayout() {
         style={{
           fontSize: 12,
           fontWeight: focused ? "700" : "500",
-          color: !focused ? "#9B9BB5": '#7c3aed',
+          color: !focused ? "#9B9BB5": '#3b82f6',
         }}
       >
         favourites

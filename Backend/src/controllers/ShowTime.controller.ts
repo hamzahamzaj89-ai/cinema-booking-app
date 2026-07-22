@@ -123,68 +123,87 @@ export const createShowTime: Controller = async (req, res, next) => {
 };
 
 export const getShowTimeMovies: Controller = async (req, res, next) => {
-  try {
-    const page = Number(req.query.page) || 0;
-    const branchId: any = req.params.branchId;
-    const limit = 2;
-    let hasNextPage = false;
+    try {
+        const page = Number(req.query.page) || 0;
+        const limit = 2;
+        const skip = page * limit;
+        let hasNextPage = false;
 
-    const skip = page * limit;
 
-    const movies = await showTimeModel.aggregate([
-      {
-        $match: {
-          branch: new mongoose.Types.ObjectId(branchId),
-        },
-      },
+        const branchId = new mongoose.Types.ObjectId((req.params.branchId) as string);
+        const now = new Date();
 
-      // Get one document per movie and calculate its latest showtime
-      {
-        $group: {
-          _id: "$movie",
-          latestShowtime: {
-            $max: "$startTime",
-          },
-        },
-      },
+        const movies = await showTimeModel.aggregate([
+            {
+                $match: {
+                    branch: branchId,
+                   
+                    isActive: true
+                }
+            },
 
-      // Sort movies by latest showtime
-      {
-        $sort: {
-          latestShowtime: -1,
-        },
-      },
+            {
+                $group: {
+                    _id: "$movie",
 
-      {
-        $skip: skip,
-      },
+                    firstShowTimeStart: {
+                        $min: "$startTime"
+                    },
 
-      {
-        $limit: limit + 1,
-      },
+                    lastShowTimeStart: {
+                        $max: "$startTime"
+                    }
+                }
+            },
 
-      // Fetch movie document
-      {
-        $lookup: {
-          from: "movies",
-          localField: "_id",
-          foreignField: "_id",
-          as: "movie",
-        },
-      },
+         
 
-      {
-        $unwind: "$movie",
-      },
+            {
+                $sort: {
+                    lastShowTimeStart: -1
+                }
+            },
 
-      // Return ONLY the movie document
-      {
-        $replaceRoot: {
-          newRoot: "$movie",
-        },
-      },
-    ]);
+            {
+                $skip: skip
+            },
 
+            {
+                $limit: limit + 1
+            },
+
+            {
+                $lookup: {
+                    from: "movies",
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "movie"
+                }
+            },
+
+            {
+                $unwind: "$movie"
+            },
+
+            {
+                $replaceRoot: {
+                    newRoot: {
+                        $mergeObjects: [
+                            "$movie",
+                            {
+                               
+                                firstShowTimeStart: "$firstShowTimeStart",
+                                lastShowTimeStart: "$lastShowTimeStart"
+                            }
+                        ]
+                    }
+                }
+            }
+        ]);
+
+
+
+        
     if (movies.length === 0) {
       throw new AppError("No movies found.", 404);
     }
@@ -197,20 +216,17 @@ export const getShowTimeMovies: Controller = async (req, res, next) => {
       movies.pop();
     }
 
-    res.status(200).json({
-      success: true,
-      message: "Movies fetched successfully.",
-      data: movies,
-      hasNextPage: hasNextPage,
-    });
 
+        res.status(200).json({
+            success: true,
+            message: "Movies fetched successfully.",
+            data: movies,
+            hasNextPage
+        });
 
-
-
-    
-  } catch (error) {
-    next(error);
-  }
+    } catch (error) {
+        next(error);
+    }
 };
 
 export const getShowTimes: Controller = async (req, res, next) => {
@@ -540,54 +556,120 @@ export const getShowtimePrices: Controller = async (req: any, res: any) => {
   }
 };
 
-export const deleteShowTime: Controller = async (req, res, next) => {
-  try {
-    const { id } = req.params;
 
-    // Find showtime
-    const showtime = await showTimeModel.findById(id);
 
-    if (!showtime) {
-      throw new AppError("Showtime not found.", 404);
+
+export const searchShowTimeMovies: Controller = async (
+    req,
+    res,
+    next
+) => {
+    try {
+        const { query , page } = req.query;
+        const { branchId } = req.params;
+        const limit = 8
+         const skip = Number(page as string) * limit
+         let hasNextPage = false
+        const now = new Date();
+
+        const movies = await showTimeModel.aggregate([
+            {
+                $match: {
+                    branch: new mongoose.Types.ObjectId(branchId as string),
+                  
+                    isActive: true
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "movies",
+                    localField: "movie",
+                    foreignField: "_id",
+                    as: "movie"
+                }
+            },
+
+            {
+                $unwind: "$movie"
+            },
+
+            {
+                $match: {
+                    "movie.title": {
+                        $regex: query,
+                        $options: "i"
+                    }
+                }
+            },
+
+            {
+                $group: {
+                    _id: "$movie._id",
+
+                    movie: {
+                        $first: "$movie"
+                    },
+
+                    firstShowTimeStart: {
+                        $min: "$startTime"
+                    },
+
+                    lastShowTimeStart: {
+                        $max: "$startTime"
+                    }
+                }
+            },
+
+            {
+                $sort: {
+                    lastShowTimeStart: -1
+                }
+            },
+            {
+              $skip : skip 
+            },
+            {
+              $limit : limit + 1
+            },
+
+            {
+                $replaceRoot: {
+                    newRoot: {
+                        $mergeObjects: [
+                            "$movie",
+                            {
+                                firstShowTimeStart: "$firstShowTimeStart",
+                                lastShowTimeStart: "$lastShowTimeStart"
+                            }
+                        ]
+                    }
+                }
+            }
+        ]);
+
+
+
+   if (movies.length === 0) {
+      throw new AppError("No movies found.", 404);
     }
 
-    const movieId = showtime.movie;
-
-    // Delete showtime
-    await showtime.deleteOne();
-
-    // Find earliest remaining showtime
-    const firstShowtime = await showTimeModel
-      .findOne({
-        movie: movieId,
-      })
-      .sort({ startTime: 1 });
-
-    // Find latest remaining showtime
-    const lastShowtime = await showTimeModel
-      .findOne({
-        movie: movieId,
-      })
-      .sort({ startTime: -1 });
-
-    // Update movie
-    if (!firstShowtime || !lastShowtime) {
-      await movieModel.findByIdAndUpdate(movieId, {
-        firstShowTime: null,
-        lastShowTime: null,
-      });
-    } else {
-      await movieModel.findByIdAndUpdate(movieId, {
-        firstShowTime: firstShowtime.startTime,
-        lastShowTime: lastShowtime.startTime,
-      });
+    if (movies.length >= 8) {
+      hasNextPage = true;
     }
 
-    res.status(200).json({
-      success: true,
-      message: "Showtime deleted successfully.",
-    });
-  } catch (error) {
-    next(error);
-  }
+    if (hasNextPage) {
+      movies.pop();
+    }
+
+        res.status(200).json({
+            success: true,
+            message: "Movies fetched successfully.",
+            hasNextPage,
+            data: movies
+        });
+
+    } catch (error) {
+        next(error);
+    }
 };

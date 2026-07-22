@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   
   StatusBar,
@@ -17,22 +17,50 @@ import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useAuthStore from "../store/authStore";
 import InfoPage from "../components/InfoPage";
+import InfoScreen from "../screens/InfoScreen";
+import { useFetch } from "../hooks/useFetch";
+import { getUserAddresses } from "../services/address.services";
+import { IAddress } from "../interface/IAddress";
+import useAddressStore from "../store/addressStore";
 
 export default function AddressPage() {
 
 
-    const session = useAuthStore((state) => state.session)
+  const session = useAuthStore((state) => state.session)
 
   const getGrandTotal = useBookingStore((state) => state.getGrandTotal)
+  const selectedAddress = useAddressStore((state) => state.selectedAddress)
+    const setSelectedAddress = useAddressStore((state) => state.setSelectedAddress)
 
-  const [selectedAddress, setSelectedAddress] = useState(
-    addresses.find((item) => item.isDefault)?.id ??
-      addresses[0]?.id
-  );
+  
+  const setAddresses = useAddressStore((state) => state.setAddresses)
+    const storeAddresses = useAddressStore((state) => state.addresses)
+
+  //callBack
+
+  const fetchUserAdresses = useCallback( 
+    () => {
+             
+       return getUserAddresses()
+       
+ 
+    } , []
+
+  )
+
+  const {data:addresses , loading , error} = useFetch<IAddress>({
+     fetchFunction: fetchUserAdresses,
+     enabled: storeAddresses.length > 0 ? false : true
+  })
 
 
 
 
+   useEffect(() => {
+
+              setAddresses(addresses)
+
+  } ,[addresses]) 
 
 
   const grandTotal = getGrandTotal();
@@ -40,15 +68,21 @@ export default function AddressPage() {
 
 
 
-  if (session) {
+  if (!session) {
 
-        <InfoPage text={""} link={""}/>
+    return   <InfoScreen text="To continue Booking Please Sign In"  buttonText="SignIn"/>
 
   }
 
 
 
  
+
+  if (addresses.length === 0) {
+
+         return   <InfoScreen text="Please Create A Address to Continue With Booking"  buttonText="Create Address"/>
+
+  }
 
 
 
@@ -69,7 +103,7 @@ export default function AddressPage() {
         <AddressHeader
           onBack={() => router.back()}
           onAddAddress={() =>
-            router.push("/(screens)/CreateAddress")
+            router.push("/screens/CreateAddress")
           }
         />
 
@@ -78,14 +112,14 @@ export default function AddressPage() {
         {addresses.length === 0 ? (
           <EmptyAddress
             onAddAddress={() =>
-              router.push("/(screens)/CreateAddress")
+              router.push("/screens/CreateAddress")
             }
           />
         ) : (
           <>
             <FlatList
               data={addresses}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item._id}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{
                 paddingBottom: 150,
@@ -94,10 +128,10 @@ export default function AddressPage() {
                 <AddressCard
                   address={item}
                   selected={
-                    item.id === selectedAddress
+                    item._id === selectedAddress?._id
                   }
                   onPress={() =>
-                    setSelectedAddress(item.id)
+                    setSelectedAddress(item)
                   }
                 />
               )}

@@ -40,7 +40,7 @@ export default function BottomCheckout({
             Grand Total
           </Text>
 
-          <Text className=" font-poppins-bold text-[0.9rem] mb-[3px] text-[#8B5CF6]">
+          <Text className=" font-poppins-bold text-[0.9rem] mb-[3px] text-blue-500">
             ${total.toFixed(2)}
           </Text>
 

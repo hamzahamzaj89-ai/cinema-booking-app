@@ -38,7 +38,7 @@ export default function BranchCard({
       <View className="px-3 py-3 items-center justify-center rounded-md bg-[#24273B]/30">
         <Building2
           size={22}
-          color="#8B5CF6"
+          color="#3b82f6"
         />
       </View>
 
@@ -55,7 +55,7 @@ export default function BranchCard({
         <View className="mt-1 flex-row items-center">
           <MapPin
             size={14}
-            color="#8B5CF6"
+            color="#3b82f6"
             style={{
                 marginBottom: 3
             }}

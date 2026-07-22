@@ -45,7 +45,7 @@ export default function TimeCard({
 
       <View
         className={`relative mr-2  h-[60px] w-24 items-center justify-center rounded-lg ${
-          selected ? "bg-[#8B5CF6]" : "bg-[#1B1B31]"
+          selected ? "bg-[#3b82f6]" : "bg-[#1B1B31]"
         }`}
       >
       

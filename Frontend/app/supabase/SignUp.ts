@@ -5,7 +5,7 @@ import * as Linking from "expo-linking";
 interface Props {
     email: string;
     password: string;
-    fullName: string
+    name: string
 
 }
 
@@ -13,10 +13,11 @@ interface Props {
 export async function signUp(
   { email,
   password,
-  fullName}: Props
+  name}: Props
 ) {
   const redirectTo =
-    Linking.createURL("auth/callback");
+    Linking.createURL("/callback");
+    
 
   const { data, error } =
     await supabase.auth.signUp({
@@ -25,16 +26,25 @@ export async function signUp(
 
       options: {
         data: {
-          full_name: fullName,
+          name: name,
         },
 
-        emailRedirectTo: redirectTo,
+   
       },
     });
 
+
+
+
+
+
   if (error) {
+
+     console.log(error)
     throw error;
   }
+   
 
+  console.log(data)
   return data;
 }

@@ -30,7 +30,7 @@ export default function PriceRow({
         className={`
         ${
           grandTotal
-            ? "font-poppins-bold text-2xl text-[#8B5CF6]"
+            ? "font-poppins-bold text-2xl text-[#3b82f6]"
             : discount
             ? "font-poppins-semibold text-[#22C55E]"
             : "font-poppins-semibold text-white"

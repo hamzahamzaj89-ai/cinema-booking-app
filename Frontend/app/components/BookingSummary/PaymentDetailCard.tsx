@@ -44,7 +44,7 @@ export default function PaymentDetailCard() {
 
 
   return (
-    <View className=" mt-5 rounded-xl bg-field p-5">
+    <View className=" mt-5 rounded-xl  p-5">
 
       {/* Header */}
 

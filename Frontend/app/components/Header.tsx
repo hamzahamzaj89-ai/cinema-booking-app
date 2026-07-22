@@ -10,8 +10,8 @@ export default function Header({onPress} : {onPress: () => void}) {
 
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center">
-          <View className="h-12 w-12 items-center justify-center rounded-lg bg-[#8B5CF6]/15">
-            <Building2 size={24} color="#8B5CF6" strokeWidth={3}/>
+          <View className=" ml-2 items-center justify-center rounded-lg bg-">
+            <Building2 size={30} color="#3b82f6" strokeWidth={2}/>
           </View>
 
           <View className="ml-3">
@@ -33,9 +33,9 @@ export default function Header({onPress} : {onPress: () => void}) {
           className="rounded-lg bg-violet px-5 py-2  border-0 border-violet-600 "
         >
           <View className="flex-row items-center">
-            <Text className="font-poppins-semibold text-violet-600 ">Change</Text>
+            <Text className="font-poppins-semibold text-blue-500 ">Change</Text>
 
-            <ChevronRight size={18} color="#7c3aed" style={{ marginLeft: 4 }} />
+            <ChevronRight size={18} color="#3b82f6" strokeWidth={3} style={{ marginLeft: 4 }} />
           </View>
         </TouchableOpacity>
       </View>

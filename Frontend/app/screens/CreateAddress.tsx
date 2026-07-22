@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   
   ScrollView,
@@ -26,31 +26,56 @@ import SectionTitle from "../components/Address/SectionTitle";
 import CustomButton from "../components/CustomButton";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { IAddress, IAddressFormData } from "../interface/IAddress";
+import { createUserAddress } from "../services/create.address.service";
+import { useFetch } from "../hooks/useFetch";
+import useAddressStore from "../store/addressStore";
 
 export default function CreateAddress({ navigation }: any) {
 
-  const [label, setLabel] = useState("Home");
 
   const [isDefault, setIsDefault] = useState(true);
 
-  const [form, setForm] = useState({
+  const addAddress = useAddressStore((state) => state.addAddress)
+
+
+  const [form, setForm] = useState<IAddressFormData>({
     fullName: "",
     phone: "",
-    country: "",
     city: "",
+    isDefault: false,
     area: "",
-    street: "",
-    apartment: "",
-    postalCode: "",
+    address: "",
+    label: "Home"
+
   });
 
-  const update = (key: string, value: string) => {
-    setForm({
-      ...form,
-      [key]: value,
-    });
-  };
 
+
+   //callBack
+
+   const useCreateUserAddress = useCallback(() => {
+      
+            return createUserAddress(form)
+
+   } ,[])
+
+
+
+
+   //hook
+
+   const {loading , error , refetch , data:address } = useFetch<IAddress>({fetchFunction: useCreateUserAddress})
+
+
+
+   useEffect(() => {
+
+    addAddress(address[0])
+
+   } , [address])
+
+  
   return (
     <View className="flex-1 bg-bg">
         <SafeAreaView style={{ flex: 1 }}>
@@ -83,14 +108,14 @@ export default function CreateAddress({ navigation }: any) {
           icon={<UserRound color="#8B5CF6" />}
           placeholder="Full Name"
           value={form.fullName}
-          onChangeText={(v) => update("fullName", v)}
+          onChangeText={(v) => setForm({...form , fullName: v})}
         />
 
         <AddressInput
           icon={<Phone color="#8B5CF6" />}
           placeholder="Phone Number"
           value={form.phone}
-          onChangeText={(v) => update("phone", v)}
+          onChangeText={(v) => setForm({...form , phone: v})}
         />
 
         <SectionTitle title="Address Information" />
@@ -100,31 +125,25 @@ export default function CreateAddress({ navigation }: any) {
           icon={<Building2 color="#8B5CF6" />}
           placeholder="City"
           value={form.city}
-          onChangeText={(v) => update("city", v)}
+          onChangeText={(v) => setForm({...form , city: v})}
         />
 
         <AddressInput
           icon={<MapPinned color="#8B5CF6" />}
           placeholder="Area / Society"
           value={form.area}
-          onChangeText={(v) => update("area", v)}
+          onChangeText={(v) => setForm({...form, area: v})}
         />
 
         <AddressInput
           icon={<House color="#8B5CF6" />}
-          placeholder="Street Address"
-          value={form.street}
-          onChangeText={(v) => update("street", v)}
+          placeholder=" Address"
+          value={form.address}
+          onChangeText={(v) => setForm({...form , address: v})}
         />
 
        
 
-        <AddressInput
-          icon={<Mailbox color="#8B5CF6" />}
-          placeholder="Postal Code"
-          value={form.postalCode}
-          onChangeText={(v) => update("postalCode", v)}
-        />
 
         <SectionTitle title="Save As" />
 
@@ -132,20 +151,20 @@ export default function CreateAddress({ navigation }: any) {
 
           <LabelChip
             title="Home"
-            selected={label === "Home"}
-            onPress={() => setLabel("Home")}
+            selected={form.label === "Home"}
+            onPress={() => setForm({...form, label: "Home"})}
           />
 
           <LabelChip
             title="Office"
-            selected={label === "Office"}
-            onPress={() => setLabel("Office")}
+            selected={form.label === "Office"}
+            onPress={() => setForm({...form, label: "Office"})}
           />
 
           <LabelChip
             title="Other"
-            selected={label === "Other"}
-            onPress={() => setLabel("Other")}
+            selected={form.label === "Other"}
+            onPress={() => setForm({...form, label: "Other"})}
           />
 
         </View>
@@ -160,7 +179,7 @@ export default function CreateAddress({ navigation }: any) {
             <View className="px-4 ">
                   <CustomButton 
                   Icon={Save}
-                  onPress={() => {}}
+                  onPress={() => {refetch}}
                   
                   />
             </View>

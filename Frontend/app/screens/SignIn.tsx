@@ -1,16 +1,39 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, ScrollView } from 'react-native'
+import React, { useState } from 'react'
 import InputField from '../components/InputField'
 import { Lock, MailIcon, RectangleGogglesIcon } from 'lucide-react-native'
 import CustomButton from '../components/CustomButton'
 import SocialButton from '../components/Auth/SocialButton'
 import AuthFooter from '../components/Auth/AuthFooter'
 import Auth from '../(auth)/Auth'
+import OTPModal from '../components/OTPModal'
 
 const SignIn = ({onPress} : {onPress:() => void}) => {
+
+
+  const [isVisible , setIsVisible] = useState(false)
+
+
+
+  
+   const handleVerification = (code:string) => {
+      
+    }
+
+
   return (
+
+
+          <ScrollView
+                   keyboardShouldPersistTaps="handled"
+                   showsVerticalScrollIndicator={false}
+                   style={{
+                    paddingBottom: 10
+                   }}
+               >
     <View className='flex-1 '>
 
+      
                 <InputField
                Icon={MailIcon}
                label='Email'
@@ -24,6 +47,7 @@ const SignIn = ({onPress} : {onPress:() => void}) => {
                Placeholder='Please enter the password'
                onValueChange={(text) =>  {}}
               />
+
 
 
 
@@ -57,7 +81,19 @@ const SignIn = ({onPress} : {onPress:() => void}) => {
                  onPress={() => {onPress()}}
                  />
 
+
+                 
+                <OTPModal
+                
+                   isVisible={isVisible}
+                   onClose={() => setIsVisible(false)}
+                   onVerify={(code) =>{handleVerification(code)} }
+                />
+
     </View>
+
+
+    </ScrollView>
   )
 }
 

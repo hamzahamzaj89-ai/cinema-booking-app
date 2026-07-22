@@ -41,7 +41,7 @@ setTotalPrice(totalPrice2)
         <View className="h-11 w-11 items-center justify-center rounded-2xl bg-[#8B5CF6]/15">
           <Armchair
             size={22}
-            color="#8B5CF6"
+            color="#3b82f6"
           />
         </View>
 
@@ -61,7 +61,7 @@ setTotalPrice(totalPrice2)
             key={seat.seatId}
             className="mr-2 mb-2 rounded-lg bg-[#8B5CF6]/15 px-4 py-2"
           >
-            <Text className="font-poppins-semibold text-[#8B5CF6]">
+            <Text className="font-poppins-semibold text-[#3b82f6]">
               {seat.seatId}
             </Text>
           </View>
@@ -87,7 +87,7 @@ setTotalPrice(totalPrice2)
             Total Price
           </Text>
 
-          <Text className="font-poppins-bold text-2xl text-[#8B5CF6]">
+          <Text className="font-poppins-bold text-2xl text-[#3b82f6]">
             ${totalPrice}
           </Text>
         </View>
